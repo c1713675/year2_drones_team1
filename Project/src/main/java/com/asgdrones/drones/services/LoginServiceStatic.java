@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginServiceStatic implements LoginService{
+public class LoginServiceStatic {
     private LoginJPA loginJPA;
 
     @Autowired
@@ -14,20 +14,19 @@ public class LoginServiceStatic implements LoginService{
         loginJPA = jpa;
     }
 
-    @Override
+
     public Login findByLoginDetails(String un, String pw) {
         return loginJPA.findByLoginDetails(un, pw);
     }
 
-    @Override
+
     public void signup(Login signupInfo) {
         loginJPA.save(signupInfo);
     }
-
-    @Override
-    public boolean isLoginAdmin(String un) {
-        return loginJPA.isLoginAdmin(un);
-    }
+// the code below seemed to cause some problems
+//    public boolean isLoginAdmin(String un) {
+//        return loginJPA.isLoginAdmin(un);
+//    }
 
 //    I may need to delete these, along with their repositories. I will see if I need to use them later on in the code
 //    The LoginJPA may be enough for all logins.

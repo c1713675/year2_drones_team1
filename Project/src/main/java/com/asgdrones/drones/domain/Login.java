@@ -12,11 +12,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "charity")
+@Table(name = "Login")
 public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "LoginID")
     private Long id;
 
     @Column(name = "username")

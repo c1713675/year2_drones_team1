@@ -10,5 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface LoginRepoJPA extends JpaRepository<Login,Long>, LoginRepo {
+
 public List<Login> findByUsernameAndPassword(String username, String password);
 }

@@ -23,21 +23,21 @@ import java.util.List;
 
 @Service
 public class LoginService implements LoginServiceInterface {
-private LoginRepoJPA loginRepoJPA;
+    private LoginRepoJPA loginRepoJPA;
 
-@Autowired
-    LoginService(LoginRepoJPA lRepo){
-    loginRepoJPA = lRepo;
-}
+    @Autowired
+    LoginService(LoginRepoJPA lRepo) {
+        loginRepoJPA = lRepo;
+    }
 
     @Override
     public String checkLogin(Login login) {
         List<Login> loginList = loginRepoJPA.findByUsernameAndPassword(login.getUsername(),
                 login.getPassword());
-        if (loginList.isEmpty()){
+        if (loginList.isEmpty()) {
             String permission = "none";
             return permission;
-        }else {
+        } else {
             String permission = loginList.get(0).getAccess();
             return permission;
         }
