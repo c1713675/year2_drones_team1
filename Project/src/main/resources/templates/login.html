@@ -5,12 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-<form action = "#" th:action = "@{/addBankDetails}"
+<form action = "#" th:action = "@{/login}"
       th:object = "${login}" method = "post" >
     <h2>Username</h2>
     <input type = "text" th:field = "*{username}" />
     <h2>Password</h2>
-    <input type = "text" th:field = "*{password}" />
+    <input type = "password" th:field = "*{password}" />
     <button type = "Login" >Submit</button >
 </form>
 </body>

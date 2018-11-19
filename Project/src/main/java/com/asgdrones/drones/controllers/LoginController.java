@@ -1,18 +1,52 @@
 package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Login;
+import com.asgdrones.drones.repositories.LoginRepoJPA;
+import com.asgdrones.drones.services.LoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class LoginController {
-@RequestMapping(value = "login",method = RequestMethod.GET)
-    public ModelAndView login(Model model){
-    Login login = new Login();
-    model.addAttribute("login", login);
-    return new ModelAndView("login",model.asMap());
-}
+    private LoginRepoJPA loginRepoJPA;
+    private LoginService loginService;
+
+    @Autowired
+    LoginController(LoginRepoJPA LRepo, LoginService LService) {
+        loginRepoJPA = LRepo;
+        loginService = LService;
+    }
+
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public ModelAndView getLogin(Model model) {
+        Login login = new Login();
+        model.addAttribute("login", login);
+        return new ModelAndView("login", model.asMap());
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public ModelAndView postLogin(@Valid Login login,
+                                  BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            System.out.println("Validation error" + bindingResult.getFieldErrors());
+        } else {
+            String access = loginService.checkLogin(login);
+            System.out.println("Form Received");
+            System.out.println("access: "+access);
+            System.out.println("username: "+login.getUsername());
+            System.out.println("password: "+login.getPassword());
+        }
+        model.addAttribute("login", login);
+        return new ModelAndView("landingPage", model.asMap());
+    }
 }
