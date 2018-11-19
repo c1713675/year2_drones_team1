@@ -1,4 +1,4 @@
-package com.asgdrones.drones.repositories.login.customer;
+package com.asgdrones.drones.repositories.login;
 
 import com.asgdrones.drones.domain.Login;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,8 +1,7 @@
 package com.asgdrones.drones.repositories;
 
 import com.asgdrones.drones.domain.Login;
-import com.asgdrones.drones.repositories.login.customer.LoginJPA;
-import com.asgdrones.drones.repositories.login.customer.LoginRepository;
+import com.asgdrones.drones.repositories.login.LoginJPA;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

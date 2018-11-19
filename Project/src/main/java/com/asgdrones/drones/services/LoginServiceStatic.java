@@ -1,7 +1,7 @@
 package com.asgdrones.drones.services;
 
 import com.asgdrones.drones.domain.Login;
-import com.asgdrones.drones.repositories.login.customer.LoginJPA;
+import com.asgdrones.drones.repositories.login.LoginJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
