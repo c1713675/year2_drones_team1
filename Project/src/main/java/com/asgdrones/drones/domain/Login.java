@@ -1,23 +1,30 @@
 package com.asgdrones.drones.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.*;
+
 
 import javax.persistence.*;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "login")
+@Entity
+@Table(name = "charity")
 public class Login {
     @Id
-    @Column(name = "LoginID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "Username")
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "username")
     private String username;
-    @Column(name = "Password")
+
+    @Column(name = "password")
     private String password;
+
     @Column(name = "Access")
     private String access;
 }

@@ -6,6 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+//<<<<<<< HEAD import java.util.List;
+//
+//public interface LoginService {
+//    Login findByLoginDetails(String un, String pw);
+//    void signup(Login signupInfo);
+//    boolean isLoginAdmin(String un);
+////    void signupAdmin(Login signupInfo);
+////    void signupInstructor(Login signupInfo);
+//=======
+//import com.asgdrones.drones.repositories.LoginRepoJPA;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.List;
 
 @Service
 public class LoginService implements LoginServiceInterface {
