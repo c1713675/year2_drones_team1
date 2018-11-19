@@ -24,16 +24,23 @@ public class LoginServiceStatic implements LoginService{
         loginJPA.save(signupInfo);
     }
 
-//    I may need to delete these, along with their repositories. I will see if I need to use them later on in the code
-//    The login JPA may be enough for all logins.
-//    I need to review this later in development.
     @Override
-    public void signupAdmin(Login signupInfo) {
-        loginJPA.save(signupInfo);
+    public boolean isLoginAdmin(String un) {
+        return loginJPA.isLoginAdmin(un);
     }
 
-    @Override
-    public void signupInstructor(Login signupInfo) {
-        loginJPA.save(signupInfo);
-    }
+//    I may need to delete these, along with their repositories. I will see if I need to use them later on in the code
+//    The LoginJPA may be enough for all logins.
+//    I need to review this later in development.
+//    @Override
+//    public void signupAdmin(Login signupInfo) {
+//        loginJPA.save(signupInfo);
+//    }
+//
+//    @Override
+//    public void signupInstructor(Login signupInfo) {
+//        loginJPA.save(signupInfo);
+//    }
+
+
 }
