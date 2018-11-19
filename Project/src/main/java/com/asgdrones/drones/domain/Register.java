@@ -17,26 +17,33 @@ public class Register {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "FirstNaame")
+    private String Fname;
 
-    @Column(name = "acronym")
-    private String acronym;
+    @Column(name = "LastName")
+    private String Lname;
 
-    @Column(name = "purpose")
-    private String description;
+    @Column(name = "Dob")
+    private String dob;
 
-    @Column(name = "logo_file_name")
-    private String logoPath;
+    @Column(name = "Email")
+    private String email;
 
-    @Column(name = "registration_id")
-    private String registrationNumber;
+    @Column(name = "PhoneNumber")
+    private String PhoneNumber;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "HouseOfFlying")
+    private Boolean hoursOfFlying;
 
+    @Column(name = "Disability")
+    private String disability;
+
+    @Column(name = "EnglishSpeakingLevel")
+    private String englishlevel;
+
+    @Column(name = "Insured")
+    private boolean insured;
 
 
     }
 
-}
