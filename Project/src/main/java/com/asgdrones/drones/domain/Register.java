@@ -17,11 +17,11 @@ public class Register {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "FirstNaame")
-    private String Fname;
+    @Column(name = "FirstName")
+    private String firstName;
 
     @Column(name = "LastName")
-    private String Lname;
+    private String lastName;
 
     @Column(name = "Dob")
     private String dob;
@@ -30,20 +30,26 @@ public class Register {
     private String email;
 
     @Column(name = "PhoneNumber")
-    private String PhoneNumber;
+    private String phoneNumber;
 
-    @Column(name = "HouseOfFlying")
+    @Column(name = "HoursOfFlying")
     private Boolean hoursOfFlying;
 
     @Column(name = "Disability")
     private String disability;
 
     @Column(name = "EnglishSpeakingLevel")
-    private String englishlevel;
+    private String englishLevel;
 
     @Column(name = "Insured")
-    private boolean insured;
+    private String insured;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "AddressID")
+    private Address address;
 
 
-    }
+
+
+}
 

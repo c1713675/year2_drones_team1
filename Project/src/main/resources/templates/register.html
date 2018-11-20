@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:http="http://www.w3.org/1999/xhtml">
-<html xmlns:th="http://www.thymelead.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,17 +8,23 @@
 <body>
 
 <form action="#" th:action="@{/register}" th:object= "${register}" method="post">
-    <p>First Name: <input type = "text" th:field="*{firstname}" /></p>
-    <p>Last Name: <input type = "text" th:field="*{lastname}" /></p>
+    <p>First Name: <input type = "text" th:field="*{firstName}" /></p>
+    <p>Last Name: <input type = "text" th:field="*{lastName}" /></p>
     <p>Date of Birth: <input type = "date" th:field="*{dob}" /></p>
-    <p>Address: <input type = "text" th:field="*{street}" /></p>
-    <p>Post Code: <input type = "text" th:field="*{postcode}"/></p>
+    <p>Street Address: <input type = "text" th:field="*{address.street}" /></p>
+    <p>House Number: <input type = "text" th:field="*{address.houseNumber}"/></p>
+    <p>House Name: <input type = "text" th:field="*{address.houseName}"/></p>
+    <p>City: <input type = "text" th:field="*{address.city}"/></p>
+    <p>Post Code: <input type = "text" th:field="*{address.postcode}"/></p>
     <p>Email : <input type = "email" th:field="*{email}"/></p>
-    <p>English Speaking Level: <input type = "text" th:field="*{englishlvl}" /></p>
-    <p>Prior hours of flying: <input type = "number" th:field="*{practisehours}" /></p>
-    <p>Preferred location for course: <input type = "checkbox" th:field="*{location}" /></p>
+    <p>English Speaking Level: <input type = "text" th:field="*{englishLevel}" /></p>
+    <p>Prior hours of flying: <input type = "number" th:field="*{hoursOfFlying}" /></p>
+    <!--<p>Preferred location for course: <input type = "checkbox" th:field="*{location}" /></p>-->
     <p>Drone insured: <input type = "text" th:field="*{insured}"/></p>
     <p>Disability: <input type = "text" th:field="*{disability}"/></p>
+    <button type = "submit" >Submit </button >
+
+
 
 
 </form>
