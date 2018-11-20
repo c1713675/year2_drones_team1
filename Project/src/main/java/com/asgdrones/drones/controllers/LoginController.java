@@ -3,6 +3,7 @@ package com.asgdrones.drones.controllers;
 import com.asgdrones.drones.domain.Login;
 import com.asgdrones.drones.repositories.LoginRepoJPA;
 import com.asgdrones.drones.services.LoginService;
+import com.asgdrones.drones.services.LoginServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,10 @@ import java.util.Optional;
 @Controller
 public class LoginController {
     private LoginRepoJPA loginRepoJPA;
-    private LoginService loginService;
+    private LoginServiceInterface loginService;
 
     @Autowired
-    LoginController(LoginRepoJPA LRepo, LoginService LService) {
+    LoginController(LoginRepoJPA LRepo, LoginServiceInterface LService) {
         loginRepoJPA = LRepo;
         loginService = LService;
     }
