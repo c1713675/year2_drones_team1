@@ -61,6 +61,9 @@ public class RegisterController {
         return new ModelAndView("AccountCreated", model.asMap());
     }
 
+
+    }
+
 }
 
 
