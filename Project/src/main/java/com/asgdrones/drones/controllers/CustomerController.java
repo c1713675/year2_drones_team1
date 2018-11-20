@@ -1,7 +1,9 @@
 package com.asgdrones.drones.controllers;
 
+import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jms.JmsProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomerController {
     private CustomerService customerService;
     private Cookie[] access;
-    private String page;
+    private Templates page;
     @Autowired
     CustomerController(CustomerService cService){
         customerService = cService;
@@ -26,10 +28,10 @@ public class CustomerController {
         access = request.getCookies();
         System.out.println(access[1].getName() +" " +access[1].getValue());
         if (access[1].getValue().equals("customer")){
-            page = "customerAccount";
+            page = Templates.CUSTOMER_ACCOUNT;
         }else {
-            page = "accessDenied";
+            page = Templates.ACCESS_DENIED;
         }
-        return new ModelAndView(page, model.asMap());
+        return new ModelAndView(page.toString(), model.asMap());
     }
 }

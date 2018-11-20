@@ -1,5 +1,6 @@
 package com.asgdrones.drones.controllers;
 
+import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class InstructorController {
     private Cookie[] access;
-    private String page;
+    private Templates page;
     private InstructorRepoJPA instructorRepoJPA;
 
     @Autowired
@@ -27,11 +28,11 @@ public class InstructorController {
         access = request.getCookies();
         System.out.println(access[1].getName() +" " +access[1].getValue());
         if (access[1].getValue().equals("instructor")){
-            page = "instructorAccount";
+            page = Templates.INSTRUCTOR_ACCOUNT;
         }else {
-            page = "accessDenied";
+            page = Templates.ACCESS_DENIED;
         }
-        return new ModelAndView(page, model.asMap());
+        return new ModelAndView(page.toString(), model.asMap());
     }
 
 }
