@@ -6,7 +6,7 @@ import com.asgdrones.drones.repositories.LoginRepoJPA;
 import com.asgdrones.drones.services.LoginService;
 import com.asgdrones.drones.services.LoginServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.trace.http.HttpTrace;
+//import org.springframework.boot.actuate.trace.http.HttpTrace;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
