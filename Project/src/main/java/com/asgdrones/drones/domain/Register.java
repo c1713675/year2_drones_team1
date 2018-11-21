@@ -2,6 +2,7 @@ package com.asgdrones.drones.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.apachecommons.CommonsLog;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -51,6 +52,15 @@ public class Register {
 
     @Column(name = "preferredgslocation")
     private int preferredLocation;
+
+    @Column(name = "Login_LoginID", nullable = true)
+    private int loginid;
+
+    @Column(name = "drone_DroneID", nullable = true)
+    private int droneid;
+
+    @Column(name = "course_courseID", nullable = true)
+    private int courseid;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn(name = "address_addressid")
