@@ -44,7 +44,13 @@ public class Register {
     private int englishLevel;
 
     @Column(name = "insured")
-    private String insured;
+    private int insured;
+
+    @Column(name = "paid")
+    private int paid;
+
+    @Column(name = "preferredgslocation")
+    private int preferredLocation;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn(name = "address_addressid")

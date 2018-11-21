@@ -52,9 +52,11 @@ public class RegisterController {
         model.addAttribute("hoursOfFlying", rregister.getHoursOfFlying());
         model.addAttribute("disability", rregister.getDisability());
         model.addAttribute("englishSpeakingLevel",rregister.getEnglishLevel());
+        model.addAttribute("paid",rregister.getPaid());
         model.addAttribute("insured", rregister.getInsured());
         model.addAttribute("id", rregister.getId());
         model.addAttribute("address",rregister.getAddress());
+        model.addAttribute("preferredLocation",rregister.getPreferredLocation());
 
 
         // call service to save charity

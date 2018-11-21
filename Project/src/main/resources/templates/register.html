@@ -11,6 +11,8 @@
     <p>First Name: <input type = "text" th:field="*{firstName}" /></p>
     <p>Last Name: <input type = "text" th:field="*{lastName}" /></p>
     <p>Date of Birth: <input type = "date" th:field="*{dob}" /></p>
+    <p>Phone Number: <input type = "number" th:field="*{phoneNumber}" /></p>
+    <p>Phone Number: <input type = "number" th:field="*{paid}" /></p>
     <p>Street Address: <input type = "text" th:field="*{address.street}" /></p>
     <p>House Number: <input type = "text" th:field="*{address.houseNumber}"/></p>
     <p>House Name: <input type = "text" th:field="*{address.houseName}"/></p>
@@ -19,8 +21,9 @@
     <p>Email : <input type = "email" th:field="*{email}"/></p>
     <p>English Speaking Level: <input type = "number" th:field="*{englishLevel}" /></p>
     <p>Prior hours of flying: <input type = "number" th:field="*{hoursOfFlying}" /></p>
+    <p>Preferred Location: <input type = "text" th:field="*{preferredLocation}" /></p>
     <!--<p>Preferred location for course: <input type = "checkbox" th:field="*{location}" /></p>-->
-    <p>Drone insured: <input type = "text" th:field="*{insured}"/></p>
+    <p>Drone insured: <input type = "number" th:field="*{insured}"/></p>
     <p>Disability: <input type = "text" th:field="*{disability}"/></p>
     <button type = "submit" >Submit </button >
 
