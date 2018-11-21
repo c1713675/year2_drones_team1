@@ -48,17 +48,20 @@ public class RegisterController {
         model.addAttribute("lastName", rregister.getLastName());
         model.addAttribute("dob", rregister.getDob());
         model.addAttribute("email", rregister.getEmail());
+        model.addAttribute("phoneNumber",rregister.getPhoneNumber());
         model.addAttribute("hoursOfFlying", rregister.getHoursOfFlying());
         model.addAttribute("disability", rregister.getDisability());
+        model.addAttribute("englishSpeakingLevel",rregister.getEnglishLevel());
         model.addAttribute("insured", rregister.getInsured());
-        model.addAttribute("address", rregister.getAddress());
+        model.addAttribute("id", rregister.getId());
+        model.addAttribute("address",rregister.getAddress());
 
 
         // call service to save charity
         // saving to db
         this.registerRepo.save(rregister);
 
-        return new ModelAndView("AccountCreated", model.asMap());
+        return new ModelAndView("404", model.asMap());
     }
 
 

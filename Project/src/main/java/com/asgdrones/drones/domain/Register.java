@@ -2,13 +2,13 @@ package com.asgdrones.drones.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.time.LocalDate;
 import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customers")
+@Table(name = "customer")
 public class Register {
 
     //entity creation to map to column fields
@@ -17,35 +17,35 @@ public class Register {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "FirstName")
+    @Column(name = "firstname")
     private String firstName;
 
-    @Column(name = "LastName")
+    @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "Dob")
-    private String dob;
+    @Column(name = "dob")
+    private LocalDate dob;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "PhoneNumber")
+    @Column(name = "phonenumber")
     private String phoneNumber;
 
-    @Column(name = "HoursOfFlying")
+    @Column(name = "hoursofflying")
     private int hoursOfFlying;
 
-    @Column(name = "Disability")
+    @Column(name = "disability")
     private String disability;
 
-    @Column(name = "EnglishSpeakingLevel")
-    private String englishLevel;
+    @Column(name = "englishspeakinglevel")
+    private int englishLevel;
 
-    @Column(name = "Insured")
+    @Column(name = "insured")
     private String insured;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "AddressID")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
+    @JoinColumn(name = "address_addressid")
     private Address address;
 
 
