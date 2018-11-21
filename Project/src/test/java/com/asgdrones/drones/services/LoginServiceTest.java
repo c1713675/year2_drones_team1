@@ -1,4 +1,4 @@
-package com.asgdrones.drones;
+package com.asgdrones.drones.services;
 
 import com.asgdrones.drones.domain.Login;
 import com.asgdrones.drones.repositories.LoginRepoJPA;
@@ -33,17 +33,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext
-//@DataJpaTest
-public class LoginTest {
+public class LoginServiceTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     LoginServiceInterface loginService;
-
-   /* @Autowired
-    private LoginRepoJPA loginRepoJPA;
-    @Autowired
-    private TestEntityManager entityManager;*/
 
     @Test
     public void adminLoginTest() throws Exception {
@@ -56,7 +50,7 @@ public class LoginTest {
         )
                 .andDo(print())
                 .andExpect(cookie().exists("Access"))
-                .andExpect(status().isOk())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(cookie().value("Access", "admin"));
     }
 
@@ -71,7 +65,7 @@ public class LoginTest {
         )
                 .andDo(print())
                 .andExpect(cookie().exists("Access"))
-                .andExpect(status().isOk())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(cookie().value("Access", "instructor"));
     }
 
@@ -86,7 +80,7 @@ public class LoginTest {
         )
                 .andDo(print())
                 .andExpect(cookie().exists("Access"))
-                .andExpect(status().isOk())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(cookie().value("Access", "customer"));
     }
 }
