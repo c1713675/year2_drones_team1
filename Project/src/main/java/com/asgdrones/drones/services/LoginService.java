@@ -47,7 +47,11 @@ public class LoginService implements LoginServiceInterface {
     public String getUsername(Login login) {
         List<Login> loginList = loginRepoJPA.findByUsernameAndPassword(login.getUsername(),
                 login.getPassword());
-        String username = loginList.get(0).getUsername();
-        return username;
+        if (loginList.isEmpty()) {
+            return null;
+        } else {
+            String username = loginList.get(0).getUsername();
+            return username;
+        }
     }
 }

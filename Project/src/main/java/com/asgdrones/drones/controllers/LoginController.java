@@ -51,8 +51,13 @@ public class LoginController {
         } else {
             String access = loginService.checkLogin(login);
             response.addCookie(new Cookie("Access", access));
-            page = access + "/" + loginService.getUsername(login);
-            System.out.println(page);
+            if(access.equals("none")){
+                page = "login";
+                System.out.println(page);
+            }else {
+                page = access + "/" + loginService.getUsername(login);
+                System.out.println(page);
+            }
         }
 
         model.addAttribute("login", login);
