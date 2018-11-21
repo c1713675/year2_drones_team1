@@ -2,6 +2,8 @@ package com.asgdrones.drones.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
 import java.time.LocalDate;
 import javax.persistence.*;
 @Data
@@ -24,7 +26,7 @@ public class Register {
     private String lastName;
 
     @Column(name = "dob")
-    private LocalDate dob;
+    private Date dob;
 
     @Column(name = "email")
     private String email;
