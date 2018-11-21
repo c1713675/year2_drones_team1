@@ -39,7 +39,7 @@ public class RegisterController {
     public ModelAndView addRegisterForm(@Valid Register rregister, BindingResult bindingResult, Model model) {
         //binding result stops it from being null
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
         }
         System.out.println("Form Received");
@@ -51,7 +51,7 @@ public class RegisterController {
         model.addAttribute("hoursOfFlying", rregister.getHoursOfFlying());
         model.addAttribute("disability", rregister.getDisability());
         model.addAttribute("insured", rregister.getInsured());
-        model.addAttribute("address",rregister.getAddress());
+        model.addAttribute("address", rregister.getAddress());
 
 
         // call service to save charity
@@ -62,9 +62,9 @@ public class RegisterController {
     }
 
 
-    }
-
 }
+
+
 
 
 

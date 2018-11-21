@@ -33,7 +33,7 @@ public class Register {
     private String phoneNumber;
 
     @Column(name = "HoursOfFlying")
-    private Boolean hoursOfFlying;
+    private int hoursOfFlying;
 
     @Column(name = "Disability")
     private String disability;

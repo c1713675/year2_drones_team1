@@ -17,21 +17,22 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "addressID")
     private Long id;
 
-    @Column(name= "PostCode")
+    @Column(name= "postcode")
     private String postcode;
 
-    @Column(name = "City")
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "Street")
+    @Column(name = "street")
     private String street;
 
-    @Column(name ="HouseNumber")
+    @Column(name ="housenumber")
     private int  houseNumber;
 
-    @Column(name = "HouseName")
+    @Column(name = "housename")
     private String houseName;
 
 
