@@ -28,8 +28,7 @@ public class InstructorController {
                                    HttpServletRequest request,
                                    @PathVariable("instructorUsername") String instructorUsername){
         access = request.getCookies();
-        System.out.println(access[1].getName() +" " +access[1].getValue());
-        if (access[1].getValue().equals("instructor")){
+        if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;
         }else {
             page = Templates.ACCESS_DENIED;

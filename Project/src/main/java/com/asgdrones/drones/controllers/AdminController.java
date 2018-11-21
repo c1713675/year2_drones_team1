@@ -21,7 +21,7 @@ public class AdminController {
                                      HttpServletRequest request,
                                      @PathVariable("adminUsername") String adminUsername) {
         access = request.getCookies();
-        if (access[1].getValue().equals("admin")) {
+        if (access[0].getValue().equals("admin")) {
             page = Templates.ADMIN_ACCOUNT;
         } else {
             page = Templates.ACCESS_DENIED;

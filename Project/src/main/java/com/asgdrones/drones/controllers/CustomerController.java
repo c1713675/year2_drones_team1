@@ -28,8 +28,7 @@ public class CustomerController {
                                      HttpServletRequest request,
                                      @PathVariable("customerUsername") String customerUsername){
         access = request.getCookies();
-        System.out.println(access[1].getName() +" " +access[1].getValue());
-        if (access[1].getValue().equals("customer")){
+        if (access[0].getValue().equals("customer")){
             page = Templates.CUSTOMER_ACCOUNT;
         }else {
             page = Templates.ACCESS_DENIED;
