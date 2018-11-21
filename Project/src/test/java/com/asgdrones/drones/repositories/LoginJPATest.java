@@ -33,11 +33,33 @@ public class LoginJPATest {
     private LoginRepoJPA repository;
 
     @Test
-    public void loginTest() throws Exception{
+    public void loginAdminTest() throws Exception{
         this.entityManager.merge(new Login(1L,"John","password","admin"));
         List<Login> login = this.repository.findByUsernameAndPassword("John","password");
         assertThat(login.get(0).getUsername()).isEqualTo("John");
         assertThat(login.get(0).getPassword()).isEqualTo("password");
         assertThat(login.get(0).getAccess()).isEqualTo("admin");
+    }
+    @Test
+    public void loginInstructorTest() throws Exception{
+        this.entityManager.merge(new Login(1L,"Jim","password","instructor"));
+        List<Login> login = this.repository.findByUsernameAndPassword("Jim","password");
+        assertThat(login.get(0).getUsername()).isEqualTo("Jim");
+        assertThat(login.get(0).getPassword()).isEqualTo("password");
+        assertThat(login.get(0).getAccess()).isEqualTo("instructor");
+    }
+    @Test
+    public void loginCustomerTest() throws Exception{
+        this.entityManager.merge(new Login(1L,"Jan","password","customer"));
+        List<Login> login = this.repository.findByUsernameAndPassword("Jan","password");
+        assertThat(login.get(0).getUsername()).isEqualTo("Jan");
+        assertThat(login.get(0).getPassword()).isEqualTo("password");
+        assertThat(login.get(0).getAccess()).isEqualTo("customer");
+    }
+    @Test
+    public void loginDeniedTest() throws Exception{
+        this.entityManager.merge(new Login(1L,"Jess","password","customemr"));
+        List<Login> login = this.repository.findByUsernameAndPassword("Jan","password");
+        assertThat(login).isEmpty();
     }
 }
