@@ -46,10 +46,6 @@ public class LoginController {
             System.out.println("Validation error" + bindingResult.getFieldErrors());
         } else {
             String access = loginService.checkLogin(login);
-            System.out.println("Form Received");
-            System.out.println("access: "+access);
-            System.out.println("username: "+login.getUsername());
-            System.out.println("password: "+login.getPassword());
             response.addCookie(new Cookie("Access",access));
         }
         model.addAttribute("login", login);
