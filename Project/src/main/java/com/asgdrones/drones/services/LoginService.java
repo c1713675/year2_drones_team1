@@ -42,4 +42,12 @@ public class LoginService implements LoginServiceInterface {
             return permission;
         }
     }
+
+    @Override
+    public String getUsername(Login login) {
+        List<Login> loginList = loginRepoJPA.findByUsernameAndPassword(login.getUsername(),
+                login.getPassword());
+        String username = loginList.get(0).getUsername();
+        return username;
+    }
 }

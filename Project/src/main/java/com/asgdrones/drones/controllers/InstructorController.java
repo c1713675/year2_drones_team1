@@ -5,6 +5,7 @@ import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,9 +23,10 @@ public class InstructorController {
     InstructorController(InstructorRepoJPA iRepo){
       instructorRepoJPA = iRepo;
     }
-    @RequestMapping(value = "instructor", method = RequestMethod.GET)
+    @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
-                                   HttpServletRequest request){
+                                   HttpServletRequest request,
+                                   @PathVariable("instructorUsername") String instructorUsername){
         access = request.getCookies();
         System.out.println(access[1].getName() +" " +access[1].getValue());
         if (access[1].getValue().equals("instructor")){

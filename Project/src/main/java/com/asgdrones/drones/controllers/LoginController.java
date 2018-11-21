@@ -1,6 +1,7 @@
 package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Login;
+import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.LoginRepoJPA;
 import com.asgdrones.drones.services.LoginService;
 import com.asgdrones.drones.services.LoginServiceInterface;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +25,7 @@ import java.util.Optional;
 public class LoginController {
     private LoginRepoJPA loginRepoJPA;
     private LoginServiceInterface loginService;
+    private String page;
 
     @Autowired
     LoginController(LoginRepoJPA LRepo, LoginServiceInterface LService) {
@@ -39,7 +42,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView postLogin(@Valid Login login,
+    public RedirectView postLogin(@Valid Login login,
                                   BindingResult bindingResult,
                                   HttpServletResponse response,
                                   Model model) {
@@ -47,9 +50,12 @@ public class LoginController {
             System.out.println("Validation error" + bindingResult.getFieldErrors());
         } else {
             String access = loginService.checkLogin(login);
-            response.addCookie(new Cookie("Access",access));
+            response.addCookie(new Cookie("Access", access));
+            page = access + "/" + loginService.getUsername(login);
+            System.out.println(page);
         }
+
         model.addAttribute("login", login);
-        return new ModelAndView("landingPage", model.asMap());
+        return new RedirectView(page);
     }
 }

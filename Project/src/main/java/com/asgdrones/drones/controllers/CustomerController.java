@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jms.JmsProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,9 +23,10 @@ public class CustomerController {
     CustomerController(CustomerService cService){
         customerService = cService;
     }
-    @RequestMapping(value = "customer", method = RequestMethod.GET)
+    @RequestMapping(value = "customer/{customerUsername}", method = RequestMethod.GET)
     public ModelAndView customerPage(Model model,
-                                     HttpServletRequest request){
+                                     HttpServletRequest request,
+                                     @PathVariable("customerUsername") String customerUsername){
         access = request.getCookies();
         System.out.println(access[1].getName() +" " +access[1].getValue());
         if (access[1].getValue().equals("customer")){
