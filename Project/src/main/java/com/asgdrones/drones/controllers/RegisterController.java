@@ -54,10 +54,9 @@ public class RegisterController {
         model.addAttribute("englishSpeakingLevel",rregister.getEnglishLevel());
         model.addAttribute("paid",rregister.getPaid());
         model.addAttribute("insured", rregister.getInsured());
-        model.addAttribute("id", rregister.getId());
+//        model.addAttribute("id", rregister.getId());
         model.addAttribute("address",rregister.getAddress());
         model.addAttribute("preferredLocation",rregister.getPreferredLocation());
-
 
         // call service to save charity
         // saving to db

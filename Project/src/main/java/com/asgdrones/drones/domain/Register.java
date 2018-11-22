@@ -7,6 +7,8 @@ import lombok.extern.apachecommons.CommonsLog;
 import java.sql.Date;
 import java.time.LocalDate;
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,7 +18,7 @@ public class Register {
 
     //entity creation to map to column fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
@@ -50,18 +52,25 @@ public class Register {
     @Column(name = "paid")
     private int paid;
 
-    @Column(name = "preferredgslocation")
-    private int preferredLocation;
+    @Column(name = "preferredGSLocation")
+    private String preferredLocation;
 
-    @Column(name = "Login_LoginID", nullable = true)
-    private int loginid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @OneToOne
+    @JoinColumn(name = "drone_droneid")
+    private Drone droneID;
 
-    @Column(name = "drone_DroneID", nullable = true)
-    private int droneid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @OneToOne
+    @JoinColumn(name = "course_courseid")
+    private Course courseID;
 
-    @Column(name = "course_courseID", nullable = true)
-    private int courseid;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_loginid")
+    private Login LoginID;
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL )
     @JoinColumn(name = "address_addressid")
     private Address address;
