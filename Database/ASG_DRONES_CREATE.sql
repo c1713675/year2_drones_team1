@@ -274,6 +274,21 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `asg`.`feedback`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `asg`.`Feedback` (
+  `FeedbackID` VARCHAR(45) NOT NULL,
+  `CandidateReferenceID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `RatingExperience` VARCHAR(45) NOT NULL,
+  `RatingInstructor` VARCHAR(45) NOT NULL,
+  `Additional_Info` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`FeedbackID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
