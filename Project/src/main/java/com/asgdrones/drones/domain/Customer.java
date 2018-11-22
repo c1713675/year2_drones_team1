@@ -3,6 +3,8 @@ package com.asgdrones.drones.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,56 +20,61 @@ public class Customer {
     @Column(name = "CandidateReferenceID")
     private Long id;
 
-    @Column(name = "FirstName")
+    @Column(name = "firstname")
     private String firstName;
 
-    @Column(name = "LastName")
+    @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "Dob")
-    private Date dob;
+    @Column(name = "dob")
+    private java.sql.Date dob;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "PhoneNumber")
+    @Column(name = "phonenumber")
     private String phoneNumber;
 
-    @Column(name = "Paid")
+    @Column(name = "paid")
     private Boolean paid;
 
-    @Column(name = "HoursOfFlying")
+    @Column(name = "hoursofflying")
     private Float hoursOfFlying;
 
-    @Column(name = "Disability")
-    private Boolean disability;
+    @Column(name = "disability")
+    private String disability;
 
-    @Column(name = "EnglishSpeakingLevel")
+    @Column(name = "englishspeakinglevel")
     private Float englishSpeakingLevel;
 
-    @Column(name = "PreferredGSLocation")
+    @Column(name = "preferredGSLocation")
     private String preferredGSLocation;
 
-    @Column(name = "Insured")
+    @Column(name = "insured")
     private Boolean insured;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_LoginID")
+    @JoinColumn(name = "login_loginid")
     private Login login;
 
 
+
+
 //      ******* add these later *********
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "drone_DroneID")
-//    private Drone drone;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_AddressID")
-//    private Address address;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "course_CourseID")
-//    private Course course;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "drone_droneid")
+    private Drone drone;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_addressid")
+    private Address address;
+
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_CourseID")
+    private Course course;
 
 
 
