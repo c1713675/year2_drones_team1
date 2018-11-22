@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -53,6 +54,7 @@ public class Customer {
     @Column(name = "insured")
     private Boolean insured;
 
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "login_loginid")
     private Login login;
@@ -62,19 +64,19 @@ public class Customer {
 
 //      ******* add these later *********
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "drone_droneid")
-    private Drone drone;
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "drone_droneid")
+//    private Drone drone;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_addressid")
     private Address address;
 
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_CourseID")
-    private Course course;
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "course_CourseID")
+//    private Course course;
 
 
 

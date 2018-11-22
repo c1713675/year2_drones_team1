@@ -59,9 +59,9 @@ public class RegisterController {
         model.addAttribute("id", rregister.getId());
 //        model.addAttribute("address",rregister.get());
         model.addAttribute("preferredLocation",rregister.getPreferredGSLocation());
-        model.addAttribute("course",rregister.getCourse());
-        model.addAttribute("address",rregister.getAddress());
-        model.addAttribute("drone",rregister.getDrone());
+//        model.addAttribute("course",rregister.getCourse());
+//        model.addAttribute("address",rregister.getAddress());
+//        model.addAttribute("drone",rregister.getDrone());
 
         // call service to save charity
         // saving to db
