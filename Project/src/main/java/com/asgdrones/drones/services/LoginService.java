@@ -54,4 +54,16 @@ public class LoginService implements LoginServiceInterface {
             return username;
         }
     }
+
+    @Override
+    public Long getUserID(Login login) {
+        List<Login> loginList = loginRepoJPA.findByUsernameAndPassword(login.getUsername(),
+                login.getPassword());
+        if (loginList.isEmpty()) {
+            return null;
+        } else {
+            Long userID = loginList.get(0).getId();
+            return userID;
+        }
+    }
 }

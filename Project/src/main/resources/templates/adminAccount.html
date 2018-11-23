@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>Admin account</h1>
+<h2>Name</h2>
+<span th:text="${AdminName}"></span> <br>
+<h2>Address</h2>
+<span th:text="${houseNumber}"></span>
+<span th:text="${houseName}"></span>
+<span th:text="${street}"></span> <br>
+<span th:text="${postcode}"></span> <br>
+<span th:text="${city}"></span> <br>
 </body>
 </html>

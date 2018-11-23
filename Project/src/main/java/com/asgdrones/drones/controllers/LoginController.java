@@ -55,7 +55,7 @@ public class LoginController {
                 page = "login";
                 System.out.println(page);
             }else {
-                page = access + "/" + loginService.getUsername(login);
+                page = access + "/" + loginService.getUserID(login);
                 System.out.println(page);
             }
         }
