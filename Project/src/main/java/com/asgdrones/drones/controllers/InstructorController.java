@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class InstructorController {
@@ -23,16 +24,23 @@ public class InstructorController {
     InstructorController(InstructorRepoJPA iRepo){
       instructorRepoJPA = iRepo;
     }
-    @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
+    @RequestMapping(value = "instructor/{instructorID}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
                                    HttpServletRequest request,
-                                   @PathVariable("instructorUsername") String instructorUsername){
+                                   @PathVariable("instructorID") Long instructorID){
         access = request.getCookies();
+//        todo
+//        Currently having an issue with the ID being retrieved.
+//        This issue is being caused by the findByUsername method returning a list of longs as opposed to one Long.
+//        I need to change this so only one Long is returned.
+//        List<Long> instructorID = instructorRepoJPA.findByUsername(instructorName);
+        List<String> addresses = instructorRepoJPA.getInstructorAddresses(instructorID);
         if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;
         }else {
             page = Templates.ACCESS_DENIED;
         }
+        model.addAttribute("addresses", addresses);
         return new ModelAndView(page.toString(), model.asMap());
     }
 
