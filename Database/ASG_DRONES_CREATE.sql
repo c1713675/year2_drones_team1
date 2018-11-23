@@ -19,8 +19,6 @@ USE `asg` ;
 
 -- -----------------------------------------------------
 -- Table `asg`.`address`
-<<<<<<< HEAD
-=======
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `asg`.`address` ;
 
@@ -39,7 +37,6 @@ DEFAULT CHARACTER SET = latin1;
 
 -- -----------------------------------------------------
 -- Table `asg`.`login`
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `asg`.`address` (
   `AddressID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -73,11 +70,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`administrator`
 -- -----------------------------------------------------
-<<<<<<< HEAD
-=======
 DROP TABLE IF EXISTS `asg`.`administrator` ;
 
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
   `AdminID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -148,8 +142,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`course` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
-<<<<<<< HEAD
-=======
+
 
 
 -- -----------------------------------------------------
@@ -164,7 +157,6 @@ CREATE TABLE IF NOT EXISTS `asg`.`drone` (
   PRIMARY KEY (`DroneID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 
 
 -- -----------------------------------------------------
@@ -251,11 +243,9 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`results`
 -- -----------------------------------------------------
-<<<<<<< HEAD
-=======
+
 DROP TABLE IF EXISTS `asg`.`results` ;
 
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 CREATE TABLE IF NOT EXISTS `asg`.`results` (
   `ResultID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Mark` INT(11) NOT NULL,

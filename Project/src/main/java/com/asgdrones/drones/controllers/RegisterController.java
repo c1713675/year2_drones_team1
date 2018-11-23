@@ -2,6 +2,7 @@ package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Address;
 import com.asgdrones.drones.domain.Customer;
+import com.asgdrones.drones.domain.Login;
 import com.asgdrones.drones.repositories.CustomerRepo;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class RegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView addRegister(Model model) {
         Customer customer = new Customer();
+        Login login = new Login();
         model.addAttribute("register", customer);
         return new ModelAndView("register", model.asMap());
     }
@@ -57,12 +59,8 @@ public class RegisterController {
         model.addAttribute("paid",rregister.getPaid());
         model.addAttribute("insured", rregister.getInsured());
         model.addAttribute("id", rregister.getId());
-//        model.addAttribute("address",rregister.get());
         model.addAttribute("preferredLocation",rregister.getPreferredGSLocation());
-//        model.addAttribute("course",rregister.getCourse());
-//        model.addAttribute("address",rregister.getAddress());
-//        model.addAttribute("drone",rregister.getDrone());
-
+        model.addAttribute("login",rregister.getLogin());
         // call service to save charity
         // saving to db
         customerRepoJPA.save(rregister);

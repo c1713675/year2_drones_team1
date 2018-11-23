@@ -14,13 +14,12 @@ import javax.persistence.*;
 public class Drone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DroneID")
+    @Column(name = "droneid")
     private Long id;
 
-
-    @Column(name = "Manufacturer")
+    @Column(name = "manufacturer")
     private String manufacturer;
 
-    @Column(name = "Model")
+    @Column(name = "model")
     private String model;
 }

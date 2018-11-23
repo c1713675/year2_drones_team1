@@ -8,6 +8,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -18,7 +19,7 @@ import java.util.Date;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CandidateReferenceID")
+    @Column(name = "CandidateReferenceID", nullable = false)
     private Long id;
 
     @Column(name = "firstname")
@@ -28,7 +29,7 @@ public class Customer {
     private String lastName;
 
     @Column(name = "dob")
-    private java.sql.Date dob;
+    private LocalDate Dob;
 
     @Column(name = "email")
     private String email;
@@ -64,9 +65,9 @@ public class Customer {
 
 //      ******* add these later *********
 
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "drone_droneid")
-//    private Drone drone;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "drone_droneid")
+    private Drone drone;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_addressid")
@@ -74,9 +75,9 @@ public class Customer {
 
 
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "course_CourseID")
-//    private Course course;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_courseid")
+    private Course course;
 
 
 

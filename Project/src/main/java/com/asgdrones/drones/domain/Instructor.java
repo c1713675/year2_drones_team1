@@ -14,24 +14,24 @@ import javax.persistence.*;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "InstructorID")
+    @Column(name = "instructorid")
     private Long id;
 
-    @Column(name = "FirstName")
+    @Column(name = "firstname")
     private String firstName;
 
-    @Column(name = "LastName")
+    @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "PhoneNumber")
+    @Column(name = "phonenumber")
     private Integer phoneNumber;
 
     @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_LoginID")
+    @JoinColumn(name = "login_loginID")
     private Login login;
 
 //    ******** add this later ***********
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_Address")
+    @JoinColumn(name = "address_address")
     private Address address;
 }

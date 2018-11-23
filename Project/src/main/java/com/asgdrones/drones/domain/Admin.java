@@ -14,17 +14,17 @@ import javax.persistence.*;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "AdminID")
+    @Column(name = "adminid")
     private Long id;
 
-    @Column(name = "FirstName")
+    @Column(name = "firstname")
     private String firstName;
 
-    @Column (name = "LastName")
+    @Column (name = "lastname")
     private String lastName;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_LoginID")
+    @JoinColumn(name = "login_loginid")
     private Login login;
 
 //    ***** add this later *****
