@@ -16,7 +16,7 @@ public class InstructorService implements InstructorServiceInterface {
     }
 
     @Override
-    public List<String> getInstructorAddresses(Long loginID) {
+    public List<String> getInstructorAddresses(Integer loginID) {
         return instructorRepoJPA.getInstructorAddresses(loginID);
     }
 }

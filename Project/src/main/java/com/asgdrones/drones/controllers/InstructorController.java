@@ -24,16 +24,14 @@ public class InstructorController {
     InstructorController(InstructorRepoJPA iRepo){
       instructorRepoJPA = iRepo;
     }
-    @RequestMapping(value = "instructor/{instructorID}", method = RequestMethod.GET)
+    @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
                                    HttpServletRequest request,
-                                   @PathVariable("instructorID") Long instructorID){
+                                   @PathVariable("instructorUsername") String instructorUsername){
         access = request.getCookies();
 //        todo
-//        Currently having an issue with the ID being retrieved.
-//        This issue is being caused by the findByUsername method returning a list of longs as opposed to one Long.
-//        I need to change this so only one Long is returned.
-//        List<Long> instructorID = instructorRepoJPA.findByUsername(instructorName);
+        List<Integer> instructorIDList = instructorRepoJPA.findByUsername(instructorUsername);
+        Integer instructorID = instructorIDList.get(0);
         List<String> addresses = instructorRepoJPA.getInstructorAddresses(instructorID);
         if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;

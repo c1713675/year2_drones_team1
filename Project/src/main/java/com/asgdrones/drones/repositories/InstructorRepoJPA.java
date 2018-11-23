@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface InstructorRepoJPA extends JpaRepository<Instructor,Long>,InstructorRepo {
     @Query(value = "SELECT a.City FROM instructor i JOIN address a ON i.address_AddressID = a.AddressID WHERE i.login_LoginID = :loginID", nativeQuery = true)
-    List<String> getInstructorAddresses(@Param("loginID") Long loginID);
-//
-//    @Query(value = "SELECT loginID FROM Login WHERE Username = :un")
-//    List<String> findByUsername(@Param("un") String un);
+    List<String> getInstructorAddresses(@Param("loginID") Integer loginID);
+
+    @Query(value = "SELECT loginID FROM Login WHERE Username = :un")
+    List<Integer> findByUsername(@Param("un") String un);
 }
