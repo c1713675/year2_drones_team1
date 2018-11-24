@@ -23,8 +23,9 @@ public class InstructorController {
     private InstructorService instructorService;
 
     @Autowired
-    InstructorController(InstructorRepoJPA iRepo){
+    InstructorController(InstructorRepoJPA iRepo, InstructorService iService){
       instructorRepoJPA = iRepo;
+      instructorService =  iService;
     }
     @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,

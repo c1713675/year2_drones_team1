@@ -12,9 +12,9 @@ import java.util.List;
 //The schema will need changing to solve this issue.
 @Repository
 public interface InstructorRepoJPA extends JpaRepository<Instructor,Long>,InstructorRepo {
-    @Query(value = "SELECT a.City FROM instructor i JOIN address a ON i.address_AddressID = a.AddressID WHERE i.login_LoginID = :loginID", nativeQuery = true)
+    @Query(value = "SELECT c.CourseLocation FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID WHERE i.login_LoginID = :loginID", nativeQuery = true)
     List<String> getInstructorAddresses(@Param("loginID") Integer loginID);
 
-    @Query(value = "SELECT loginID FROM Login WHERE Username = :un")
+    @Query(value = "SELECT loginID FROM Login WHERE Username = :un", nativeQuery = true)
     List<Integer> findByUsername(@Param("un") String un);
 }

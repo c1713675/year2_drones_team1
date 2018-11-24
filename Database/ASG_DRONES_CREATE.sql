@@ -10,6 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema asg
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `asg` ;
 
 -- -----------------------------------------------------
 -- Schema asg
@@ -19,8 +20,6 @@ USE `asg` ;
 
 -- -----------------------------------------------------
 -- Table `asg`.`address`
-<<<<<<< HEAD
-=======
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `asg`.`address` ;
 
@@ -39,24 +38,9 @@ DEFAULT CHARACTER SET = latin1;
 
 -- -----------------------------------------------------
 -- Table `asg`.`login`
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `asg`.`address` (
-  `AddressID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Postcode` VARCHAR(7) NOT NULL,
-  `City` VARCHAR(80) NULL DEFAULT NULL,
-  `Street` VARCHAR(150) NOT NULL,
-  `HouseNumber` INT(11) NULL DEFAULT NULL,
-  `HouseName` VARCHAR(100) NULL DEFAULT NULL,
-  PRIMARY KEY (`AddressID`),
-  UNIQUE INDEX `AddressID_UNIQUE` (`AddressID` ASC))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
+DROP TABLE IF EXISTS `asg`.`login` ;
 
-
--- -----------------------------------------------------
--- Table `asg`.`login`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `asg`.`login` (
   `LoginID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(20) NOT NULL,
@@ -73,11 +57,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`administrator`
 -- -----------------------------------------------------
-<<<<<<< HEAD
-=======
 DROP TABLE IF EXISTS `asg`.`administrator` ;
 
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
   `AdminID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -105,6 +86,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`instructor`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`instructor` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
   `InstructorID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -133,10 +116,14 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`course`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`course` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`course` (
-  `CourseID` INT(10) UNSIGNED NOT NULL,
+  `CourseID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `CourseName` VARCHAR(45) NOT NULL,
   `CourseType` VARCHAR(45) NOT NULL,
+  `CourseLocation` VARCHAR(45) NOT NULL,
+  `CourseDate` DATE NULL,
   `Instructor_InstructorID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`CourseID`),
   UNIQUE INDEX `CourseID_UNIQUE` (`CourseID` ASC),
@@ -148,8 +135,6 @@ CREATE TABLE IF NOT EXISTS `asg`.`course` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
-<<<<<<< HEAD
-=======
 
 
 -- -----------------------------------------------------
@@ -164,24 +149,13 @@ CREATE TABLE IF NOT EXISTS `asg`.`drone` (
   PRIMARY KEY (`DroneID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
-
-
--- -----------------------------------------------------
--- Table `asg`.`drone`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `asg`.`drone` (
-  `DroneID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Manufacturer` VARCHAR(45) NOT NULL,
-  `Model` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`DroneID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
 -- Table `asg`.`customer`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`customer` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `CandidateReferenceID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -233,6 +207,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`qualification`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`qualification` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`qualification` (
   `QualificationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `QualificationName` VARCHAR(45) NOT NULL,
@@ -251,11 +227,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`results`
 -- -----------------------------------------------------
-<<<<<<< HEAD
-=======
 DROP TABLE IF EXISTS `asg`.`results` ;
 
->>>>>>> 8ba09c380ae5c3c2cc2803dea0efa1676e099103
 CREATE TABLE IF NOT EXISTS `asg`.`results` (
   `ResultID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Mark` INT(11) NOT NULL,
@@ -278,4 +251,10 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-SELECT * FROM address;
+
+INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'admin', '123', 'admin');
+INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'ins', '123', 'instructor');
+INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'custom', '123', 'customer');
+INSERT INTO address (AddressID, Postcode, City, Street, HouseNumber, HouseName) VALUES (null, 'CF123CD', 'Cardiff', 'Abc Street', 1, 'House One');
+INSERT INTO instructor (InstructorID, FirstName, LastName, PhoneNumber, address_AddressID, login_LoginID) VALUES (null, 'Ins', 'Test', 01234567890, 1, 4);
+INSERT INTO course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_InstructorID) VALUES (null, 'Course A', 'Ground', 'Cardiff', '2018-12-12', 1);
