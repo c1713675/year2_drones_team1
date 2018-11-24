@@ -1,18 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet"  th:href="@{/css/admin.css}">
+    <!--<meta http-equiv="Content-Type"-->
+          <!--content="text/html; charset=UTF-8"/>-->
+    <title>Admin</title>
 </head>
 <body>
 <h1>Admin account</h1>
-<h2>Name</h2>
-<span th:text="${AdminName}"></span> <br>
-<h2>Address</h2>
-<span th:text="${houseNumber}"></span>
-<span th:text="${houseName}"></span>
-<span th:text="${street}"></span> <br>
-<span th:text="${postcode}"></span> <br>
-<span th:text="${city}"></span> <br>
+<div id="welcome">
+    <H2><span th:text="Welcome+' '+${AdminName}"></span></H2>
+</div>
+<div id="address">
+    <h2>Address</h2>
+    <span th:text="${houseNumber}">house number</span>
+    <span th:text="${houseName}">house name</span>
+    <span th:text="${street}">street</span> <br>
+    <span th:text="${postcode}">post code</span> <br>
+    <span th:text="${city}">city</span> <br>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Email</th>
+        <th>Phone number</th>
+        <th>Subscription Paid?</th>
+        <th>Hours of Flying</th>
+        <th>Has Disability?</th>
+        <th>English Speaking Level</th>
+        <th>Preferred GS Location</th>
+        <th>Insured</th>
+        <th>Access</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer: ${customers}">
+        <td><span th:text="${customer.firstName} +' '+ ${customer.lastName}">Customer Name</span></td>
+        <td><span th:text="${customer.dob}"> </span></td>
+        <td><span th:text="${customer.email}"></span></td>
+        <td><span th:text="${customer.phoneNumber}"></span></td>
+        <td><span th:text="${customer.paid}"></span></td>
+        <td><span th:text="${customer.hoursOfFlying}"></span></td>
+        <td><span th:text="${customer.disability}"></span></td>
+        <td><span th:text="${customer.englishSpeakingLevel}"></span></td>
+        <td><span th:text="${customer.preferredGSLocation}"></span></td>
+        <td><span th:text="${customer.insured}"></span></td>
+        <td><span th:text="${customer.login.access}"></span></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Address;
 import com.asgdrones.drones.domain.Admin;
+import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.AdminRepoJPA;
 import com.asgdrones.drones.services.AdminService;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -43,13 +45,14 @@ public class AdminController {
             String city = adminService.GetAdminCity(loginID);
             String street = adminService.GetAdminStreet(loginID);
             String houseNumber = adminService.GetAdminHouseNumber(loginID);
-//            String houseName = adminService.GetAdminHouseName(loginID);
+            List<Customer> customerList = adminService.getCustomers();
+            System.out.println(Arrays.deepToString(new List[]{customerList}));
             model.addAttribute("AdminName",name);
             model.addAttribute("postcode",postCode);
             model.addAttribute("city",city);
             model.addAttribute("street",street);
             model.addAttribute("houseNumber",houseNumber);
-//            model.addAttribute("houseName",houseName);
+            model.addAttribute("customers",customerList);
         } else {
             page = Templates.ACCESS_DENIED;
         }

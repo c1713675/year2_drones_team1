@@ -2,7 +2,9 @@ package com.asgdrones.drones.services;
 
 import com.asgdrones.drones.domain.Address;
 import com.asgdrones.drones.domain.Admin;
+import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.repositories.AdminRepoJPA;
+import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +14,24 @@ import java.util.Optional;
 @Service
 public class AdminService implements AdminServiceInterface {
     private AdminRepoJPA adminRepoJPA;
+    private CustomerRepoJPA customerRepoJPA;
 
     @Autowired
-    AdminService(AdminRepoJPA aRepo){
+    AdminService(AdminRepoJPA aRepo, CustomerRepoJPA cRepo){
         adminRepoJPA = aRepo;
+        customerRepoJPA = cRepo;
     }
 
     @Override
     public Admin getAdmin(Long loginID) {
         Admin admin = adminRepoJPA.findAdminByLogin_Id(loginID);
         return admin;
+    }
+
+    @Override
+    public List<Customer> getCustomers() {
+        List<Customer> customerList = customerRepoJPA.findAll();
+        return customerList;
     }
 
     @Override
