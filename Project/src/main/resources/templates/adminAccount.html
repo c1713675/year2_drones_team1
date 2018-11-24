@@ -2,14 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet"  th:href="@{/css/admin.css}">
-    <!--<meta http-equiv="Content-Type"-->
-          <!--content="text/html; charset=UTF-8"/>-->
     <title>Admin</title>
 </head>
 <body>
 <h1>Admin account</h1>
 <div id="welcome">
     <H2><span th:text="Welcome+' '+${AdminName}"></span></H2>
+</div>
+<div id="search">
+    <h2>Search</h2>
+    <form action="/admin_search" method="post" >
+        <input type="text"/>
+        <input type="submit" value="submit"/>
+    </form>
 </div>
 <div id="address">
     <h2>Address</h2>

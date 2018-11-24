@@ -9,13 +9,16 @@ import com.asgdrones.drones.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class AdminController {
 
     @Autowired
     AdminController(AdminRepoJPA aRepo, AdminService aService) {
-        adminRepoJPA =aRepo;
+        adminRepoJPA = aRepo;
         adminService = aService;
     }
 
@@ -47,15 +50,25 @@ public class AdminController {
             String houseNumber = adminService.GetAdminHouseNumber(loginID);
             List<Customer> customerList = adminService.getCustomers();
             System.out.println(Arrays.deepToString(new List[]{customerList}));
-            model.addAttribute("AdminName",name);
-            model.addAttribute("postcode",postCode);
-            model.addAttribute("city",city);
-            model.addAttribute("street",street);
-            model.addAttribute("houseNumber",houseNumber);
-            model.addAttribute("customers",customerList);
+            model.addAttribute("AdminName", name);
+            model.addAttribute("postcode", postCode);
+            model.addAttribute("city", city);
+            model.addAttribute("street", street);
+            model.addAttribute("houseNumber", houseNumber);
+            model.addAttribute("customers", customerList);
         } else {
             page = Templates.ACCESS_DENIED;
         }
         return new ModelAndView(page.toString(), model.asMap());
+    }
+
+    @RequestMapping(value = "admin_search", method = RequestMethod.POST)
+    public ModelAndView customerSearch(@Valid String searchQuery,
+                                       Model model) {
+        List<Customer> customerList = adminService.searchCustomers(searchQuery);
+        model.addAttribute("customers", customerList);
+
+        model.addAttribute("searchQuery", searchQuery);
+        return new ModelAndView("customerSearch", model.asMap());
     }
 }

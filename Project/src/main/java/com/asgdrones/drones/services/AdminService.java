@@ -35,6 +35,12 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
+    public List<Customer> searchCustomers(String searchQuery) {
+        List<Customer> customerList = customerRepoJPA.findBySearchTerm(searchQuery);
+        return customerList;
+    }
+
+    @Override
     public String getAdminName(Long loginID){
         Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
             String adminFirstName = adminDetails.getFirstName();

@@ -16,4 +16,5 @@ public interface AdminServiceInterface {
     public String getAdminName(Long adminId);
     public Admin getAdmin (Long loginID);
     public List<Customer> getCustomers();
+    public List<Customer> searchCustomers(String searchQuery);
 }
