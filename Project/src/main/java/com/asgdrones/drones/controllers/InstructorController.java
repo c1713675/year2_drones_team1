@@ -35,6 +35,7 @@ public class InstructorController {
 
         Integer instructorID = instructorService.getInstructorIDByUsername(instructorUsername);
         String address = instructorService.getInstructorAddress(instructorID);
+        String date = instructorService.getCourseDates(instructorID);
 
         if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;
@@ -42,6 +43,7 @@ public class InstructorController {
             page = Templates.ACCESS_DENIED;
         }
         model.addAttribute("addresses", address);
+        model.addAttribute("dates", date);
         return new ModelAndView(page.toString(), model.asMap());
     }
 

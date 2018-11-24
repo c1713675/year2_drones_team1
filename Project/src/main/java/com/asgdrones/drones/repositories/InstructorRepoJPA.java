@@ -17,4 +17,8 @@ public interface InstructorRepoJPA extends JpaRepository<Instructor,Long>,Instru
 
     @Query(value = "SELECT loginID FROM Login WHERE Username = :un", nativeQuery = true)
     List<Integer> findByUsername(@Param("un") String un);
+
+    @Query(value = "SELECT c.CourseLocation FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID WHERE i.login_LoginID = :loginID", nativeQuery = true)
+    List<String> getCourseDates(@Param("loginID") Integer loginID);
+
 }

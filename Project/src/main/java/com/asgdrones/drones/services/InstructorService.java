@@ -28,4 +28,11 @@ public class InstructorService implements InstructorServiceInterface {
         Integer instructorID = instructorIDList.get(0);
         return instructorID;
     }
+
+    @Override
+    public String getCourseDates(Integer loginID) {
+        List<String> dates = instructorRepoJPA.getCourseDates(loginID);
+        String date = dates.get(0);
+        return date;
+    }
 }

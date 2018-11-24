@@ -9,11 +9,17 @@
     <table class="table">
         <thead>
         <tr>City</tr>
+        <tr>Date</tr>
         </thead>
         <tbody>
-        <tr th:each="address :${addresses}">
+        <tr>
             <th>
                 <a th:text="${address}"></a>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <a th:text="${date}"></a>
             </th>
         </tr>
         </tbody>
