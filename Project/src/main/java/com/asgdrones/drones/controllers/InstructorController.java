@@ -43,8 +43,8 @@ public class InstructorController {
         }else {
             page = Templates.ACCESS_DENIED;
         }
-        model.addAttribute("addresses", address);
-        model.addAttribute("dates", date);
+        model.addAttribute("address", address);
+        model.addAttribute("date", date);
         return new ModelAndView(page.toString(), model.asMap());
     }
 
