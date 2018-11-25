@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -50,12 +51,14 @@ public class AdminController {
             String houseNumber = adminService.GetAdminHouseNumber(loginID);
             List<Customer> customerList = adminService.getCustomers();
             System.out.println(Arrays.deepToString(new List[]{customerList}));
+            String search = new String ();
             model.addAttribute("AdminName", name);
             model.addAttribute("postcode", postCode);
             model.addAttribute("city", city);
             model.addAttribute("street", street);
             model.addAttribute("houseNumber", houseNumber);
             model.addAttribute("customers", customerList);
+            model.addAttribute("search",search);
         } else {
             page = Templates.ACCESS_DENIED;
         }
@@ -63,12 +66,12 @@ public class AdminController {
     }
 
     @RequestMapping(value = "admin_search", method = RequestMethod.POST)
-    public ModelAndView customerSearch(@Valid String searchQuery,
+    public ModelAndView customerSearch(@RequestParam (value = "search", required = false)String searchQuery,
                                        Model model) {
         List<Customer> customerList = adminService.searchCustomers(searchQuery);
+        System.out.println(searchQuery);
+        System.out.println(Arrays.deepToString(new List[]{customerList}));
         model.addAttribute("customers", customerList);
-
-        model.addAttribute("searchQuery", searchQuery);
         return new ModelAndView("customerSearch", model.asMap());
     }
 }

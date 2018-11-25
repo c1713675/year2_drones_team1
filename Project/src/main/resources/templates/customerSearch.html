@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet"  th:href="@{/css/admin.css}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Email</th>
+        <th>Phone number</th>
+        <th>Subscription Paid?</th>
+        <th>Hours of Flying</th>
+        <th>Has Disability?</th>
+        <th>English Speaking Level</th>
+        <th>Preferred GS Location</th>
+        <th>Insured</th>
+        <th>Access</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer: ${customers}">
+        <td><span th:text="${customer.firstName} +' '+ ${customer.lastName}">Customer Name</span></td>
+        <td><span th:text="${customer.dob}"> </span></td>
+        <td><span th:text="${customer.email}"></span></td>
+        <td><span th:text="${customer.phoneNumber}"></span></td>
+        <td><span th:text="${customer.paid}"></span></td>
+        <td><span th:text="${customer.hoursOfFlying}"></span></td>
+        <td><span th:text="${customer.disability}"></span></td>
+        <td><span th:text="${customer.englishSpeakingLevel}"></span></td>
+        <td><span th:text="${customer.preferredGSLocation}"></span></td>
+        <td><span th:text="${customer.insured}"></span></td>
+        <td><span th:text="${customer.login.access}"></span></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
