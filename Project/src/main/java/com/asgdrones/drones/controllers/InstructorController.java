@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,7 +36,7 @@ public class InstructorController {
 
         Integer instructorID = instructorService.getInstructorIDByUsername(instructorUsername);
         String address = instructorService.getInstructorAddress(instructorID);
-        String date = instructorService.getCourseDates(instructorID);
+        Date date = instructorService.getCourseDates(instructorID);
 
         if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;

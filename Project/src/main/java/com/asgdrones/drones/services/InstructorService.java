@@ -4,6 +4,7 @@ import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,9 +31,9 @@ public class InstructorService implements InstructorServiceInterface {
     }
 
     @Override
-    public String getCourseDates(Integer loginID) {
-        List<String> dates = instructorRepoJPA.getCourseDates(loginID);
-        String date = dates.get(0);
+    public Date getCourseDates(Integer loginID) {
+        List<Date> dates = instructorRepoJPA.getCourseDates(loginID);
+        Date date = dates.get(0);
         return date;
     }
 }

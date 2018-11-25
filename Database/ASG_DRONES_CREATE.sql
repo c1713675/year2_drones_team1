@@ -252,9 +252,13 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'admin', '123', 'admin');
-INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'ins', '123', 'instructor');
-INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'custom', '123', 'customer');
-INSERT INTO address (AddressID, Postcode, City, Street, HouseNumber, HouseName) VALUES (null, 'CF123CD', 'Cardiff', 'Abc Street', 1, 'House One');
-INSERT INTO instructor (InstructorID, FirstName, LastName, PhoneNumber, address_AddressID, login_LoginID) VALUES (null, 'Ins', 'Test', 01234567890, 1, 4);
-INSERT INTO course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_InstructorID) VALUES (null, 'Course A', 'Ground', 'Cardiff', '2018-12-12', 1);
+#INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'admin', '123', 'admin');
+#INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'ins', '123', 'instructor');
+#INSERT INTO login (LoginID, Username, `Password`, Access) VALUES (null, 'custom', '123', 'customer');
+#INSERT INTO address (AddressID, Postcode, City, Street, HouseNumber, HouseName) VALUES (null, 'CF123CD', 'Cardiff', 'Abc Street', 1, 'House One');
+#INSERT INTO instructor (InstructorID, FirstName, LastName, PhoneNumber, address_AddressID, login_LoginID) VALUES (null, 'Ins', 'Test', 01234567890, 1, 4);
+#INSERT INTO course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_InstructorID) VALUES (null, 'Course A', 'Ground', 'Cardiff', '2018-12-12', 1);
+#SELECT c.courseLocation FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID WHERE i.login_loginID = (SELECT loginID FROM login WHERE username = 'ins');
+#SELECT loginID FROM login WHERE username = 'ins';
+#SELECT login_LoginID FROM instructor WHERE FirstName = 'Ins';
+#SELECT * FROM instructor;
