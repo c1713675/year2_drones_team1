@@ -5,6 +5,10 @@ import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.domain.Login;
 import com.asgdrones.drones.repositories.CustomerRepo;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
+import com.asgdrones.drones.services.AddressService;
+import com.asgdrones.drones.services.CustomerService;
+import com.asgdrones.drones.services.LoginService;
+import com.asgdrones.drones.services.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +17,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-
+@SessionAttributes({"customer", "address", "login"})
 @Controller
 public class RegisterController {
 
-    private CustomerRepo customerRepo;
-    private CustomerRepoJPA customerRepoJPA;
+    private RegisterService registerService;
+
     @Autowired
-    public RegisterController(CustomerRepo cRepo, CustomerRepoJPA cReopJPA) {
-        this.customerRepo = cRepo;
-        this.customerRepoJPA = cReopJPA;
+    public RegisterController(RegisterService rService) {
+        registerService =rService;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -33,40 +39,96 @@ public class RegisterController {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView addRegister(Model model) {
         Customer customer = new Customer();
-        Login login = new Login();
-        model.addAttribute("register", customer);
+        model.addAttribute("customer", customer);
         return new ModelAndView("register", model.asMap());
     }
 
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public ModelAndView addRegisterForm(@Valid Customer rregister, BindingResult bindingResult, Model model) {
+    public RedirectView addRegisterForm(@Valid Customer customer, BindingResult bindingResult, Model model) {
         //binding result stops it from being null
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
         }
         System.out.println("Form Received");
-        System.out.println(rregister);
-        model.addAttribute("firstName", rregister.getFirstName());
-        model.addAttribute("lastName", rregister.getLastName());
-        model.addAttribute("dob", rregister.getDob());
-        model.addAttribute("email", rregister.getEmail());
-        model.addAttribute("phoneNumber",rregister.getPhoneNumber());
-        model.addAttribute("hoursOfFlying", rregister.getHoursOfFlying());
-        model.addAttribute("disability", rregister.getDisability());
-        model.addAttribute("englishSpeakingLevel",rregister.getEnglishSpeakingLevel());
-        model.addAttribute("paid",rregister.getPaid());
-        model.addAttribute("insured", rregister.getInsured());
-        model.addAttribute("id", rregister.getId());
-        model.addAttribute("preferredLocation",rregister.getPreferredGSLocation());
-        model.addAttribute("login",rregister.getLogin());
+        System.out.println(customer);
+        model.addAttribute("customer",customer);
+        model.addAttribute("firstName", customer.getFirstName());
+        model.addAttribute("lastName", customer.getLastName());
+        model.addAttribute("dob", customer.getDob());
+        model.addAttribute("email", customer.getEmail());
+        model.addAttribute("phoneNumber",customer.getPhoneNumber());
+        model.addAttribute("hoursOfFlying", customer.getHoursOfFlying());
+        model.addAttribute("disability", customer.getDisability());
+        model.addAttribute("englishSpeakingLevel",customer.getEnglishSpeakingLevel());
+        model.addAttribute("paid",customer.getPaid());
+        model.addAttribute("insured", customer.getInsured());
+        model.addAttribute("preferredLocation",customer.getPreferredGSLocation());
         // call service to save charity
         // saving to db
-        customerRepoJPA.save(rregister);
 
-        return new ModelAndView("404", model.asMap());
+        return new RedirectView("/register_address", true);
     }
 
+
+    @RequestMapping(value = "/register_address", method = RequestMethod.GET)
+    public ModelAndView addRegisterAddress(@SessionAttribute Customer customer ,Model model) {
+        System.out.println(customer);
+        Address address = new Address();
+        model.addAttribute("address", address);
+        return new ModelAndView("registerAddress", model.asMap());
+    }
+
+
+    @RequestMapping(path = "/register_address", method = RequestMethod.POST)
+    public RedirectView addCustomerForm(@Valid Address address, BindingResult bindingResult, Model model) {
+        //binding result stops it from being null
+
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+        }
+        System.out.println("Form Received");
+        System.out.println(address);
+        model.addAttribute("address",address);
+        model.addAttribute("Street",address.getStreet());
+        model.addAttribute("HouseName",address.getHouseName());
+        model.addAttribute("HouseNumber",address.getHouseNumber());
+        model.addAttribute("Postcode",address.getPostcode());
+        model.addAttribute("City",address.getCity());
+
+
+        return new RedirectView("/register_customer", true);
+    }
+
+    @RequestMapping(value = "/register_customer", method = RequestMethod.GET)
+    public ModelAndView addRegisterCustomer(@SessionAttribute Address address,@SessionAttribute Customer customer, Model model) {
+        Login login = new Login();
+        System.out.println(address);
+        System.out.println(customer);
+        model.addAttribute("login", login);
+        return new ModelAndView("registerCustomer", model.asMap());
+    }
+
+
+    @RequestMapping(path = "/register_customer", method = RequestMethod.POST)
+    public String addLoginForm(@Valid Login login, @SessionAttribute Address address,
+                               @SessionAttribute Customer customer,
+                               BindingResult bindingResult, Model model) {
+        //binding result stops it from being null
+
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+        }
+        System.out.println("Form Received");
+        System.out.println(login);
+        System.out.println(customer);
+        System.out.println(address);
+        model.addAttribute("login",login);
+        model.addAttribute("HouseName",login.getUsername());
+        model.addAttribute("HouseNumber",login.getPassword());
+        registerService.upload(address,customer,login);
+        return "receipt";
+    }
 
 }
