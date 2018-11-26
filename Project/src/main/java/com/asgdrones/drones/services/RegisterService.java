@@ -1,9 +1,6 @@
 package com.asgdrones.drones.services;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Course;
-import com.asgdrones.drones.domain.Customer;
-import com.asgdrones.drones.domain.Login;
+import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.enums.Access;
 import com.asgdrones.drones.repositories.AddressRepoJPA;
 import com.asgdrones.drones.repositories.CustomerRepo;
@@ -27,14 +24,15 @@ public class RegisterService implements RegisterServiceInterface {
 
     @Override
     public void upload(Address address, Customer customer, Login login) {
-        Course course = new Course();
+        Course course = new Course(null,"","");
+        Drone drone = new Drone(null,"asg","redDrone");
         Login newLogin = new Login(null, "customer", login.getUsername(), login.getPassword());
         Customer newCustomer = new Customer(null, customer.getFirstName(),
                 customer.getLastName(), customer.getDob(),
                 customer.getEmail(), customer.getPhoneNumber(),
                 customer.getPaid(), customer.getHoursOfFlying(),
                 customer.getDisability(), customer.getEnglishSpeakingLevel(), customer.getPreferredGSLocation(),
-                customer.getInsured(), newLogin, address, null);
+                customer.getInsured(), newLogin, drone, address, course);
         customerRepoJPA.save(newCustomer);
         loginRepoJPA.save(newLogin);
         addressRepoJPA.save(address);
