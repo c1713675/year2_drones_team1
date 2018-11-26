@@ -1,9 +1,65 @@
+*{
+    margin: 0px;
+    border: 0px;
+}
 table, th, td {
     border: 1px solid black;
 }
 h1{
+    background: black;
+    color: white;
     text-align: center;
+    font-family:"Times New Roman";
+    text-space: 5px;
+    font-size: 100pt;
 }
 body{
     background: aliceblue;
+}
+nav{
+    border: 0px;
+    margin: 0px;
+    height: 10%;
+    background: blue;
+    width: 100%;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: right;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li a:hover {
+    background-color: #111;
+}
+#customerSearch{
+    position: center;
+    text-align: -webkit-center;
+    text-align: center;
+}
+#address{
+    position: center;
+    text-align: -webkit-center;
+    text-align: center;
+}
+table{
+    margin-right: 10%;
+    margin-left: 10%;
+}
+#welcome{
+    text-align: center;
+    position: center;
 }

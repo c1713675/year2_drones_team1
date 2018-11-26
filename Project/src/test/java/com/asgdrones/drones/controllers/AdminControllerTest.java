@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @DirtiesContext
 public class AdminControllerTest {
-
+    
     @Autowired
     private MockMvc mockMvc;
 
