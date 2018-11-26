@@ -14,12 +14,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each = "course: ${courses}">
             <td>
-                <a th:text="${address}"></a>
+                <a th:text="${course.courseLocation}"></a>
             </td>
             <td>
-                <a th:text="${date}"></a>
+                <a th:text="${course.courseDate}"></a>
             </td>
         </tr>
         </tbody>

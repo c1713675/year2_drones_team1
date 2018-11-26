@@ -1,6 +1,8 @@
 package com.asgdrones.drones.controllers;
 
+import com.asgdrones.drones.domain.Course;
 import com.asgdrones.drones.enums.Templates;
+import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import com.asgdrones.drones.services.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,13 @@ public class InstructorController {
     private Templates page;
     private InstructorRepoJPA instructorRepoJPA;
     private InstructorService instructorService;
+    private CourseRepoJPA courseRepoJPA;
 
     @Autowired
-    InstructorController(InstructorRepoJPA iRepo, InstructorService iService){
+    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseRepoJPA cRepo){
       instructorRepoJPA = iRepo;
       instructorService =  iService;
+      courseRepoJPA = cRepo;
     }
     @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
@@ -35,16 +39,18 @@ public class InstructorController {
         access = request.getCookies();
 
         Integer instructorID = instructorService.getInstructorIDByUsername(instructorUsername);
-        String address = instructorService.getInstructorAddress(instructorID);
-        Date date = instructorService.getCourseDates(instructorID);
+        List<Course> courses = courseRepoJPA.findAllByInstructorID(instructorID);
+        List<String> addresses = instructorService.getInstructorAddress(instructorID);
+        List<Date> dates = instructorService.getCourseDates(instructorID);
 
         if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;
         }else {
             page = Templates.ACCESS_DENIED;
         }
-        model.addAttribute("address", address);
-        model.addAttribute("date", date);
+        model.addAttribute("addresses", addresses);
+        model.addAttribute("dates", dates);
+        model.addAttribute("courses", courses);
         return new ModelAndView(page.toString(), model.asMap());
     }
 

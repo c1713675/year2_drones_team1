@@ -1,5 +1,6 @@
 package com.asgdrones.drones.services;
 
+import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,17 +11,18 @@ import java.util.List;
 @Service
 public class InstructorService implements InstructorServiceInterface {
     private InstructorRepoJPA instructorRepoJPA;
+    private CourseRepoJPA courseRepoJPA;
 
     @Autowired
-    InstructorService(InstructorRepoJPA iRepo) {
+    InstructorService(InstructorRepoJPA iRepo, CourseRepoJPA cRepo) {
         instructorRepoJPA = iRepo;
+        courseRepoJPA = cRepo;
     }
 
     @Override
-    public String getInstructorAddress(Integer loginID) {
+    public List<String> getInstructorAddress(Integer loginID) {
         List<String> addresses = instructorRepoJPA.getInstructorAddresses(loginID);
-        String address = addresses.get(0);
-        return address;
+        return addresses;
     }
 
     @Override
@@ -31,9 +33,8 @@ public class InstructorService implements InstructorServiceInterface {
     }
 
     @Override
-    public Date getCourseDates(Integer loginID) {
+    public List<Date> getCourseDates(Integer loginID) {
         List<Date> dates = instructorRepoJPA.getCourseDates(loginID);
-        Date date = dates.get(0);
-        return date;
+        return dates;
     }
 }
