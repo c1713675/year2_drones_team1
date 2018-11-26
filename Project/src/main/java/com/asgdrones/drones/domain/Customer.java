@@ -15,40 +15,40 @@ import java.util.Date;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CandidateReferenceID")
+    @Column(name = "candidatereferenceID")
     private Long id;
 
-    @Column(name = "FirstName")
+    @Column(name = "firstname")
     private String firstName;
 
-    @Column(name = "LastName")
+    @Column(name = "lastname")
     private String lastName;
 
     @Column(name = "Dob")
     private Date dob;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "PhoneNumber")
+    @Column(name = "phonenumber")
     private String phoneNumber;
 
-    @Column(name = "Paid")
+    @Column(name = "paid")
     private Boolean paid;
 
-    @Column(name = "HoursOfFlying")
+    @Column(name = "hoursofflying")
     private Float hoursOfFlying;
 
-    @Column(name = "Disability")
+    @Column(name = "disability")
     private Boolean disability;
 
-    @Column(name = "EnglishSpeakingLevel")
+    @Column(name = "englishspeakinglevel")
     private Float englishSpeakingLevel;
 
-    @Column(name = "PreferredGSLocation")
+    @Column(name = "preferredGSLocation")
     private String preferredGSLocation;
 
-    @Column(name = "Insured")
+    @Column(name = "insured")
     private Boolean insured;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -61,9 +61,9 @@ public class Customer {
 //    @JoinColumn(name = "drone_DroneID")
 //    private Drone drone;
 //
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_AddressID")
-//    private Address address;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_AddressID")
+    private Address address;
 //
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "course_CourseID")
