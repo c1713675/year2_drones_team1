@@ -1265,6 +1265,12 @@ insert into administrator (AdminID, FirstName, LastName, address_AddressID, logi
 insert into administrator (AdminID, FirstName, LastName, address_AddressID, login_LoginID) values (9, 'Malchy', 'Praton', 827, 510);
 insert into administrator (AdminID, FirstName, LastName, address_AddressID, login_LoginID) values (10, 'Jory', 'Fewless', 440, 132);
 
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (1, 'Course2','Type3', 'Cardiff', '2018-12-12',  1);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (2, 'Course1','Type2', 'Cardiff', '2019-03-02',  1);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (3, 'Course3','Type2', 'London', '2019-03-04',  1);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (4, 'Course3','Type2', 'London', '2019-03-04',  1);
+SELECT * FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID;
+SELECT * FROM login WHERE loginId = 979;
 
 insert into course (CourseID, CourseName, CourseType, Instructor_instructorID) values (1, 'Course2', 'Type3', 29);
 insert into course (CourseID, CourseName, CourseType, Instructor_instructorID) values (2, 'Course3', 'Type1', 361);

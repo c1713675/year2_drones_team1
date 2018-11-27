@@ -1,6 +1,7 @@
 package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Course;
+import com.asgdrones.drones.domain.Instructor;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
@@ -39,10 +40,10 @@ public class InstructorController {
                                    @PathVariable("instructorUsername") String instructorUsername){
         access = request.getCookies();
 
-        Integer instructorID = instructorService.getInstructorIDByUsername(instructorUsername);
-        List<Course> courses = courseService.findAllByInstructorID(instructorID);
-        List<String> addresses = instructorService.getInstructorAddress(instructorID);
-        List<Date> dates = instructorService.getCourseDates(instructorID);
+        Instructor instructor = instructorService.getInstructorByUsername(instructorUsername);
+        List<Course> courses = courseService.findByInstructor(instructor);
+        List<String> addresses = instructorService.getInstructorAddress(instructor.getId());
+        List<Date> dates = instructorService.getCourseDates(instructor.getId());
 
         if (access[0].getValue().equals("instructor")){
             page = Templates.INSTRUCTOR_ACCOUNT;

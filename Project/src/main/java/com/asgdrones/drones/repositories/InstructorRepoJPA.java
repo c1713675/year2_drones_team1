@@ -14,12 +14,12 @@ import java.util.List;
 @Repository
 public interface InstructorRepoJPA extends JpaRepository<Instructor,Long>,InstructorRepo {
     @Query(value = "SELECT c.CourseLocation FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID WHERE i.login_LoginID = :loginID", nativeQuery = true)
-    List<String> getInstructorAddresses(@Param("loginID") Integer loginID);
+    List<String> getInstructorAddresses(@Param("loginID") Long loginID);
 
-    @Query(value = "SELECT loginID FROM Login WHERE Username = :un", nativeQuery = true)
-    List<Integer> findByUsername(@Param("un") String un);
+    @Query(value = "SELECT LoginID FROM Login WHERE Username = :un", nativeQuery = true)
+    List<Number> findByUsername(@Param("un") String un);
 
     @Query(value = "SELECT c.CourseDate FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID WHERE i.login_LoginID = :loginID", nativeQuery = true)
-    List<Date> getCourseDates(@Param("loginID") Integer loginID);
+    List<Date> getCourseDates(@Param("loginID") Long loginID);
 
 }

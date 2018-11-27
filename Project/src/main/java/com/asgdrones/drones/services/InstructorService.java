@@ -1,5 +1,6 @@
 package com.asgdrones.drones.services;
 
+import com.asgdrones.drones.domain.Instructor;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,25 @@ public class InstructorService implements InstructorServiceInterface {
     }
 
     @Override
-    public List<String> getInstructorAddress(Integer loginID) {
+    public Instructor getInstructorById(Long instructorId) {
+        return instructorRepoJPA.getOne(instructorId);
+    }
+
+    @Override
+    public List<String> getInstructorAddress(Long loginID) {
         List<String> addresses = instructorRepoJPA.getInstructorAddresses(loginID);
         return addresses;
     }
 
     @Override
-    public Integer getInstructorIDByUsername(String username) {
-        List<Integer> instructorIDList = instructorRepoJPA.findByUsername(username);
-        Integer instructorID = instructorIDList.get(0);
-        return instructorID;
+    public Instructor getInstructorByUsername(String username) {
+        List<Number> instructorIDList = instructorRepoJPA.findByUsername(username);
+        Long instructorId = instructorIDList.get(0).longValue();
+        return this.getInstructorById(instructorId);
     }
 
     @Override
-    public List<Date> getCourseDates(Integer loginID) {
+    public List<Date> getCourseDates(Long loginID) {
         List<Date> dates = instructorRepoJPA.getCourseDates(loginID);
         return dates;
     }

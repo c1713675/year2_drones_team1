@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -15,7 +16,7 @@ public class Course {
     @Id
     @GeneratedValue
     @Column(name = "CourseID")
-    private Integer courseID;
+    private Long courseID;
 
     @Column(name = "CourseName")
     private String courseName;
@@ -27,8 +28,9 @@ public class Course {
     private String courseLocation;
 
     @Column(name = "CourseDate")
-    private String courseDate;
+    private Date courseDate;
 
-    @Column(name = "Instructor_InstructorID")
-    private Integer instructorID;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Instructor_InstructorID")
+    private Instructor instructor;
 }
