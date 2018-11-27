@@ -4,6 +4,7 @@ import com.asgdrones.drones.domain.Course;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
+import com.asgdrones.drones.services.CourseService;
 import com.asgdrones.drones.services.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,13 +25,13 @@ public class InstructorController {
     private Templates page;
     private InstructorRepoJPA instructorRepoJPA;
     private InstructorService instructorService;
-    private CourseRepoJPA courseRepoJPA;
+    private CourseService courseService;
 
     @Autowired
-    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseRepoJPA cRepo){
+    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseService cService){
       instructorRepoJPA = iRepo;
       instructorService =  iService;
-      courseRepoJPA = cRepo;
+      courseService = cService;
     }
     @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
@@ -39,7 +40,7 @@ public class InstructorController {
         access = request.getCookies();
 
         Integer instructorID = instructorService.getInstructorIDByUsername(instructorUsername);
-        List<Course> courses = courseRepoJPA.findAllByInstructorID(instructorID);
+        List<Course> courses = courseService.findAllByInstructorID(instructorID);
         List<String> addresses = instructorService.getInstructorAddress(instructorID);
         List<Date> dates = instructorService.getCourseDates(instructorID);
 
