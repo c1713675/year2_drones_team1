@@ -1269,8 +1269,10 @@ insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate
 insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (2, 'Course1','Type2', 'Cardiff', '2019-03-02',  1);
 insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (3, 'Course3','Type2', 'London', '2019-03-04',  1);
 insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (4, 'Course3','Type2', 'London', '2019-03-04',  1);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (5, 'Course3','Type2', 'London', '2019-03-04',  42);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (6, 'Course3','Type2', 'London', '2019-03-04',  42);
+
 SELECT * FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID;
-SELECT * FROM login WHERE loginId = 979;
 
 insert into course (CourseID, CourseName, CourseType, Instructor_instructorID) values (1, 'Course2', 'Type3', 29);
 insert into course (CourseID, CourseName, CourseType, Instructor_instructorID) values (2, 'Course3', 'Type1', 361);
