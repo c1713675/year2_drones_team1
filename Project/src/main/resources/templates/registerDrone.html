@@ -19,10 +19,11 @@
     </div>
     <div class="jumbotron">
         <h1>Register</h1>
-        <form action="#" th:action="@{/register_customer}" th:object= "${login}" method="post">
-            <p>Username: <input type = "text" th:field="*{username}"/></p>
-            <p>Password: <input type = "password" th:field="*{password}"/></p>
-            <button type = "submit" >Next </button >
+        <form action="#" th:action="@{/register_drone}" th:object= "${drone}" method="post">
+            <p>If you do not have a drone then type "N/A" for both fields</p>
+            <p>Drone Manufacturer: <input type = "text" th:field="*{manufacturer}"/></p>
+            <p>Drone Model: <input type = "text" th:field="*{model}"/></p>
+            <button type = "submit" >Submit </button >
         </form>
     </div>
 </div>
