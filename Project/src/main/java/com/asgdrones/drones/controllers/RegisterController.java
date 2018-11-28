@@ -151,10 +151,12 @@ public class RegisterController {
             System.out.println(bindingResult);
         }
         System.out.println("Form Received");
+        login.setAccess("customer");
         System.out.println(login);
         System.out.println(customer);
         System.out.println(address);
         System.out.println(drone);
+
         model.addAttribute("login", login);
         model.addAttribute("HouseName", login.getUsername());
         model.addAttribute("HouseNumber", login.getPassword());
