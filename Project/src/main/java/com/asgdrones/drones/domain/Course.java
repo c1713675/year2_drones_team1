@@ -23,6 +23,8 @@ public class Course {
     @Column(name = "coursetype")
     private String courseType;
 
+    @Column(name = "instructor_instructorID")
+    private int instructorID;
 
 
 
