@@ -27,8 +27,7 @@ public class Admin {
     @JoinColumn(name = "login_loginid")
     private Login login;
 
-//    ***** add this later *****
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "address_AddressID")
-//    private Address address;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_addressID")
+    private Address address;
 }

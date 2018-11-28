@@ -22,7 +22,7 @@ import java.util.Date;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CandidateReferenceID")
+    @Column(name = "candidatereferenceID")
     private Long id;
 
     @Column(name = "firstname")

@@ -2,35 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
-    <title>Admin</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-<h1>Admin account</h1>
-<nav>
-    <ul>
-        <li><a th:href="@{/login}">Logout</a></li>
-    </ul>
-</nav>
-<div id="welcome">
-    <H2><span th:text="Welcome+' '+${AdminName}"></span></H2>
-</div>
-<div id="customerSearch">
-    <h2>Search</h2>
-    <form action="#" th:action="@{/admin_search}" th:object="${searchQuery}" method="post">
-        <input name="search"
-               id="search" type="text"/>
-        <input type="submit" value="submit"/>
-    </form>
-</div>
-<div id="address">
-    <h2>Address</h2>
-    <span th:text="${houseNumber}">house number</span>
-    <span th:text="${houseName}">house name</span>
-    <span th:text="${street}">street</span> <br>
-    <span th:text="${postcode}">post code</span> <br>
-    <span th:text="${city}">city</span> <br>
-</div>
-
 <table>
     <thead>
     <tr>
