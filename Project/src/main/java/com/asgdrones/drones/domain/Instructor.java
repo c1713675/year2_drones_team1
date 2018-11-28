@@ -24,7 +24,7 @@ public class Instructor {
     private String lastName;
 
     @Column(name = "PhoneNumber")
-    private Integer phoneNumber;
+    private String phoneNumber;
 
     @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "login_LoginID")
