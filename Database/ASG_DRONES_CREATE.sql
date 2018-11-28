@@ -1271,6 +1271,10 @@ insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate
 insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (4, 'Course3','Type2', 'London', '2019-03-04',  1);
 insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (5, 'Course3','Type2', 'London', '2019-03-04',  42);
 insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (6, 'Course3','Type2', 'London', '2019-03-04',  42);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (7, 'Course1','Type2', 'London', '2019-03-04',  42);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (8, 'Course2','Type2', 'Cardiff', '2019-01-04',  42);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (9, 'Course2','Type2', 'London', '2019-02-06',  42);
+insert into course (CourseID, CourseName, CourseType, CourseLocation, CourseDate, Instructor_instructorID) values (10, 'Course1','Type2', 'Newport', '2018-12-12',  42);
 
 SELECT * FROM instructor i JOIN course c ON i.InstructorID = c.Instructor_InstructorID;
 
@@ -3276,7 +3280,6 @@ insert into customer (CandidateReferenceID, FirstName, LastName, Dob, Email, Pho
 insert into customer (CandidateReferenceID, FirstName, LastName, Dob, Email, PhoneNumber, Paid, HoursOfFlying, Disability, EnglishSpeakingLevel, PreferredGSLocation, Insured, drone_DroneID, address_AddressID, course_CourseID, login_LoginID) values (998, 'Tandy', 'Cornner', '2011/08/02', 'tcornnerrp@cnn.com', '8875644200', true, 14, true, 2, 'London', false, 917, 336, 267, 882);
 insert into customer (CandidateReferenceID, FirstName, LastName, Dob, Email, PhoneNumber, Paid, HoursOfFlying, Disability, EnglishSpeakingLevel, PreferredGSLocation, Insured, drone_DroneID, address_AddressID, course_CourseID, login_LoginID) values (999, 'Chris', 'Pilbeam', '1994/08/08', 'cpilbeamrq@sogou.com', '5326574863', false, 17, true, 4, 'Cardiff', true, 782, 508, 280, 886);
 insert into customer (CandidateReferenceID, FirstName, LastName, Dob, Email, PhoneNumber, Paid, HoursOfFlying, Disability, EnglishSpeakingLevel, PreferredGSLocation, Insured, drone_DroneID, address_AddressID, course_CourseID, login_LoginID) values (1000, 'Suzann', 'Dunsford', '1974/01/13', 'sdunsfordrr@shareasale.com', '4144656215', false, 7, true, 9, 'London', false, 14, 657, 214, 936);
-
 
 insert into drone (DroneID, Manufacturer, Model) values (1, 'SJ', 'Stim');
 insert into drone (DroneID, Manufacturer, Model) values (2, 'Lumina', 'Konklab');

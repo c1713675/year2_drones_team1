@@ -29,15 +29,16 @@ public class InstructorController {
     private CourseService courseService;
 
     @Autowired
-    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseService cService){
-      instructorRepoJPA = iRepo;
-      instructorService =  iService;
-      courseService = cService;
+    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseService cService) {
+        instructorRepoJPA = iRepo;
+        instructorService = iService;
+        courseService = cService;
     }
+
     @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
                                    HttpServletRequest request,
-                                   @PathVariable("instructorUsername") String instructorUsername){
+                                   @PathVariable("instructorUsername") String instructorUsername) {
         access = request.getCookies();
 
         Instructor instructor = instructorService.getInstructorByUsername(instructorUsername);
@@ -45,9 +46,9 @@ public class InstructorController {
         List<String> addresses = instructorService.getInstructorAddress(instructor.getId());
         List<Date> dates = instructorService.getCourseDates(instructor.getId());
 
-        if (access[0].getValue().equals("instructor")){
+        if (access[0].getValue().equals("instructor")) {
             page = Templates.INSTRUCTOR_ACCOUNT;
-        }else {
+        } else {
             page = Templates.ACCESS_DENIED;
         }
         model.addAttribute("addresses", addresses);
