@@ -46,7 +46,7 @@ public class AdminController {
             String postCode = adminService.GetAdminPostCode(loginID);
             String city = adminService.GetAdminCity(loginID);
             String street = adminService.GetAdminStreet(loginID);
-            String houseNumber = adminService.GetAdminHouseNumber(loginID);
+            Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
             List<Customer> customerList = adminService.getCustomers();
             System.out.println(customerList.size());
             System.out.println(Arrays.deepToString(new List[]{customerList}));

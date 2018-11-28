@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+
 @SessionAttributes({"customer", "address", "drone", "login"})
 @Controller
 public class RegisterController {
@@ -32,7 +33,7 @@ public class RegisterController {
 
     @Autowired
     public RegisterController(RegisterService rService) {
-        registerService =rService;
+        registerService = rService;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -54,18 +55,18 @@ public class RegisterController {
         }
         System.out.println("Form Received");
         System.out.println(customer);
-        model.addAttribute("customer",customer);
+        model.addAttribute("customer", customer);
         model.addAttribute("firstName", customer.getFirstName());
         model.addAttribute("lastName", customer.getLastName());
         model.addAttribute("dob", customer.getDob());
         model.addAttribute("email", customer.getEmail());
-        model.addAttribute("phoneNumber",customer.getPhoneNumber());
+        model.addAttribute("phoneNumber", customer.getPhoneNumber());
         model.addAttribute("hoursOfFlying", customer.getHoursOfFlying());
         model.addAttribute("disability", customer.getDisability());
-        model.addAttribute("englishSpeakingLevel",customer.getEnglishSpeakingLevel());
-        model.addAttribute("paid",customer.getPaid());
+        model.addAttribute("englishSpeakingLevel", customer.getEnglishSpeakingLevel());
+        model.addAttribute("paid", customer.getPaid());
         model.addAttribute("insured", customer.getInsured());
-        model.addAttribute("preferredLocation",customer.getPreferredGSLocation());
+        model.addAttribute("preferredLocation", customer.getPreferredGSLocation());
         // call service to save charity
         // saving to db
 
@@ -74,7 +75,7 @@ public class RegisterController {
 
 
     @RequestMapping(value = "/register_address", method = RequestMethod.GET)
-    public ModelAndView addRegisterAddress(@SessionAttribute Customer customer ,Model model) {
+    public ModelAndView addRegisterAddress(@SessionAttribute Customer customer, Model model) {
         System.out.println(customer);
         Address address = new Address();
         model.addAttribute("address", address);
@@ -91,21 +92,22 @@ public class RegisterController {
         }
         System.out.println("Form Received");
         System.out.println(address);
-        model.addAttribute("address",address);
-        model.addAttribute("Street",address.getStreet());
-        model.addAttribute("HouseName",address.getHouseName());
-        model.addAttribute("HouseNumber",address.getHouseNumber());
-        model.addAttribute("Postcode",address.getPostcode());
-        model.addAttribute("City",address.getCity());
+        model.addAttribute("address", address);
+        model.addAttribute("Street", address.getStreet());
+        model.addAttribute("HouseName", address.getHouseName());
+        model.addAttribute("HouseNumber", address.getHouseNumber());
+        model.addAttribute("Postcode", address.getPostcode());
+        model.addAttribute("City", address.getCity());
 
 
         return new RedirectView("/register_drone", true);
     }
 
     @RequestMapping(value = "/register_drone", method = RequestMethod.GET)
-    public ModelAndView addDrone(@SessionAttribute Address address , Model model) {
+    public ModelAndView addDrone(@SessionAttribute Address address, @SessionAttribute Customer customer, Model model) {
         System.out.println(address);
         Drone drone = new Drone();
+        model.addAttribute("address", address);
         model.addAttribute("drone", drone);
         return new ModelAndView("registerDrone", model.asMap());
     }
@@ -120,17 +122,16 @@ public class RegisterController {
         }
         System.out.println("Form Received");
         System.out.println(drone);
-        model.addAttribute("model",drone.getManufacturer());
-        model.addAttribute("manufacturer",drone.getModel());
+        model.addAttribute("model", drone.getManufacturer());
+        model.addAttribute("manufacturer", drone.getModel());
 
 
         return new RedirectView("/register_customer", true);
     }
 
 
-
     @RequestMapping(value = "/register_customer", method = RequestMethod.GET)
-    public ModelAndView addRegisterCustomer(@SessionAttribute Address address,@SessionAttribute Customer customer,
+    public ModelAndView addRegisterCustomer(@SessionAttribute Address address, @SessionAttribute Customer customer,
                                             @SessionAttribute Drone drone, Model model) {
         Login login = new Login();
         System.out.println(drone);
@@ -146,19 +147,20 @@ public class RegisterController {
                                @SessionAttribute Customer customer, @SessionAttribute Drone drone,
                                BindingResult bindingResult, Model model) {
         //binding result stops it from being null
-
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
         }
         System.out.println("Form Received");
+        login.setAccess("customer");
         System.out.println(login);
         System.out.println(customer);
         System.out.println(address);
         System.out.println(drone);
-        model.addAttribute("login",login);
-        model.addAttribute("HouseName",login.getUsername());
-        model.addAttribute("HouseNumber",login.getPassword());
-        registerService.upload(address,drone,customer,login);
+
+        model.addAttribute("login", login);
+        model.addAttribute("HouseName", login.getUsername());
+        model.addAttribute("HouseNumber", login.getPassword());
+        registerService.upload(address, drone, customer, login);
         return "receipt";
     }
 
