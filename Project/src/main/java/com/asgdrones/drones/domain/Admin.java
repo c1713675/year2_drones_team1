@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "adminID")
+    @Column(name = "adminid")
     private Long id;
 
     @Column(name = "firstname")
@@ -24,7 +24,7 @@ public class Admin {
     private String lastName;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_LoginID")
+    @JoinColumn(name = "login_loginid")
     private Login login;
 
     @ManyToOne(cascade = CascadeType.ALL)

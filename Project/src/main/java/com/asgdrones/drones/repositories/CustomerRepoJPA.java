@@ -16,3 +16,4 @@ public interface CustomerRepoJPA extends JpaRepository<Customer,Long>, CustomerR
             "or c.preferredGSLocation LIKE %:searchQuery%")
     public List<Customer> findBySearchTerm(@Param("searchQuery")String searchQuery);
 }
+

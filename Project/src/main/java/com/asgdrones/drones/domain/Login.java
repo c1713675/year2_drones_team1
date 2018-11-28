@@ -13,12 +13,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @EqualsAndHashCode
-@Table(name = "Login")
+@Table(name = "login", schema = "asg")
 public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "LoginID")
+    @Column(name = "loginid")
     private Long id;
+
+    @Column(name = "Access")
+    private String access;
 
     @Column(name = "username")
     private String username;
@@ -26,6 +29,5 @@ public class Login {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "Access")
-    private String access;
+
 }

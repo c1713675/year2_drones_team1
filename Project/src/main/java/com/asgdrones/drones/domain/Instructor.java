@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "instructorID")
+    @Column(name = "instructorid")
     private Long id;
 
     @Column(name = "firstname")
@@ -32,6 +32,6 @@ public class Instructor {
 
 //    ******** add this later ***********
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_addressID")
+    @JoinColumn(name = "address_address")
     private Address address;
 }

@@ -116,7 +116,7 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `asg`.`course` ;
 CREATE TABLE IF NOT EXISTS `asg`.`course` (
-  `CourseID` INT(10) UNSIGNED NOT NULL,
+  `CourseID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `CourseName` VARCHAR(45) NOT NULL,
   `CourseType` VARCHAR(45) NOT NULL,
   `Instructor_InstructorID` INT(10) UNSIGNED NOT NULL,

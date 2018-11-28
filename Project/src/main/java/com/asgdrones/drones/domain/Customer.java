@@ -1,10 +1,17 @@
 package com.asgdrones.drones.domain;
 
+import io.micrometer.core.lang.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -24,8 +31,9 @@ public class Customer {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "Dob")
-    private Date dob;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "dob")
+    private Date Dob;
 
     @Column(name = "email")
     private String email;
@@ -40,7 +48,7 @@ public class Customer {
     private Float hoursOfFlying;
 
     @Column(name = "disability")
-    private Boolean disability;
+    private String disability;
 
     @Column(name = "englishspeakinglevel")
     private Float englishSpeakingLevel;
@@ -51,21 +59,24 @@ public class Customer {
     @Column(name = "insured")
     private Boolean insured;
 
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "login_LoginID")
     private Login login;
 
 
 //      ******* add these later *********
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "drone_DroneID")
-//    private Drone drone;
-//
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "drone_droneid")
+    private Drone drone;
+
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_AddressID")
     private Address address;
-//
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "course_CourseID")
     private Course course;
 
