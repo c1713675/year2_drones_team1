@@ -27,12 +27,10 @@ import java.util.List;
 public class AdminController {
     private Cookie[] access;
     private Templates page;
-    private AdminRepoJPA adminRepoJPA;
     private AdminService adminService;
 
     @Autowired
-    AdminController(AdminRepoJPA aRepo, AdminService aService) {
-        adminRepoJPA = aRepo;
+    AdminController(AdminService aService) {
         adminService = aService;
     }
 
@@ -50,6 +48,7 @@ public class AdminController {
             String street = adminService.GetAdminStreet(loginID);
             String houseNumber = adminService.GetAdminHouseNumber(loginID);
             List<Customer> customerList = adminService.getCustomers();
+            System.out.println(customerList.size());
             System.out.println(Arrays.deepToString(new List[]{customerList}));
             String search = new String ();
             model.addAttribute("AdminName", name);

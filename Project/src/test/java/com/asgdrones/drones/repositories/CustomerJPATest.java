@@ -1,8 +1,6 @@
 package com.asgdrones.drones.repositories;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Customer;
-import com.asgdrones.drones.domain.Login;
+import com.asgdrones.drones.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +32,12 @@ public class CustomerJPATest {
     public void customerJPATest() throws Exception{
         Address address = new Address(1L,"CF244AN","Cardiff","Abby Lane",4,"");
         Login login = new Login(1L,"jbuckland","1234","customer");
+        Instructor instructor = new Instructor(1L,"james","buckland","01895430027",login,address);
+        Course course = new Course(1L,"Course1","Type2",instructor);
         this.entityManager.merge(new Customer(1L,"James","Buckland",
                 new Date(16/11/1998),"j@gmail.com","01735432576",
                 true,(float)13.0,false,(float)5.0,"Cardiff",
-                true, login, address));
+                true, login, address, course));
         List<Customer> customerList = this.customerRepoJPA.findAll();
         assertThat(customerList.get(0).getFirstName()).isEqualTo("James");
         assertThat(customerList.get(0).getLastName()).isEqualTo("Buckland");
@@ -62,10 +62,12 @@ public class CustomerJPATest {
     public void searchQueryTestByFirstName() throws Exception{
         Address address = new Address(1L,"CF244AN","Cardiff","Abby Lane",4,"");
         Login login = new Login(1L,"jbuckland","1234","customer");
+        Instructor instructor = new Instructor(1L,"james","buckland","01895430027",login,address);
+        Course course = new Course(1L,"Course1","Type2",instructor);
         this.entityManager.merge(new Customer(2L,"Arron","Li",
                 new Date(5/7/1992),"a@gmail.com","01643875987",
                 true,(float)13.0,true,(float)5.0,"Cardiff",
-                true, login, address));
+                true, login, address,course));
         List<Customer> customerList = this.customerRepoJPA.findBySearchTerm("James");
         assertThat(customerList.size()).isEqualTo(1);
     }
@@ -73,10 +75,12 @@ public class CustomerJPATest {
     public void searchQueryTestByLastName() throws Exception{
         Address address = new Address(1L,"CF244AN","Cardiff","Abby Lane",4,"");
         Login login = new Login(1L,"jbuckland","1234","customer");
+        Instructor instructor = new Instructor(1L,"james","buckland","01895430027",login,address);
+        Course course = new Course(1L,"Course1","Type2",instructor);
         this.entityManager.merge(new Customer(1L,"James","Buckland",
                 new Date(16/11/1998),"j@gmail.com","01735432576",
                 true,(float)13.0,false,(float)5.0,"Cardiff",
-                true, login, address));
+                true, login, address,course));
         List<Customer> customerList = this.customerRepoJPA.findBySearchTerm("Buckland");
         assertThat(customerList.size()).isEqualTo(1);
     }

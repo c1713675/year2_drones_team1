@@ -35,7 +35,8 @@ public class LoginController {
 
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public ModelAndView getLogin(Model model) {
+    public ModelAndView getLogin(Model model,HttpServletResponse response) {
+        response.addCookie (new Cookie("Access", null));
         Login login = new Login();
         model.addAttribute("login", login);
         return new ModelAndView("login", model.asMap());

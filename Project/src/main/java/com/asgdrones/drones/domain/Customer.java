@@ -65,9 +65,9 @@ public class Customer {
     @JoinColumn(name = "address_AddressID")
     private Address address;
 //
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "course_CourseID")
-//    private Course course;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_CourseID")
+    private Course course;
 
 
 
