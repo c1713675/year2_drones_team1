@@ -23,7 +23,10 @@ public class RegisterService implements RegisterServiceInterface {
 
     @Override
     public void upload(Address address, Drone drone, Customer customer, Login login) {
-        Course course = new Course(null,"","",new Instructor());
+        Address instructorAddress = new Address(null,"1234567","Cardiff","123 Street",4,"");
+        Login instructorLogin = new Login(null,"instructor","test","test");
+        Instructor instructor = new Instructor(null,"null","null","11111111111",login,address);
+        Course course = new Course(null,"","",instructor);
         Drone newDrone = new Drone(null, drone.getManufacturer(), drone.getModel());
         Login newLogin = new Login(null, "customer", login.getUsername(), login.getPassword());
         Customer newCustomer = new Customer(null, customer.getFirstName(),
