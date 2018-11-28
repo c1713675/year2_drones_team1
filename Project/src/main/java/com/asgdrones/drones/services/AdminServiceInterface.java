@@ -11,7 +11,7 @@ public interface AdminServiceInterface {
     public String GetAdminPostCode(Long loginID);
     public String GetAdminCity(Long loginID);
     public String GetAdminStreet(Long loginID);
-    public String GetAdminHouseNumber(Long loginID);
+    public Integer GetAdminHouseNumber(Long loginID);
     public String GetAdminHouseName(Long loginID);
     public String getAdminName(Long adminId);
     public Admin getAdmin (Long loginID);

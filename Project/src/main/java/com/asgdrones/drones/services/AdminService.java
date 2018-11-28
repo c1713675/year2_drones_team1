@@ -89,16 +89,11 @@ public class AdminService implements AdminServiceInterface {
     }
 
     @Override
-    public String GetAdminHouseNumber(Long loginID) {
+    public Integer GetAdminHouseNumber(Long loginID) {
         Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
         Address address = adminDetails.getAddress();
-        if (address.getHouseNumber().equals(null)){
-            String houseNumber = "";
+            Integer houseNumber = address.getHouseNumber();
             return houseNumber;
-        }else {
-            String houseNumber = String.valueOf(address.getHouseNumber());
-            return houseNumber;
-        }
     }
 
     @Override

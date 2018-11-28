@@ -32,6 +32,6 @@ public class Instructor {
 
 //    ******** add this later ***********
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_address")
+    @JoinColumn(name = "address_addressID")
     private Address address;
 }
