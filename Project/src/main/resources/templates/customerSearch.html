@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet"  th:href="@{/css/admin.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -24,7 +24,8 @@
     </thead>
     <tbody>
     <tr th:each="customer: ${customers}">
-        <td><span th:text="${customer.firstName} +' '+ ${customer.lastName}">Customer Name</span></td>
+        <td><a th:href="@{/customer/{customerID}/course_progression(customerID= ${customer.id})}"><span
+                th:text="${customer.firstName} +' '+ ${customer.lastName}">Customer Name</span></a></td>
         <td><span th:text="${customer.dob}"> </span></td>
         <td><span th:text="${customer.email}"></span></td>
         <td><span th:text="${customer.phoneNumber}"></span></td>

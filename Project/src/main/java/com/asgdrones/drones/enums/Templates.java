@@ -6,6 +6,7 @@ public enum Templates {
     CUSTOMER_ACCOUNT("customerAccount"),
     ADMIN_ACCOUNT("adminAccount"),
     FEEDBACK("feedback"),
+    CUSTOMER_PROGRESSION("customerProgression"),
     ACCESS_DENIED("accessDenied");
 
     private final String name;
