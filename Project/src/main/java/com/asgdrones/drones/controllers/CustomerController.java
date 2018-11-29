@@ -30,10 +30,16 @@ public class CustomerController {
                                      HttpServletRequest request,
                                      @PathVariable("customerUsername") String customerUsername) {
         access = request.getCookies();
-        if (access[0].getValue().equals("customer")) {
-            page = Templates.CUSTOMER_ACCOUNT;
-        } else {
-            page = Templates.ACCESS_DENIED;
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("customer")) {
+                    page = Templates.CUSTOMER_ACCOUNT;
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
         }
         return new ModelAndView(page.toString(), model.asMap());
     }

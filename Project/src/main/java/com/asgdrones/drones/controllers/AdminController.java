@@ -39,33 +39,39 @@ public class AdminController {
                                      HttpServletRequest request,
                                      @PathVariable("loginID") Long loginID) {
         access = request.getCookies();
-        if (access[0].getValue().equals("admin")) {
-            page = Templates.ADMIN_ACCOUNT;
-            Admin adminDetails = adminService.getAdmin(loginID);
-            String name = adminService.getAdminName(loginID);
-            String postCode = adminService.GetAdminPostCode(loginID);
-            String city = adminService.GetAdminCity(loginID);
-            String street = adminService.GetAdminStreet(loginID);
-            Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
-            List<Customer> customerList = adminService.getCustomers();
-            System.out.println(customerList.size());
-            System.out.println(Arrays.deepToString(new List[]{customerList}));
-            String search = new String ();
-            model.addAttribute("AdminName", name);
-            model.addAttribute("postcode", postCode);
-            model.addAttribute("city", city);
-            model.addAttribute("street", street);
-            model.addAttribute("houseNumber", houseNumber);
-            model.addAttribute("customers", customerList);
-            model.addAttribute("search",search);
-        } else {
-            page = Templates.ACCESS_DENIED;
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("admin")) {
+                    page = Templates.ADMIN_ACCOUNT;
+                    Admin adminDetails = adminService.getAdmin(loginID);
+                    String name = adminService.getAdminName(loginID);
+                    String postCode = adminService.GetAdminPostCode(loginID);
+                    String city = adminService.GetAdminCity(loginID);
+                    String street = adminService.GetAdminStreet(loginID);
+                    Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
+                    List<Customer> customerList = adminService.getCustomers();
+                    System.out.println(customerList.size());
+                    System.out.println(Arrays.deepToString(new List[]{customerList}));
+                    String search = new String();
+                    model.addAttribute("AdminName", name);
+                    model.addAttribute("postcode", postCode);
+                    model.addAttribute("city", city);
+                    model.addAttribute("street", street);
+                    model.addAttribute("houseNumber", houseNumber);
+                    model.addAttribute("customers", customerList);
+                    model.addAttribute("search", search);
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
         }
         return new ModelAndView(page.toString(), model.asMap());
     }
 
     @RequestMapping(value = "admin_search", method = RequestMethod.POST)
-    public ModelAndView customerSearch(@RequestParam (value = "search", required = false)String searchQuery,
+    public ModelAndView customerSearch(@RequestParam(value = "search", required = false) String searchQuery,
                                        Model model) {
         List<Customer> customerList = adminService.searchCustomers(searchQuery);
         System.out.println(searchQuery);

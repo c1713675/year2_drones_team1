@@ -20,18 +20,25 @@ public class InstructorController {
     private InstructorRepoJPA instructorRepoJPA;
 
     @Autowired
-    InstructorController(InstructorRepoJPA iRepo){
-      instructorRepoJPA = iRepo;
+    InstructorController(InstructorRepoJPA iRepo) {
+        instructorRepoJPA = iRepo;
     }
+
     @RequestMapping(value = "instructor/{instructorUsername}", method = RequestMethod.GET)
     public ModelAndView instructor(Model model,
                                    HttpServletRequest request,
-                                   @PathVariable("instructorUsername") String instructorUsername){
+                                   @PathVariable("instructorUsername") String instructorUsername) {
         access = request.getCookies();
-        if (access[0].getValue().equals("instructor")){
-            page = Templates.INSTRUCTOR_ACCOUNT;
-        }else {
-            page = Templates.ACCESS_DENIED;
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("instructor")) {
+                    page = Templates.INSTRUCTOR_ACCOUNT;
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
         }
         return new ModelAndView(page.toString(), model.asMap());
     }
