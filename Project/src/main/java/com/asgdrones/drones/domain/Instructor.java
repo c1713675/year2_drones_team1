@@ -23,14 +23,13 @@ public class Instructor {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "phonenumber")
+    @Column(name = "PhoneNumber")
     private String phoneNumber;
 
     @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "login_loginID")
     private Login login;
 
-//    ******** add this later ***********
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_addressID")
     private Address address;

@@ -6,6 +6,9 @@ import com.asgdrones.drones.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Service
 public class RegisterService implements RegisterServiceInterface {
     private CustomerRepoJPA customerRepoJPA;
@@ -26,7 +29,7 @@ public class RegisterService implements RegisterServiceInterface {
         Address instructorAddress = new Address(null,"1234567","Cardiff","123 Street",4,"");
         Login instructorLogin = new Login(null,"instructor","test","test");
         Instructor instructor = new Instructor(null,"null","null","11111111111",instructorLogin,instructorAddress);
-        Course course = new Course(null,"","",instructor);
+        Course course = new Course(null,"","","cardiff",Date.valueOf(LocalDate.now()),instructor);
         Drone newDrone = new Drone(null, drone.getManufacturer(), drone.getModel());
         Login newLogin = new Login(null, "customer", login.getUsername(), login.getPassword());
         Customer newCustomer = new Customer(null, customer.getFirstName(),
@@ -36,9 +39,9 @@ public class RegisterService implements RegisterServiceInterface {
                 customer.getDisability(), customer.getEnglishSpeakingLevel(), customer.getPreferredGSLocation(),
                 customer.getInsured(), newLogin, newDrone, address, course);
         customerRepoJPA.save(newCustomer);
-//        droneRepoJPA.save(newDrone);
-//        loginRepoJPA.save(newLogin);
-//        addressRepoJPA.save(address);
+        droneRepoJPA.save(newDrone);
+        loginRepoJPA.save(newLogin);
+        addressRepoJPA.save(address);
 
     }
 }
