@@ -4,11 +4,13 @@ import com.asgdrones.drones.domain.Course;
 import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.enums.Courses;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
+import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class CustomerService implements CustomerServiceInterface {
@@ -18,6 +20,11 @@ public class CustomerService implements CustomerServiceInterface {
     @Autowired
     CustomerService(CustomerRepoJPA cRepo) {
         customerRepoJPA = cRepo;
+    }
+
+    @Override
+    public List<Customer> findAllById(Iterable<Long> id) {
+        return customerRepoJPA.findAllById(id);
     }
 
     @Override

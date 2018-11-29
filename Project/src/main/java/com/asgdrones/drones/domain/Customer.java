@@ -59,13 +59,9 @@ public class Customer {
     @Column(name = "insured")
     private Boolean insured;
 
-
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "login_LoginID")
     private Login login;
-
-
-//      ******* add these later *********
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "drone_droneid")
@@ -76,7 +72,7 @@ public class Customer {
     @JoinColumn(name = "address_AddressID")
     private Address address;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "course_CourseID")
     private Course course;
 

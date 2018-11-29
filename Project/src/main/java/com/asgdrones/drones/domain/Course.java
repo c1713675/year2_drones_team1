@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -17,13 +18,19 @@ public class Course {
     @Column(name = "courseid")
     private Long id;
 
-    @Column(name = "coursename")
+    @Column(name = "CourseName")
     private String courseName;
 
-    @Column(name = "coursetype")
-    private String CourseType;
+    @Column(name = "CourseType")
+    private String courseType;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "instructor_instructorID")
+    @Column(name = "CourseLocation")
+    private String courseLocation;
+
+    @Column(name = "CourseDate")
+    private Date courseDate;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Instructor_InstructorID")
     private Instructor instructor;
 }

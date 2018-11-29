@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LoginRepoJPA extends JpaRepository<Login,Long>, LoginRepo {
+public interface LoginRepoJPA extends JpaRepository<Login, Long>, LoginRepo {
 
-public List<Login> findByUsernameAndPassword(String username, String password);
+    public List<Login> findByUsernameAndPassword(String username, String password);
+
+    public Optional<Login> findByUsername(String username);
+
 }
