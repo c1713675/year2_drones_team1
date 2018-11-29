@@ -21,11 +21,9 @@ public class Course {
     private String courseName;
 
     @Column(name = "coursetype")
-    private String courseType;
+    private String CourseType;
 
-    @Column(name = "instructor_instructorID")
-    private int instructorID;
-
-
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "instructor_instructorID")
+    private Instructor instructor;
 }

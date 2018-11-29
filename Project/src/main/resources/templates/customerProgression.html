@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"  th:href="@{/css/progression.css}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myChart"></canvas>
+<script th:inline = "javascript" >
+    /*<![CDATA[*/
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: /*[[${name}]]*/,
+            datasets: [{
+                label: 'Course progression',
+                data: /*[[${progression}]]*/ ,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                        max: 3,
+                        min: 0,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+    /*]]>*/
+</script>
+</body>
+</html>
