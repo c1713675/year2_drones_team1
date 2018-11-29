@@ -25,7 +25,7 @@ public class RegisterService implements RegisterServiceInterface {
     public void upload(Address address, Drone drone, Customer customer, Login login) {
         Address instructorAddress = new Address(null,"1234567","Cardiff","123 Street",4,"");
         Login instructorLogin = new Login(null,"instructor","test","test");
-        Instructor instructor = new Instructor(null,"null","null","11111111111",login,address);
+        Instructor instructor = new Instructor(null,"null","null","11111111111",instructorLogin,instructorAddress);
         Course course = new Course(null,"","",instructor);
         Drone newDrone = new Drone(null, drone.getManufacturer(), drone.getModel());
         Login newLogin = new Login(null, "customer", login.getUsername(), login.getPassword());
