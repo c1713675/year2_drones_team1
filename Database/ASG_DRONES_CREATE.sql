@@ -713,6 +713,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+
 drop procedure if exists `ErrorHandling`;
 Delimiter $$
 create procedure ErrorHandling()
@@ -739,6 +740,8 @@ DECLARE CONTINUE HANDLER
     SELECT 'Data entry is too long'; 
 end$$
 
+
+
 DELIMITER ;
 SELECT * FROM address;
 select * from creation;
@@ -750,3 +753,114 @@ select * from qualification;
 select * from course;
 select * from drone;
 select * from login;
+
+CREATE VIEW adminadetails AS SELECT l.Username, l.Access, a.AdminID, a.FirstName, a.LastName
+FROM administrator
+INNER JOIN login l ON l.LoginID=a.AdminID
+GROUP BY a.AdminID;
+
+DROP procedure IF EXISTS AdministratorAccess;
+
+DELIMITER 
+
+CREATE PROCEDURE AdministratorAccess (login_LoginID int)
+IF ISNULL(login_LoginID) THEN
+
+
+SELECT admindetails
+
+ELSE
+
+CALL AdministratorAccess(loginID);
+
+END IF;
+
+
+END
+
+DELIMITER ;
+
+
+
+CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
+FROM instructor
+INNER JOIN login l ON l.LoginID=i.InstructorID
+GROUP BY a.AdminID;
+
+DROP procedure IF EXISTS InstrcutorAccess;
+
+DELIMITER 
+
+CREATE PROCEDURE InstrcutorAccess (login_LoginID int)
+IF ISNULL(login_LoginID) THEN
+
+
+SELECT instructordetails
+
+ELSE
+
+CALL InstructorAccess(loginID);
+
+END IF;
+
+
+END
+
+DELIMITER ;
+
+
+CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
+FROM instructor
+INNER JOIN login l ON l.LoginID=i.InstructorID
+GROUP BY a.AdminID;
+
+DROP procedure IF EXISTS InstrcutorAccess;
+
+DELIMITER 
+
+CREATE PROCEDURE InstrcutorAccess (login_LoginID int)
+IF ISNULL(login_LoginID) THEN
+
+
+SELECT instructordetails
+
+ELSE
+
+CALL InstructorAccess(loginID);
+
+END IF;
+
+
+END
+
+DELIMITER ;
+
+
+
+CREATE VIEW customerdetails AS SELECT l.Username, l.Access, c.CustomerID, c.FirstName, c.LastName
+FROM customer
+INNER JOIN login l ON l.LoginID=c.CustomerID
+GROUP BY c.CustomerID;
+
+DROP procedure IF EXISTS CustomerAccess;
+
+DELIMITER 
+
+CREATE PROCEDURE CustomerAccess (login_LoginID int)
+IF ISNULL(login_LoginID) THEN
+
+
+SELECT customerdetails
+
+ELSE
+
+CALL CustomerAccess(loginID);
+
+END IF;
+
+
+END
+
+DELIMITER ;
+
+
