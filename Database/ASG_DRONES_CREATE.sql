@@ -772,8 +772,8 @@ select * from course;
 select * from drone;
 select * from login;
 
-CREATE VIEW adminadetails AS SELECT l.Username, l.Access, a.AdminID, a.FirstName, a.LastName
-FROM administrator
+CREATE VIEW adminadetails  AS SELECT l.Username, l.Access, a.AdminID, a.FirstName, a.LastName
+FROM administrator a
 INNER JOIN login l ON l.LoginID=a.AdminID
 GROUP BY a.AdminID;
 
@@ -801,9 +801,9 @@ DELIMITER ;
 
 
 CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
-FROM instructor
+FROM instructor i
 INNER JOIN login l ON l.LoginID=i.InstructorID
-GROUP BY a.AdminID;
+GROUP BY i.InstructorID;
 
 DROP procedure IF EXISTS InstrcutorAccess;
 
@@ -828,9 +828,9 @@ DELIMITER ;
 
 
 CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
-FROM instructor
+FROM instructor i
 INNER JOIN login l ON l.LoginID=i.InstructorID
-GROUP BY a.AdminID;
+GROUP BY i.InstructorID;
 
 DROP procedure IF EXISTS InstrcutorAccess;
 
