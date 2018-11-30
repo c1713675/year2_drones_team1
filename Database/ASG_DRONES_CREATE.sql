@@ -245,9 +245,424 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+-- -----------------------------------------------------
+-- Table `asg`.`version`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`version`;
+CREATE TABLE `asg`.`version` (
+  `dbversion` INT UNSIGNED NOT NULL,
+  `active` TINYINT NOT NULL,
+  `description` VARCHAR(45) NULL,
+  PRIMARY KEY (`dbversion`),
+  UNIQUE INDEX `dbversion_UNIQUE` (`dbversion` ASC));
+
+
+###################################################
+#####################TRIGGERS######################
+###################################################
+
+
+###################################################
+######################INSERT#######################
+###################################################
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.address_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`address_AFTER_INSERT`
+AFTER INSERT ON `address`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into address table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.administrator_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`administrator_AFTER_INSERT`
+AFTER INSERT ON `administrator`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into administrator table');
+END IF;
+
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.course_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`course_AFTER_INSERT`
+AFTER INSERT ON `course`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into course table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.customer_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`customer_AFTER_INSERT`
+AFTER INSERT ON `customer`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into customer table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.drone_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`drone_AFTER_INSERT`
+AFTER INSERT ON `drone`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into drone table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.instructor_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`instructor_AFTER_INSERT`
+AFTER INSERT ON `instructor`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into instructor table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.login_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`login_AFTER_INSERT`
+AFTER INSERT ON `login`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into login table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.qualification_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`qualification_AFTER_INSERT`
+AFTER INSERT ON `qualification`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into qualification table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.results_AFTER_INSERT$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`results_AFTER_INSERT`
+AFTER INSERT ON `results`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into results table');
+END IF;
+
+END$$
+DELIMITER ;
+
+
+###################################################
+#####################UPDATE######################
+###################################################
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.address_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`address_AFTER_UPDATE`
+AFTER UPDATE ON `address`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in address table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.administrator_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`administrator_AFTER_UPDATE`
+AFTER UPDATE ON `administrator`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in administrator table');
+END IF;
+
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.course_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`course_AFTER_UPDATE`
+AFTER UPDATE ON `course`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in course table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.customer_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`customer_AFTER_UPDATE`
+AFTER UPDATE ON `customer`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in customer table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.drone_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`drone_AFTER_UPDATE`
+AFTER UPDATE ON `drone`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in drone table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.instructor_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`instructor_AFTER_UPDATE`
+AFTER UPDATE ON `instructor`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in instructor table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.login_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`login_AFTER_UPDATE`
+AFTER UPDATE ON `login`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in login table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.qualification_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`qualification_AFTER_UPDATE`
+AFTER UPDATE ON `qualification`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in qualification table');
+END IF;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS asg.results_AFTER_UPDATE$$
+CREATE DEFINER = CURRENT_USER
+TRIGGER `asg`.`results_AFTER_UPDATE`
+AFTER UPDATE ON `results`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in results table');
+END IF;
+
+END$$
+DELIMITER ;
+
+
+###################################################
+#####################Test Data#####################
+###################################################
+
+INSERT INTO version (dbversion, active, description) VALUES (1, true, 'Creating first version');
+SELECT * FROM version;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
 
 SELECT * FROM address;
 select * from customer;
