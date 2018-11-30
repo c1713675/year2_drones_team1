@@ -1,4 +1,5 @@
 -- MySQL Workbench Forward Engineering
+
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
@@ -20,11 +21,9 @@ USE `asg` ;
 -- -----------------------------------------------------
 -- Table `asg`.`address`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`address` ;
-
 CREATE TABLE IF NOT EXISTS `asg`.`address` (
   `AddressID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Postcode` VARCHAR(7),
+  `Postcode` VARCHAR(7) NULL DEFAULT NULL,
   `City` VARCHAR(80) NULL DEFAULT NULL,
   `Street` VARCHAR(150) NOT NULL,
   `HouseNumber` INT(11) NULL DEFAULT NULL,
@@ -38,13 +37,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`login`
 -- -----------------------------------------------------
-
-
--- -----------------------------------------------------
--- Table `asg`.`login`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`login` ;
-
 CREATE TABLE IF NOT EXISTS `asg`.`login` (
   `LoginID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(20) NOT NULL,
@@ -59,20 +51,32 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
+-- Table `asg`.`Creation`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asg`.`Creation` (
+  `CreationID` INT NOT NULL,
+  `CreationDate` DATETIME NOT NULL,
+  `DeletionDate` DATETIME NOT NULL,
+  PRIMARY KEY (`CreationID`),
+  UNIQUE INDEX `CreationID_UNIQUE` (`CreationID` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `asg`.`administrator`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`administrator` ;
-
 CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
   `AdminID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
+  `Creation_CreationID` INT NOT NULL,
   PRIMARY KEY (`AdminID`),
   UNIQUE INDEX `AdminID_UNIQUE` (`AdminID` ASC),
   INDEX `fk_administrator_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_administrator_login1_idx` (`login_LoginID` ASC),
+  INDEX `fk_administrator_Creation1_idx` (`Creation_CreationID` ASC),
   CONSTRAINT `fk_administrator_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
@@ -82,7 +86,23 @@ CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_administrator_Creation1`
+    FOREIGN KEY (`Creation_CreationID`)
+    REFERENCES `asg`.`Creation` (`CreationID`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `asg`.`qualification`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asg`.`qualification` (
+  `QualificationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `QualificationName` VARCHAR(128) NOT NULL,
+  PRIMARY KEY (`QualificationID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -90,7 +110,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`instructor`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`instructor` ;
 CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
   `InstructorID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -98,10 +117,14 @@ CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
   `PhoneNumber` CHAR(11) NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
+  `Creation_CreationID` INT NOT NULL,
+  `qualification_QualificationID` INT(10) UNSIGNED NULL,
   PRIMARY KEY (`InstructorID`),
   UNIQUE INDEX `InstructorID_UNIQUE` (`InstructorID` ASC),
   INDEX `fk_Instructor_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_instructor_login1_idx` (`login_LoginID` ASC),
+  INDEX `fk_instructor_Creation1_idx` (`Creation_CreationID` ASC),
+  INDEX `fk_instructor_qualification1_idx` (`qualification_QualificationID` ASC),
   CONSTRAINT `fk_Instructor_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
@@ -111,6 +134,16 @@ CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_instructor_Creation1`
+    FOREIGN KEY (`Creation_CreationID`)
+    REFERENCES `asg`.`Creation` (`CreationID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_instructor_qualification1`
+    FOREIGN KEY (`qualification_QualificationID`)
+    REFERENCES `asg`.`qualification` (`QualificationID`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -119,14 +152,13 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`course`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`course` ;
 CREATE TABLE IF NOT EXISTS `asg`.`course` (
   `CourseID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `CourseName` VARCHAR(45) NOT NULL,
   `CourseType` VARCHAR(45) NOT NULL,
   `CourseLocation` VARCHAR(45) NOT NULL,
-  `CourseDate` DATE NULL,
-  `Instructor_InstructorID` INT(10) UNSIGNED NOT NULL,
+  `CourseDate` DATE NULL DEFAULT NULL,
+  `Instructor_InstructorID` INT(10) UNSIGNED NULL,
   PRIMARY KEY (`CourseID`),
   UNIQUE INDEX `CourseID_UNIQUE` (`CourseID` ASC),
   INDEX `fk_course_Instructor1_idx` (`Instructor_InstructorID` ASC),
@@ -142,20 +174,18 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`drone`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`drone` ;
-
 CREATE TABLE IF NOT EXISTS `asg`.`drone` (
   `DroneID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Manufacturer` VARCHAR(45) NOT NULL,
-  `Model` VARCHAR(45) NOT NULL,
+  `Manufacturer` VARCHAR(45) NULL,
+  `Model` VARCHAR(45) NULL,
   PRIMARY KEY (`DroneID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+
 -- -----------------------------------------------------
 -- Table `asg`.`customer`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`customer` ;
 CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `CandidateReferenceID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -165,14 +195,15 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `PhoneNumber` CHAR(11) NOT NULL,
   `Paid` TINYINT(1) NOT NULL,
   `HoursOfFlying` INT(11) NOT NULL,
-  `Disability` TINYTEXT NULL DEFAULT NULL,
-  `EnglishSpeakingLevel` FLOAT NULL DEFAULT NULL,
-  `PreferredGSLocation` TEXT NOT NULL,
-  `Insured` TINYINT(1) NOT NULL,
+  `Disability` TEXT NULL,
+  `EnglishSpeakingLevel` FLOAT NULL,
+  `PreferredGSLocation` TEXT NULL,
+  `Insured` TINYINT(1) NULL,
   `drone_DroneID` INT(10) UNSIGNED NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `course_CourseID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
+  `Creation_CreationID` INT NOT NULL,
   PRIMARY KEY (`CandidateReferenceID`),
   UNIQUE INDEX `CandidateReferenceID_UNIQUE` (`CandidateReferenceID` ASC),
   UNIQUE INDEX `Email_UNIQUE` (`Email` ASC),
@@ -180,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   INDEX `fk_customer_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_customer_course1_idx` (`course_CourseID` ASC),
   INDEX `fk_customer_login1_idx` (`login_LoginID` ASC),
+  INDEX `fk_customer_Creation1_idx` (`Creation_CreationID` ASC),
   CONSTRAINT `fk_customer_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
@@ -199,24 +231,10 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `asg`.`qualification`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`qualification` ;
-CREATE TABLE IF NOT EXISTS `asg`.`qualification` (
-  `QualificationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `QualificationName` VARCHAR(128) NOT NULL,
-  `Instructor_InstructorID` INT(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`QualificationID`),
-  INDEX `fk_qualification_Instructor1_idx` (`Instructor_InstructorID` ASC),
-  CONSTRAINT `fk_qualification_Instructor1`
-    FOREIGN KEY (`Instructor_InstructorID`)
-    REFERENCES `asg`.`instructor` (`InstructorID`)
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer_Creation1`
+    FOREIGN KEY (`Creation_CreationID`)
+    REFERENCES `asg`.`Creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -226,7 +244,6 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`results`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`results` ;
 CREATE TABLE IF NOT EXISTS `asg`.`results` (
   `ResultID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Mark` INT(11) NOT NULL,
@@ -244,9 +261,44 @@ CREATE TABLE IF NOT EXISTS `asg`.`results` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+USE `asg` ;
+
+-- -----------------------------------------------------
+-- procedure ErrorHandling
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `asg`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ErrorHandling`()
+BEGIN
+
+DECLARE CONTINUE HANDLER 
+    FOR 1292
+    SELECT 'The DATE that you provided is in an incorrect format.';
+    
+DECLARE CONTINUE HANDLER 
+	FOR 1062
+    SELECT 'You already have a row with this ID in the table.';
+    
+DECLARE CONTINUE HANDLER 
+	FOR 1146
+    SELECT 'This table does not exist ';
+    
+DECLARE CONTINUE HANDLER 
+	FOR 1071
+    SELECT 'Data entry is too large'; 
+
+DECLARE CONTINUE HANDLER 
+	FOR 1059
+    SELECT 'Data entry is too long'; 
+end$$
+
+DELIMITER ;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 drop procedure if exists `ErrorHandling`;
 Delimiter $$
