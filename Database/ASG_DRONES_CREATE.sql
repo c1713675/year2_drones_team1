@@ -23,7 +23,7 @@ USE `asg` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `asg`.`address` (
   `AddressID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Postcode` VARCHAR(7) NULL DEFAULT NULL,
+  `Postcode` VARCHAR(10) NULL DEFAULT NULL,
   `City` VARCHAR(80) NULL DEFAULT NULL,
   `Street` VARCHAR(150) NOT NULL,
   `HouseNumber` INT(11) NULL DEFAULT NULL,
@@ -711,8 +711,6 @@ SELECT * FROM version;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-<<<<<<< HEAD
-=======
 
 
 drop procedure if exists `ErrorHandling`;
@@ -742,7 +740,6 @@ DECLARE CONTINUE HANDLER
 end$$
 
 DELIMITER ;
->>>>>>> 64d98cc5a239cf30b722cfee6265e1b4b3c51762
 SELECT * FROM address;
 select * from creation;
 select * from customer;
