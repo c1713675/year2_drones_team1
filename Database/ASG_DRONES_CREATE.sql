@@ -261,6 +261,24 @@ CREATE TABLE IF NOT EXISTS `asg`.`results` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+DROP TABLE If EXISTS materialised_view_user_report;
+ 
+ CREATE TABLE `materialised_view_user_report` (
+  `Admins` INT(128) DEFAULT 0,
+  `Instructors` Int(128) DEFAULT 0,
+  `Customers` Int(128) DEFAULT 0,
+  `Updatedon` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO materialised_view_user_report
+select (select sum(Access) from login where Access = 'Admin') as Admin,
+(select sum(Access) from login where Access = 'Instructor') as Instructor,
+(select sum(Access) from login where Access = 'Customer') as Customer,
+now();
+
+Select * from materialised_view_user_report;
+
+
 USE `asg` ;
 
 -- -----------------------------------------------------
