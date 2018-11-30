@@ -54,7 +54,7 @@ DEFAULT CHARACTER SET = latin1;
 -- Table `asg`.`Creation`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `asg`.`Creation` (
-  `CreationID` INT NOT NULL,
+  `CreationID` INT NOT NULL AUTO_INCREMENT,
   `CreationDate` DATETIME NOT NULL,
   `DeletionDate` DATETIME NOT NULL,
   PRIMARY KEY (`CreationID`),
@@ -272,25 +272,30 @@ USE `asg`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ErrorHandling`()
 BEGIN
 
-DECLARE CONTINUE HANDLER 
+DECLARE EXIT HANDLER 
     FOR 1292
-    SELECT 'The DATE that you provided is in an incorrect format.';
+    SELECT 'The DATE that you provided is in an incorrect format.'
+    ROLLBACK;
     
-DECLARE CONTINUE HANDLER 
+DECLARE EXIT HANDLER 
 	FOR 1062
-    SELECT 'You already have a row with this ID in the table.';
+    SELECT 'You already have a row with this ID in the table.'
+    ROLLBACK;
     
-DECLARE CONTINUE HANDLER 
+DECLARE EXIT HANDLER 
 	FOR 1146
-    SELECT 'This table does not exist ';
+    SELECT 'This table does not exist '
+    ROLLBACK;
     
-DECLARE CONTINUE HANDLER 
+DECLARE EXIT HANDLER 
 	FOR 1071
-    SELECT 'Data entry is too large'; 
+    SELECT 'Data entry is too large'
+    ROLLBACK; 
 
-DECLARE CONTINUE HANDLER 
+DECLARE EXIT HANDLER 
 	FOR 1059
-    SELECT 'Data entry is too long'; 
+    SELECT 'Data entry is too long'
+    ROLLBACK; 
 end$$
 
 DELIMITER ;
@@ -298,38 +303,8 @@ DELIMITER ;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-drop procedure if exists `ErrorHandling`;
-Delimiter $$
-create procedure ErrorHandling()
-BEGIN
-
-DECLARE CONTINUE HANDLER 
-    FOR 1292
-    SELECT 'The DATE that you provided is in an incorrect format.';
-    
-DECLARE CONTINUE HANDLER 
-	FOR 1062
-    SELECT 'You already have a row with this ID in the table.';
-    
-DECLARE CONTINUE HANDLER 
-	FOR 1146
-    SELECT 'This table does not exist ';
-    
-DECLARE CONTINUE HANDLER 
-	FOR 1071
-    SELECT 'Data entry is too large'; 
-
-DECLARE CONTINUE HANDLER 
-	FOR 1059
-    SELECT 'Data entry is too long'; 
-end$$
-
-DELIMITER ;
-  
-
 SELECT * FROM address;
+select * from creation;
 select * from customer;
 select * from results;
 select * from instructor;
