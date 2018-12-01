@@ -774,7 +774,7 @@ select * from login;
 
 CREATE VIEW adminadetails  AS SELECT l.Username, l.Access, a.AdminID, a.FirstName, a.LastName
 FROM administrator a
-INNER JOIN login l ON l.LoginID=a.AdminID
+INNER JOIN login l ON l.LoginID=a.login_LoginID
 GROUP BY a.AdminID;
 
 DROP procedure IF EXISTS AdministratorAccess;
@@ -802,34 +802,7 @@ DELIMITER ;
 
 CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
 FROM instructor i
-INNER JOIN login l ON l.LoginID=i.InstructorID
-GROUP BY i.InstructorID;
-
-DROP procedure IF EXISTS InstrcutorAccess;
-
-DELIMITER 
-
-CREATE PROCEDURE InstrcutorAccess (login_LoginID int)
-IF ISNULL(login_LoginID) THEN
-
-
-SELECT instructordetails
-
-ELSE
-
-CALL InstructorAccess(loginID);
-
-END IF;
-
-
-END
-
-DELIMITER ;
-
-
-CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
-FROM instructor i
-INNER JOIN login l ON l.LoginID=i.InstructorID
+INNER JOIN login l ON l.LoginID=i.login_LoginID
 GROUP BY i.InstructorID;
 
 DROP procedure IF EXISTS InstrcutorAccess;
@@ -855,10 +828,10 @@ DELIMITER ;
 
 
 
-CREATE VIEW customerdetails AS SELECT l.Username, l.Access, c.CustomerID, c.FirstName, c.LastName
-FROM customer
-INNER JOIN login l ON l.LoginID=c.CustomerID
-GROUP BY c.CustomerID;
+CREATE VIEW customerdetails AS SELECT l.Username, l.Access, c.CandidateReferenceID, c.FirstName, c.LastName
+FROM customer c
+INNER JOIN login l ON l.LoginID=c.login_LoginID
+GROUP BY c.CandidateReferenceID;
 
 DROP procedure IF EXISTS CustomerAccess;
 
