@@ -16,19 +16,19 @@ public class EmailController {
 
     @RequestMapping("/simpleemail")
     @ResponseBody
-    String home() {
+    String home(String email) {
         try {
-            sendEmail();
+            sendEmail(email);
             return "Email Sent!";
         } catch (Exception ex) {
             return "Error in sending email: " + ex;
         }
     }
 
-    private void sendEmail() throws Exception {
+    private void sendEmail(String email) throws Exception {
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        helper.setTo("jamesbuckland98@gmail.com");
+        helper.setTo(email);
         helper.setText("How are you?");
         helper.setSubject("Hi");
         sender.send(message);

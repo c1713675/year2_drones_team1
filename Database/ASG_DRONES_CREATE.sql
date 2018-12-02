@@ -21,6 +21,8 @@ USE `asg` ;
 -- -----------------------------------------------------
 -- Table `asg`.`address`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`address` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`address` (
   `AddressID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Postcode` VARCHAR(10) NULL DEFAULT NULL,
@@ -31,12 +33,31 @@ CREATE TABLE IF NOT EXISTS `asg`.`address` (
   PRIMARY KEY (`AddressID`),
   UNIQUE INDEX `AddressID_UNIQUE` (`AddressID` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 11
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `asg`.`creation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`creation` ;
+
+CREATE TABLE IF NOT EXISTS `asg`.`creation` (
+  `CreationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `CreationDate` DATETIME NOT NULL,
+  `DeletionDate` DATETIME NOT NULL,
+  PRIMARY KEY (`CreationID`),
+  UNIQUE INDEX `CreationID_UNIQUE` (`CreationID` ASC))
+  AUTO_INCREMENT = 9
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
 -- Table `asg`.`login`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`login` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`login` (
   `LoginID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(20) NOT NULL,
@@ -46,50 +67,39 @@ CREATE TABLE IF NOT EXISTS `asg`.`login` (
   UNIQUE INDEX `LoginID_UNIQUE` (`LoginID` ASC),
   UNIQUE INDEX `Username_UNIQUE` (`Username` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `asg`.`Creation`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `asg`.`Creation` (
-  `CreationID` INT NOT NULL AUTO_INCREMENT,
-  `CreationDate` DATETIME NOT NULL,
-  `DeletionDate` DATETIME NOT NULL,
-  PRIMARY KEY (`CreationID`),
-  UNIQUE INDEX `CreationID_UNIQUE` (`CreationID` ASC))
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `asg`.`administrator`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`administrator` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
   `AdminID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
   `LastName` VARCHAR(45) NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
-  `Creation_CreationID` INT NOT NULL,
+  `creation_CreationID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`AdminID`),
   UNIQUE INDEX `AdminID_UNIQUE` (`AdminID` ASC),
   INDEX `fk_administrator_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_administrator_login1_idx` (`login_LoginID` ASC),
-  INDEX `fk_administrator_Creation1_idx` (`Creation_CreationID` ASC),
+  INDEX `fk_administrator_creation1_idx` (`creation_CreationID` ASC),
   CONSTRAINT `fk_administrator_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `fk_administrator_creation1`
+    FOREIGN KEY (`creation_CreationID`)
+    REFERENCES `asg`.`creation` (`CreationID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_administrator_login1`
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_administrator_Creation1`
-    FOREIGN KEY (`Creation_CreationID`)
-    REFERENCES `asg`.`Creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -99,6 +109,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`qualification`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`qualification` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`qualification` (
   `QualificationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `QualificationName` VARCHAR(128) NOT NULL,
@@ -110,6 +122,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`instructor`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`instructor` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
   `InstructorID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -117,27 +131,27 @@ CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
   `PhoneNumber` CHAR(11) NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
-  `Creation_CreationID` INT NOT NULL,
-  `qualification_QualificationID` INT(10) UNSIGNED NULL,
+  `qualification_QualificationID` INT(10) UNSIGNED NULL DEFAULT NULL,
+  `creation_CreationID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`InstructorID`),
   UNIQUE INDEX `InstructorID_UNIQUE` (`InstructorID` ASC),
   INDEX `fk_Instructor_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_instructor_login1_idx` (`login_LoginID` ASC),
-  INDEX `fk_instructor_Creation1_idx` (`Creation_CreationID` ASC),
   INDEX `fk_instructor_qualification1_idx` (`qualification_QualificationID` ASC),
+  INDEX `fk_instructor_creation1_idx` (`creation_CreationID` ASC),
   CONSTRAINT `fk_Instructor_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `fk_instructor_creation1`
+    FOREIGN KEY (`creation_CreationID`)
+    REFERENCES `asg`.`creation` (`CreationID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_instructor_login1`
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_instructor_Creation1`
-    FOREIGN KEY (`Creation_CreationID`)
-    REFERENCES `asg`.`Creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_instructor_qualification1`
@@ -152,13 +166,15 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`course`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`course` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`course` (
   `CourseID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `CourseName` VARCHAR(45) NOT NULL,
   `CourseType` VARCHAR(45) NOT NULL,
   `CourseLocation` VARCHAR(45) NOT NULL,
   `CourseDate` DATE NULL DEFAULT NULL,
-  `Instructor_InstructorID` INT(10) UNSIGNED NULL,
+  `Instructor_InstructorID` INT(10) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`CourseID`),
   UNIQUE INDEX `CourseID_UNIQUE` (`CourseID` ASC),
   INDEX `fk_course_Instructor1_idx` (`Instructor_InstructorID` ASC),
@@ -174,10 +190,12 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`drone`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`drone` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`drone` (
   `DroneID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Manufacturer` VARCHAR(45) NULL,
-  `Model` VARCHAR(45) NULL,
+  `Manufacturer` VARCHAR(45) NULL DEFAULT NULL,
+  `Model` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`DroneID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -186,6 +204,8 @@ DEFAULT CHARACTER SET = latin1;
 -- -----------------------------------------------------
 -- Table `asg`.`customer`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`customer` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `CandidateReferenceID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `FirstName` VARCHAR(45) NOT NULL,
@@ -195,23 +215,23 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `PhoneNumber` CHAR(11) NOT NULL,
   `Paid` TINYINT(1) NOT NULL,
   `HoursOfFlying` INT(11) NOT NULL,
-  `Disability` TEXT NULL,
-  `EnglishSpeakingLevel` FLOAT NULL,
-  `PreferredGSLocation` TEXT NULL,
-  `Insured` TINYINT(1) NULL,
+  `Disability` TEXT NULL DEFAULT NULL,
+  `EnglishSpeakingLevel` FLOAT NULL DEFAULT NULL,
+  `PreferredGSLocation` TEXT NULL DEFAULT NULL,
+  `Insured` TINYINT(1) NULL DEFAULT NULL,
   `drone_DroneID` INT(10) UNSIGNED NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `course_CourseID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
-  `Creation_CreationID` INT NOT NULL,
-  PRIMARY KEY (`CandidateReferenceID`),
+  `creation_CreationID` INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`CandidateReferenceID`, `creation_CreationID`),
   UNIQUE INDEX `CandidateReferenceID_UNIQUE` (`CandidateReferenceID` ASC),
   UNIQUE INDEX `Email_UNIQUE` (`Email` ASC),
   INDEX `fk_customer_drone1_idx` (`drone_DroneID` ASC),
   INDEX `fk_customer_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_customer_course1_idx` (`course_CourseID` ASC),
   INDEX `fk_customer_login1_idx` (`login_LoginID` ASC),
-  INDEX `fk_customer_Creation1_idx` (`Creation_CreationID` ASC),
+  INDEX `fk_customer_creation1_idx` (`creation_CreationID` ASC),
   CONSTRAINT `fk_customer_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
@@ -232,9 +252,9 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
     REFERENCES `asg`.`login` (`LoginID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_customer_Creation1`
-    FOREIGN KEY (`Creation_CreationID`)
-    REFERENCES `asg`.`Creation` (`CreationID`)
+  CONSTRAINT `fk_customer_creation1`
+    FOREIGN KEY (`creation_CreationID`)
+    REFERENCES `asg`.`creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -242,8 +262,24 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
+-- Table `asg`.`materialised_view_user_report`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`materialised_view_user_report` ;
+
+CREATE TABLE IF NOT EXISTS `asg`.`materialised_view_user_report` (
+  `Admins` INT(128) NULL DEFAULT '0',
+  `Instructors` INT(128) NULL DEFAULT '0',
+  `Customers` INT(128) NULL DEFAULT '0',
+  `Updatedon` DATETIME NOT NULL)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `asg`.`results`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`results` ;
+
 CREATE TABLE IF NOT EXISTS `asg`.`results` (
   `ResultID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Mark` INT(11) NOT NULL,
@@ -261,480 +297,48 @@ CREATE TABLE IF NOT EXISTS `asg`.`results` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-DROP TABLE If EXISTS materialised_view_user_report;
- 
- CREATE TABLE `materialised_view_user_report` (
-  `Admins` INT(128) DEFAULT 0,
-  `Instructors` Int(128) DEFAULT 0,
-  `Customers` Int(128) DEFAULT 0,
-  `Updatedon` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO materialised_view_user_report
-select (select sum(Access) from login where Access = 'Admin') as Admin,
-(select sum(Access) from login where Access = 'Instructor') as Instructor,
-(select sum(Access) from login where Access = 'Customer') as Customer,
-now();
+-- -----------------------------------------------------
+-- Table `asg`.`version`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`version` ;
 
-Select * from materialised_view_user_report;
-
+CREATE TABLE IF NOT EXISTS `asg`.`version` (
+  `dbversion` INT(10) UNSIGNED NOT NULL,
+  `active` TINYINT(4) NOT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`dbversion`),
+  UNIQUE INDEX `dbversion_UNIQUE` (`dbversion` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
 USE `asg` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `asg`.`adminadetails`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asg`.`adminadetails` (`Username` INT, `Access` INT, `AdminID` INT, `FirstName` INT, `LastName` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `asg`.`customerdetails`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asg`.`customerdetails` (`Username` INT, `Access` INT, `CandidateReferenceID` INT, `FirstName` INT, `LastName` INT);
+
+-- -----------------------------------------------------
+-- Placeholder table for view `asg`.`instructordetails`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `asg`.`instructordetails` (`Username` INT, `Access` INT, `InstructorID` INT, `FirstName` INT, `LastName` INT);
 
 -- -----------------------------------------------------
 -- procedure ErrorHandling
 -- -----------------------------------------------------
 
+USE `asg`;
+DROP procedure IF EXISTS `asg`.`ErrorHandling`;
+
 DELIMITER $$
 USE `asg`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ErrorHandling`()
-BEGIN
-
-DECLARE EXIT HANDLER 
-    FOR 1292
-    SELECT 'The DATE that you provided is in an incorrect format.'
-    ROLLBACK;
-    
-DECLARE EXIT HANDLER 
-	FOR 1062
-    SELECT 'You already have a row with this ID in the table.'
-    ROLLBACK;
-    
-DECLARE EXIT HANDLER 
-	FOR 1146
-    SELECT 'This table does not exist '
-    ROLLBACK;
-    
-DECLARE EXIT HANDLER 
-	FOR 1071
-    SELECT 'Data entry is too large'
-    ROLLBACK; 
-
-DECLARE EXIT HANDLER 
-	FOR 1059
-    SELECT 'Data entry is too long'
-    ROLLBACK; 
-end$$
-
-DELIMITER ;
-
--- -----------------------------------------------------
--- Table `asg`.`version`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`version`;
-CREATE TABLE `asg`.`version` (
-  `dbversion` INT UNSIGNED NOT NULL,
-  `active` TINYINT NOT NULL,
-  `description` VARCHAR(45) NULL,
-  PRIMARY KEY (`dbversion`),
-  UNIQUE INDEX `dbversion_UNIQUE` (`dbversion` ASC));
-
-
-###################################################
-#####################TRIGGERS######################
-###################################################
-
-
-###################################################
-######################INSERT#######################
-###################################################
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.address_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`address_AFTER_INSERT`
-AFTER INSERT ON `address`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into address table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.administrator_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`administrator_AFTER_INSERT`
-AFTER INSERT ON `administrator`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into administrator table');
-END IF;
-
-END$$
-DELIMITER ;
-
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.course_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`course_AFTER_INSERT`
-AFTER INSERT ON `course`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into course table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.customer_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`customer_AFTER_INSERT`
-AFTER INSERT ON `customer`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into customer table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.drone_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`drone_AFTER_INSERT`
-AFTER INSERT ON `drone`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into drone table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.instructor_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`instructor_AFTER_INSERT`
-AFTER INSERT ON `instructor`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into instructor table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.login_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`login_AFTER_INSERT`
-AFTER INSERT ON `login`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into login table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.qualification_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`qualification_AFTER_INSERT`
-AFTER INSERT ON `qualification`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into qualification table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.results_AFTER_INSERT$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`results_AFTER_INSERT`
-AFTER INSERT ON `results`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into results table');
-END IF;
-
-END$$
-DELIMITER ;
-
-
-###################################################
-#####################UPDATE######################
-###################################################
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.address_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`address_AFTER_UPDATE`
-AFTER UPDATE ON `address`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in address table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.administrator_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`administrator_AFTER_UPDATE`
-AFTER UPDATE ON `administrator`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in administrator table');
-END IF;
-
-END$$
-DELIMITER ;
-
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.course_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`course_AFTER_UPDATE`
-AFTER UPDATE ON `course`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in course table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.customer_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`customer_AFTER_UPDATE`
-AFTER UPDATE ON `customer`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in customer table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.drone_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`drone_AFTER_UPDATE`
-AFTER UPDATE ON `drone`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in drone table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.instructor_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`instructor_AFTER_UPDATE`
-AFTER UPDATE ON `instructor`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in instructor table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.login_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`login_AFTER_UPDATE`
-AFTER UPDATE ON `login`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in login table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.qualification_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`qualification_AFTER_UPDATE`
-AFTER UPDATE ON `qualification`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in qualification table');
-END IF;
-
-END$$
-DELIMITER ;
-
-DELIMITER $$
-DROP TRIGGER IF EXISTS asg.results_AFTER_UPDATE$$
-CREATE DEFINER = CURRENT_USER
-TRIGGER `asg`.`results_AFTER_UPDATE`
-AFTER UPDATE ON `results`
-FOR EACH ROW
-BEGIN
-
-DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
-DECLARE newVersion INTEGER DEFAULT 2;
-
-IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
-THEN
-SET newVersion = oldVersion + 1;
-UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
-INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in results table');
-END IF;
-
-END$$
-DELIMITER ;
-
-INSERT INTO version (dbversion, active, description) VALUES (1, true, 'Creating first version');
-SELECT * FROM version;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
-
-
-drop procedure if exists `ErrorHandling`;
-Delimiter $$
-create procedure ErrorHandling()
 BEGIN
 
 DECLARE CONTINUE HANDLER 
@@ -758,9 +362,456 @@ DECLARE CONTINUE HANDLER
     SELECT 'Data entry is too long'; 
 end$$
 
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- View `asg`.`adminadetails`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `asg`.`adminadetails` ;
+DROP TABLE IF EXISTS `asg`.`adminadetails`;
+USE `asg`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `asg`.`adminadetails` AS select `l`.`Username` AS `Username`,`l`.`Access` AS `Access`,`a`.`AdminID` AS `AdminID`,`a`.`FirstName` AS `FirstName`,`a`.`LastName` AS `LastName` from (`asg`.`administrator` `a` join `asg`.`login` `l` on((`l`.`LoginID` = `a`.`login_LoginID`))) group by `a`.`AdminID`;
+
+-- -----------------------------------------------------
+-- View `asg`.`customerdetails`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `asg`.`customerdetails` ;
+DROP TABLE IF EXISTS `asg`.`customerdetails`;
+USE `asg`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `asg`.`customerdetails` AS select `l`.`Username` AS `Username`,`l`.`Access` AS `Access`,`c`.`CandidateReferenceID` AS `CandidateReferenceID`,`c`.`FirstName` AS `FirstName`,`c`.`LastName` AS `LastName` from (`asg`.`customer` `c` join `asg`.`login` `l` on((`l`.`LoginID` = `c`.`CandidateReferenceID`))) group by `c`.`CandidateReferenceID`;
+
+-- -----------------------------------------------------
+-- View `asg`.`instructordetails`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `asg`.`instructordetails` ;
+DROP TABLE IF EXISTS `asg`.`instructordetails`;
+USE `asg`;
+CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `asg`.`instructordetails` AS select `l`.`Username` AS `Username`,`l`.`Access` AS `Access`,`i`.`InstructorID` AS `InstructorID`,`i`.`FirstName` AS `FirstName`,`i`.`LastName` AS `LastName` from (`asg`.`instructor` `i` join `asg`.`login` `l` on((`l`.`LoginID` = `i`.`login_LoginID`))) group by `i`.`InstructorID`;
+USE `asg`;
+
+DELIMITER $$
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`address_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`address_AFTER_INSERT`
+AFTER INSERT ON `asg`.`address`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into address table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`address_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`address_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`address`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in address table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`login_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`login_AFTER_INSERT`
+AFTER INSERT ON `asg`.`login`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into login table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`login_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`login_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`login`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in login table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`administrator_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`administrator_AFTER_INSERT`
+AFTER INSERT ON `asg`.`administrator`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into administrator table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`administrator_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`administrator_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`administrator`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in administrator table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`qualification_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`qualification_AFTER_INSERT`
+AFTER INSERT ON `asg`.`qualification`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into qualification table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`qualification_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`qualification_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`qualification`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in qualification table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`instructor_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`instructor_AFTER_INSERT`
+AFTER INSERT ON `asg`.`instructor`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into instructor table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`instructor_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`instructor_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`instructor`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in instructor table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`course_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`course_AFTER_INSERT`
+AFTER INSERT ON `asg`.`course`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into course table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`course_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`course_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`course`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in course table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`drone_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`drone_AFTER_INSERT`
+AFTER INSERT ON `asg`.`drone`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into drone table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`drone_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`drone_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`drone`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in drone table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`customer_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`customer_AFTER_INSERT`
+AFTER INSERT ON `asg`.`customer`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into customer table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`customer_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`customer_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`customer`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in customer table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`results_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`results_AFTER_INSERT`
+AFTER INSERT ON `asg`.`results`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into results table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`results_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`results_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`results`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in results table');
+END IF;
+
+END$$CreationID
 
 
 DELIMITER ;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
 SELECT * FROM address;
 select * from creation;
 select * from customer;
@@ -771,87 +822,4 @@ select * from qualification;
 select * from course;
 select * from drone;
 select * from login;
-
-CREATE VIEW adminadetails  AS SELECT l.Username, l.Access, a.AdminID, a.FirstName, a.LastName
-FROM administrator a
-INNER JOIN login l ON l.LoginID=a.login_LoginID
-GROUP BY a.AdminID;
-
-DROP procedure IF EXISTS AdministratorAccess;
-
-DELIMITER 
-
-CREATE PROCEDURE AdministratorAccess (login_LoginID int)
-IF ISNULL(login_LoginID) THEN
-
-
-SELECT admindetails
-
-ELSE
-
-CALL AdministratorAccess(loginID);
-
-END IF;
-
-
-END
-
-DELIMITER ;
-
-
-
-CREATE VIEW instructordetails AS SELECT l.Username, l.Access, i.InstructorID, i.FirstName, i.LastName
-FROM instructor i
-INNER JOIN login l ON l.LoginID=i.login_LoginID
-GROUP BY i.InstructorID;
-
-DROP procedure IF EXISTS InstrcutorAccess;
-
-DELIMITER 
-
-CREATE PROCEDURE InstrcutorAccess (login_LoginID int)
-IF ISNULL(login_LoginID) THEN
-
-
-SELECT instructordetails
-
-ELSE
-
-CALL InstructorAccess(loginID);
-
-END IF;
-
-
-END
-
-DELIMITER ;
-
-
-
-CREATE VIEW customerdetails AS SELECT l.Username, l.Access, c.CandidateReferenceID, c.FirstName, c.LastName
-FROM customer c
-INNER JOIN login l ON l.LoginID=c.login_LoginID
-GROUP BY c.CandidateReferenceID;
-
-DROP procedure IF EXISTS CustomerAccess;
-
-DELIMITER 
-
-CREATE PROCEDURE CustomerAccess (login_LoginID int)
-IF ISNULL(login_LoginID) THEN
-
-
-SELECT customerdetails
-
-ELSE
-
-CALL CustomerAccess(loginID);
-
-END IF;
-
-
-END
-
-DELIMITER ;
-
 

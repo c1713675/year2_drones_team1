@@ -1,9 +1,6 @@
 package com.asgdrones.drones.controllers;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Customer;
-import com.asgdrones.drones.domain.Drone;
-import com.asgdrones.drones.domain.Login;
+import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.repositories.CustomerRepo;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import com.asgdrones.drones.services.AddressService;
@@ -24,16 +21,20 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 
 @SessionAttributes({"customer", "address", "drone", "login"})
 @Controller
 public class RegisterController {
 
     private RegisterService registerService;
+    private EmailController emailController;
 
     @Autowired
-    public RegisterController(RegisterService rService) {
+    public RegisterController(RegisterService rService, EmailController eController) {
+
         registerService = rService;
+        emailController = eController;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -143,7 +144,7 @@ public class RegisterController {
 
 
     @RequestMapping(path = "/register_customer", method = RequestMethod.POST)
-    public String addLoginForm(@Valid Login login, @SessionAttribute Address address,
+    public ModelAndView addLoginForm(@Valid Login login, @SessionAttribute Address address,
                                @SessionAttribute Customer customer, @SessionAttribute Drone drone,
                                BindingResult bindingResult, Model model) {
         //binding result stops it from being null
@@ -156,12 +157,12 @@ public class RegisterController {
         System.out.println(customer);
         System.out.println(address);
         System.out.println(drone);
-
         model.addAttribute("login", login);
         model.addAttribute("HouseName", login.getUsername());
         model.addAttribute("HouseNumber", login.getPassword());
+        emailController.home(customer.getEmail());
         registerService.upload(address, drone, customer, login);
-        return "receipt";
+        return new ModelAndView("login", model.asMap());
     }
 
 }
