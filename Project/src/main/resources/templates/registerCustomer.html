@@ -22,7 +22,11 @@
         <form action="#" th:action="@{/register_customer}" th:object= "${login}" method="post">
             <p>Username: <input type = "text" th:field="*{username}"/></p>
             <p>Password: <input type = "password" th:field="*{password}"/></p>
-            <button type = "submit" >Next </button >
+            <form action="#" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms and Conditions and Privacy Policy'); return false; }">
+            <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy
+            <a href="/doc/terms.pdf">download></a>
+            <input type="submit" name="submit" value="submit">
+        </form>
         </form>
     </div>
 </div>
