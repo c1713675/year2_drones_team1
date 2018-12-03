@@ -19,11 +19,10 @@
     </div>
     <div class="jumbotron">
         <h1>Register</h1>
-        <form action="#" th:action="@{/register_customer}" th:object= "${login}" method="post">
+        <form action="#" th:action="@{/register_customer}" th:object= "${login}" method="post" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms and Conditions and Privacy Policy'); return false; }">
             <p>Username: <input type = "text" th:field="*{username}"/></p>
             <p>Password: <input type = "password" th:field="*{password}"/></p>
-            <form action="#" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms and Conditions and Privacy Policy'); return false; }">
-            <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy
+            <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy</form>
             <a href="/doc/terms.pdf">download></a>
             <input type="submit" name="submit" value="submit">
         </form>
