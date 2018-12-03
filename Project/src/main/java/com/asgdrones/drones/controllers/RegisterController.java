@@ -1,11 +1,7 @@
 package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.*;
-import com.asgdrones.drones.repositories.CustomerRepo;
-import com.asgdrones.drones.repositories.CustomerRepoJPA;
-import com.asgdrones.drones.services.AddressService;
-import com.asgdrones.drones.services.CustomerService;
-import com.asgdrones.drones.services.LoginService;
+import com.asgdrones.drones.services.EmailService;
 import com.asgdrones.drones.services.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,20 +17,19 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 
 @SessionAttributes({"customer", "address", "drone", "login"})
 @Controller
 public class RegisterController {
 
     private RegisterService registerService;
-    private EmailController emailController;
+    private EmailService emailService;
 
     @Autowired
-    public RegisterController(RegisterService rService, EmailController eController) {
+    public RegisterController(RegisterService rService, EmailService eService) {
 
         registerService = rService;
-        emailController = eController;
+        emailService = eService;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -160,7 +155,11 @@ public class RegisterController {
         model.addAttribute("login", login);
         model.addAttribute("HouseName", login.getUsername());
         model.addAttribute("HouseNumber", login.getPassword());
-        emailController.home(customer.getEmail());
+        try {
+            emailService.sendEmail(customer.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         registerService.upload(address, drone, customer, login);
         return new ModelAndView("login", model.asMap());
     }
