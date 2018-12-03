@@ -1,17 +1,92 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Bootstrap Navbar Tutorial</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+<!-- Bootstrap Js CDN -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <!-- Navbar Container -->
+    <div class="container">
+
+        <!-- Navbar Header [contains both toggle button and navbar brand] -->
+        <div class="navbar-header">
+            <!-- Toggle Button [handles opening navbar components on mobile screens]-->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#exampleNavComponents" aria-expanded"false">
+            <i class="glyphicon glyphicon-align-center"></i>
+            </button>
+
+            <!-- Navbar Brand -->
+            <a href="#" class="navbar-brand">
+            </a>
+        </div>
+
+
+        <!-- Navbar Collapse [contains navbar components such as navbar menu and forms ] -->
+        <div class="collapse navbar-collapse" id="exampleNavComponents">
+
+            <!-- Navbar Menu -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active">
+                    <a href="#register">Register</a>
+                </li>
+                <li>
+                    <a href="#">About us</a>
+                </li>
+                <li>
+                    <a href="#">Course Info</a>
+                </li>
+                <li>
+                    <a href="#feedback">Leave Feedback</a>
+                </li>
+
+                <!-- Navbar link with a dropdown menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">My Dashboard</a></li>
+                        <li><a href="#">Log out</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="header">
+        <h3 class="text-muted">ASG Drones</h3>
+    </div>
+    <div class="jumbotron">
+        <h1>Login</h1>
 <form action = "#" th:action = "@{/login}"
       th:object = "${login}" method = "post" >
-    <h2>Username</h2>
-    <input type = "text" th:field = "*{username}" />
-    <h2>Password</h2>
-    <input type = "password" th:field = "*{password}" />
+    <p>Username: <input type = "text" th:field = "*{username}" /></p>
+    <p> Password: <input type = "password" th:field = "*{password}" /></p>
     <button type = "Login" >Submit</button >
 </form>
+    </div>
+</div>
+</body>
 </body>
 </html>
