@@ -81,6 +81,13 @@ public class AdminController {
     }
 
     @RequestMapping(value = "addcoursedate", method = RequestMethod.GET)
+    public ModelAndView addcoursedate(Model model){
+        Course course = new Course();
+        model.addAttribute("course",course);
+        return new ModelAndView("addcoursedate", model.asMap());
+    }
+
+    @RequestMapping(value = "addcoursedate", method = RequestMethod.POST)
     public ModelAndView addCourseDate(Model model,
                                       @Valid Course course,
                                       BindingResult bindingResult) {
