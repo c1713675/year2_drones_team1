@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseServiceInterface {
     public List<Course> getCourses();
     List<Course> findByInstructor(Instructor instructor);
+    void addCourse(Course course);
 }

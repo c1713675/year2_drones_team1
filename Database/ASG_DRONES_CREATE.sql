@@ -853,5 +853,3 @@ END IF;
 END
 
 DELIMITER ;
-
-
