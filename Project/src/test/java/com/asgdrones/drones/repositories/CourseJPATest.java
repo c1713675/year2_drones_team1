@@ -14,7 +14,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,12 +38,13 @@ public class CourseJPATest {
         Address address = new Address(1L,"CF244AN","Cardiff","Abby Lane",4,"");
         Login login = new Login(1L,"jbuckland","1234","customer");
         Instructor instructor = new Instructor(1L,"james","buckland","01895430027",login,address);
-        Course course = new Course(1L,"Course1","Type2",instructor);
+        Course course = new Course(1L,"Course1","Type2","Cardiff", java.sql.Date.valueOf(LocalDate.now()),instructor);
         this.entityManager.merge(course);
         List<Course> courseList = courseRepoJPA.findAll();
         assertThat(courseList.get(0).getCourseName()).isEqualTo("Course1");
         assertThat(courseList.get(0).getCourseType()).isEqualTo("Type2");
-        assertThat(courseList.get(0).getInstructor()).isEqualTo(instructor);
+        assertThat(courseList.get(0).getCourseDate()).isEqualTo(Date.valueOf(LocalDate.now()));
+        assertThat(courseList.get(0).getCourseLocation()).isEqualTo("Cardiff");
 
     }
 }
