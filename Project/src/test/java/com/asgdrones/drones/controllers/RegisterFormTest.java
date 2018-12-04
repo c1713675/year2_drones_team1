@@ -39,6 +39,12 @@ public class RegisterFormTest {
                 .andExpect(content().string(containsString("First Name")));
     }
 
+    @Test
+    public void shouldReturnTerms() throws Exception{
+
+        this.mockMvc.perform(get("/register")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("terms and conditions")));
+    }
 
 
 
