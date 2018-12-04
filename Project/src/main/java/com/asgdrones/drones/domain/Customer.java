@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
 
