@@ -80,35 +80,36 @@ public class AdminController {
         return new ModelAndView("customerSearch", model.asMap());
     }
 
-    @RequestMapping(value = "addcoursedate", method = RequestMethod.GET)
-    public ModelAndView addcoursedate(Model model){
+    @RequestMapping(value = "createcoursedate", method = RequestMethod.GET)
+    public ModelAndView createCourseDate(Model model, HttpServletRequest request){
+        access = request.getCookies();
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("administrator")) {
+                    page = Templates.CREATE_COURSE_DATE;
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
+        }
+        page = Templates.CREATE_COURSE_DATE;
         Course course = new Course();
         model.addAttribute("course",course);
-        return new ModelAndView("addcoursedate", model.asMap());
+        return new ModelAndView(page.toString(), model.asMap());
     }
 
-    @RequestMapping(value = "addcoursedate", method = RequestMethod.POST)
-    public ModelAndView addCourseDate(Model model,
+    @RequestMapping(value = "createcoursedate", method = RequestMethod.POST)
+    public ModelAndView createCourseDate(Model model,
                                       @Valid Course course,
                                       BindingResult bindingResult) {
-//        access = request.getCookies();
-//        for (Cookie obj : access) {
-//            if (obj.getName().equals("Access")) {
-//                if (obj.getValue().equals("administrator")) {
-//                    page = Templates.CREATE_COURSE_DATE;
-//                } else {
-//                    page = Templates.ACCESS_DENIED;
-//                }
-//            } else {
-//                page = Templates.ACCESS_DENIED;
-//            }
-//        }
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
         }
         courseService.addCourse(course);
         model.addAttribute("course", course);
-        page = Templates.CREATE_COURSE_DATE;
+        page = Templates.COURSE_CREATED;
         return new ModelAndView(page.toString(), model.asMap());
     }
 }

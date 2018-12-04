@@ -38,7 +38,7 @@ public class CourseService implements CourseServiceInterface {
 //        Address instructorAddress = new Address(null,"1234567","Cardiff","123 Street",4,"");
 //        Login instructorLogin = new Login(null,"instructor","1234567890","test");
 //        Instructor instructor = new Instructor(null,"null","null","11111111111",instructorLogin,instructorAddress);
-        Course newCourse = new Course(null,"","","cardiff",Date.valueOf(LocalDate.now()),null);
-        courseRepoJPA.save(newCourse);
+//        Course newCourse = new Course(null,"","","cardiff",Date.valueOf(LocalDate.now()),null);
+        courseRepoJPA.save(course);
     }
 }
