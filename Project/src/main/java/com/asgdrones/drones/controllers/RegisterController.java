@@ -1,14 +1,7 @@
 package com.asgdrones.drones.controllers;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Customer;
-import com.asgdrones.drones.domain.Drone;
-import com.asgdrones.drones.domain.Login;
-import com.asgdrones.drones.repositories.CustomerRepo;
-import com.asgdrones.drones.repositories.CustomerRepoJPA;
-import com.asgdrones.drones.services.AddressService;
-import com.asgdrones.drones.services.CustomerService;
-import com.asgdrones.drones.services.LoginService;
+import com.asgdrones.drones.domain.*;
+import com.asgdrones.drones.services.EmailService;
 import com.asgdrones.drones.services.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,10 +23,13 @@ import javax.validation.Valid;
 public class RegisterController {
 
     private RegisterService registerService;
+    private EmailService emailService;
 
     @Autowired
-    public RegisterController(RegisterService rService) {
+    public RegisterController(RegisterService rService, EmailService eService) {
+
         registerService = rService;
+        emailService = eService;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -143,7 +139,7 @@ public class RegisterController {
 
 
     @RequestMapping(path = "/register_customer", method = RequestMethod.POST)
-    public String addLoginForm(@Valid Login login, @SessionAttribute Address address,
+    public ModelAndView addLoginForm(@Valid Login login, @SessionAttribute Address address,
                                @SessionAttribute Customer customer, @SessionAttribute Drone drone,
                                BindingResult bindingResult, Model model) {
         //binding result stops it from being null
@@ -156,12 +152,16 @@ public class RegisterController {
         System.out.println(customer);
         System.out.println(address);
         System.out.println(drone);
-
         model.addAttribute("login", login);
         model.addAttribute("HouseName", login.getUsername());
         model.addAttribute("HouseNumber", login.getPassword());
+        try {
+            emailService.sendEmail(customer.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         registerService.upload(address, drone, customer, login);
-        return "receipt";
+        return new ModelAndView("login", model.asMap());
     }
 
 }

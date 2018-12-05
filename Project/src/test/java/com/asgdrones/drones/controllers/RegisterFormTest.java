@@ -33,8 +33,6 @@ public class RegisterFormTest {
 
     @Test
     public void shouldReturnHomePage() throws Exception {
-
-
         this.mockMvc.perform(get("/register")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("First Name")));
     }

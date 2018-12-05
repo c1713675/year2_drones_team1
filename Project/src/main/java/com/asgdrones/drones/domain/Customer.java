@@ -67,7 +67,6 @@ public class Customer {
     @JoinColumn(name = "drone_droneid")
     private Drone drone;
 
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_AddressID")
     private Address address;
@@ -77,9 +76,7 @@ public class Customer {
     private Course course;
 
 
-
-
-
-
-
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn( name = "creation_creationid")
+    private Creation creation;
 }
