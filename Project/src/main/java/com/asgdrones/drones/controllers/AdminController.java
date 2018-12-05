@@ -2,18 +2,17 @@ package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Address;
 import com.asgdrones.drones.domain.Admin;
+import com.asgdrones.drones.domain.Course;
 import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.AdminRepoJPA;
 import com.asgdrones.drones.services.AdminService;
+import com.asgdrones.drones.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -28,10 +27,11 @@ public class AdminController {
     private Cookie[] access;
     private Templates page;
     private AdminService adminService;
-
+    private CourseService courseService;
     @Autowired
-    AdminController(AdminService aService) {
+    AdminController(AdminService aService, CourseService cService) {
         adminService = aService;
+        courseService = cService;
     }
 
     @RequestMapping(value = "admin/{loginID}", method = RequestMethod.GET)
@@ -78,5 +78,39 @@ public class AdminController {
         System.out.println(Arrays.deepToString(new List[]{customerList}));
         model.addAttribute("customers", customerList);
         return new ModelAndView("customerSearch", model.asMap());
+    }
+
+    @RequestMapping(value = "createcoursedate", method = RequestMethod.GET)
+    public ModelAndView createCourseDate(Model model, HttpServletRequest request){
+        access = request.getCookies();
+        for (Cookie obj : access) {
+            System.out.println(obj.toString());
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("admin")) {
+                    page = Templates.CREATE_COURSE_DATE;
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
+        }
+//        page = Templates.CREATE_COURSE_DATE;
+        Course course = new Course();
+        model.addAttribute("course",course);
+        return new ModelAndView(page.toString(), model.asMap());
+    }
+
+    @RequestMapping(value = "createcoursedate", method = RequestMethod.POST)
+    public ModelAndView createCourseDate(Model model,
+                                      @Valid Course course,
+                                      BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
+        }
+        courseService.addCourse(course);
+        model.addAttribute("course", course);
+        page = Templates.COURSE_CREATED;
+        return new ModelAndView(page.toString(), model.asMap());
     }
 }
