@@ -26,7 +26,7 @@ public class Login {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "Loginpassword")
+    @Column(name = "loginPassword")
     private String password;
 
 
