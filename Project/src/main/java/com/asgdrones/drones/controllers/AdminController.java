@@ -83,18 +83,19 @@ public class AdminController {
     @RequestMapping(value = "createcoursedate", method = RequestMethod.GET)
     public ModelAndView createCourseDate(Model model, HttpServletRequest request){
         access = request.getCookies();
-//        for (Cookie obj : access) {
-//            if (obj.getName().equals("Access")) {
-//                if (obj.getValue().equals("administrator")) {
-//                    page = Templates.CREATE_COURSE_DATE;
-//                } else {
-//                    page = Templates.ACCESS_DENIED;
-//                }
-//            } else {
-//                page = Templates.ACCESS_DENIED;
-//            }
-//        }
-        page = Templates.CREATE_COURSE_DATE;
+        for (Cookie obj : access) {
+            System.out.println(obj.toString());
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("admin")) {
+                    page = Templates.CREATE_COURSE_DATE;
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
+        }
+//        page = Templates.CREATE_COURSE_DATE;
         Course course = new Course();
         model.addAttribute("course",course);
         return new ModelAndView(page.toString(), model.asMap());
