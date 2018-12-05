@@ -30,7 +30,7 @@ public class Course {
     @Column(name = "CourseDate")
     private Date courseDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     @JoinColumn(name = "Instructor_InstructorID")
     private Instructor instructor;
 }

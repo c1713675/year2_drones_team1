@@ -33,26 +33,10 @@ CREATE TABLE IF NOT EXISTS `asg`.`address` (
   PRIMARY KEY (`AddressID`),
   UNIQUE INDEX `AddressID_UNIQUE` (`AddressID` ASC))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
+AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = latin1;
 
-
--- -----------------------------------------------------
--- Table `asg`.`creation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `asg`.`creation` ;
-
-CREATE TABLE IF NOT EXISTS `asg`.`creation` (
-  `CreationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `CreationDate` DATETIME NOT NULL,
-  `DeletionDate` DATETIME NOT NULL,
-  PRIMARY KEY (`CreationID`),
-  UNIQUE INDEX `CreationID_UNIQUE` (`CreationID` ASC))
-  AUTO_INCREMENT = 9
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
+insert into address (AddressID,Postcode,City,Street,HouseNumber) values (1,'CF24 4AN','Cardiff','Miskin Strret',32);
 -- -----------------------------------------------------
 -- Table `asg`.`login`
 -- -----------------------------------------------------
@@ -61,14 +45,16 @@ DROP TABLE IF EXISTS `asg`.`login` ;
 CREATE TABLE IF NOT EXISTS `asg`.`login` (
   `LoginID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Username` VARCHAR(20) NOT NULL,
-  `Password` VARCHAR(100) NOT NULL,
+  `LoginPassword` VARCHAR(100) NOT NULL,
   `Access` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`LoginID`),
   UNIQUE INDEX `LoginID_UNIQUE` (`LoginID` ASC),
   UNIQUE INDEX `Username_UNIQUE` (`Username` ASC))
 ENGINE = InnoDB
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = latin1;
 
+insert into login (Username, LoginPassword , Access) values ('admin','password','admin');
 
 -- -----------------------------------------------------
 -- Table `asg`.`administrator`
@@ -81,20 +67,13 @@ CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
   `LastName` VARCHAR(45) NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
-  `creation_CreationID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`AdminID`),
   UNIQUE INDEX `AdminID_UNIQUE` (`AdminID` ASC),
   INDEX `fk_administrator_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_administrator_login1_idx` (`login_LoginID` ASC),
-  INDEX `fk_administrator_creation1_idx` (`creation_CreationID` ASC),
   CONSTRAINT `fk_administrator_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_administrator_creation1`
-    FOREIGN KEY (`creation_CreationID`)
-    REFERENCES `asg`.`creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_administrator_login1`
@@ -105,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+insert into administrator (FirstName, LastName, address_AddressID, login_LoginID) values ('James', 'Buckland', 1, 13);
 
 -- -----------------------------------------------------
 -- Table `asg`.`qualification`
@@ -132,21 +112,14 @@ CREATE TABLE IF NOT EXISTS `asg`.`instructor` (
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
   `qualification_QualificationID` INT(10) UNSIGNED NULL DEFAULT NULL,
-  `creation_CreationID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`InstructorID`),
   UNIQUE INDEX `InstructorID_UNIQUE` (`InstructorID` ASC),
   INDEX `fk_Instructor_address1_idx` (`address_AddressID` ASC),
   INDEX `fk_instructor_login1_idx` (`login_LoginID` ASC),
   INDEX `fk_instructor_qualification1_idx` (`qualification_QualificationID` ASC),
-  INDEX `fk_instructor_creation1_idx` (`creation_CreationID` ASC),
   CONSTRAINT `fk_Instructor_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_instructor_creation1`
-    FOREIGN KEY (`creation_CreationID`)
-    REFERENCES `asg`.`creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_instructor_login1`
@@ -188,6 +161,21 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
+-- Table `asg`.`creation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`creation` ;
+
+CREATE TABLE IF NOT EXISTS `asg`.`creation` (
+  `CreationID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `CreationDate` DATETIME NULL DEFAULT NULL,
+  `DeletionDate` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`CreationID`),
+  UNIQUE INDEX `CreationID_UNIQUE` (`CreationID` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
 -- Table `asg`.`drone`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `asg`.`drone` ;
@@ -224,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `course_CourseID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
   `creation_CreationID` INT(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`CandidateReferenceID`, `creation_CreationID`),
+  PRIMARY KEY (`CandidateReferenceID`),
   UNIQUE INDEX `CandidateReferenceID_UNIQUE` (`CandidateReferenceID` ASC),
   UNIQUE INDEX `Email_UNIQUE` (`Email` ASC),
   INDEX `fk_customer_drone1_idx` (`drone_DroneID` ASC),
@@ -242,6 +230,11 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
     REFERENCES `asg`.`course` (`CourseID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer_creation1`
+    FOREIGN KEY (`creation_CreationID`)
+    REFERENCES `asg`.`creation` (`CreationID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_customer_drone1`
     FOREIGN KEY (`drone_DroneID`)
     REFERENCES `asg`.`drone` (`DroneID`)
@@ -250,11 +243,6 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   CONSTRAINT `fk_customer_login1`
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_customer_creation1`
-    FOREIGN KEY (`creation_CreationID`)
-    REFERENCES `asg`.`creation` (`CreationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -802,7 +790,7 @@ UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true
 INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in results table');
 END IF;
 
-END$$CreationID
+END$$
 
 
 DELIMITER ;
@@ -822,4 +810,3 @@ select * from qualification;
 select * from course;
 select * from drone;
 select * from login;
-

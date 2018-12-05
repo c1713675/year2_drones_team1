@@ -31,15 +31,12 @@ public class InstructorControllerTest {
     @Test
     public void instructorLocationTest() throws Exception {
         List<String> addresses = this.instructorRepoJPA.getInstructorAddresses(11L);
-
         assertEquals(addresses.get(0), "London");
-
     }
 
     @Test
     public void instructorDateTest(){
         List<Date> dates = this.instructorRepoJPA.getCourseDates(11L);
-
         assertEquals(dates.get(0).toString(),"2019-03-04");
     }
 }
