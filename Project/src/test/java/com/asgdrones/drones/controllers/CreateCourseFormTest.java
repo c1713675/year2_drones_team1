@@ -22,19 +22,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest()
 @AutoConfigureMockMvc
 
-public class RegisterFormTest {
+public class CreateCourseFormTest{
 
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    RegisterService registerService;
+//    @MockBean
+//    RegisterService registerService;
 
 
     @Test
-    public void shouldReturnHomePage() throws Exception {
-        this.mockMvc.perform(get("/register")).andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("First Name")));
+    public void testCreateCourseDate() throws Exception {
+
+
+        this.mockMvc.perform(get("/createcoursedate")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Date")))
+        .andExpect(content().string(containsString("Course Name")))
+        .andExpect(content().string(containsString("Course Date")))
+        .andExpect(content().string(containsString("Course Location")));
     }
 
 
