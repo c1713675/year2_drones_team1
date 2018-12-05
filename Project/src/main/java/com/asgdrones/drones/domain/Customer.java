@@ -10,7 +10,9 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -38,6 +40,7 @@ public class Customer {
     @Column(name = "email")
     private String email;
 
+    @Size(min = 11, max = 11)
     @Column(name = "phonenumber")
     private String phoneNumber;
 

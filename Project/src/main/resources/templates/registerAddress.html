@@ -68,11 +68,11 @@
     <div class="jumbotron">
         <h1>Register</h1>
         <form action="#" th:action="@{/register_address}" th:object= "${address}" method="post">
-            <p>Street Address: <input type = "text" th:field="*{street}" /></p>
+            <p>Street Address: <input type = "text" th:field="*{street}"  required/></p>
             <p>House Number: <input type = "text" th:field="*{houseNumber}"/></p>
             <p>House Name: <input type = "text" th:field="*{houseName}"/></p>
-            <p>City: <input type = "text" th:field="*{city}"/></p>
-            <p>Post Code: <input type = "text" th:field="*{postcode}"/></p>
+            <p>City: <input type = "text" th:field="*{city}" required/></p>
+            <p>Post Code: <input type = "text" th:field="*{postcode}" required/></p>
             <button type = "submit" >Next </button >
 
 
