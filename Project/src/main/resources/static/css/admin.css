@@ -1,0 +1,36 @@
+*{
+    margin: 0px;
+    border: 0px;
+}
+table, th, td {
+    border: 1px solid black;
+}
+h1{
+    background: black;
+    color: white;
+    text-align: center;
+    font-family:"Times New Roman";
+    text-space: 5px;
+    font-size: 100pt;
+}
+body{
+    background: aliceblue;
+}
+#customerSearch{
+    position: center;
+    text-align: -webkit-center;
+    text-align: center;
+}
+#address{
+    position: center;
+    text-align: -webkit-center;
+    text-align: center;
+}
+table{
+    margin-right: 10%;
+    margin-left: 10%;
+}
+#welcome{
+    text-align: center;
+    position: center;
+}
