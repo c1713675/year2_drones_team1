@@ -30,7 +30,7 @@ public class RegisterService implements RegisterServiceInterface {
         Address instructorAddress = new Address(null, "1234567", "Cardiff", "123 Street", 4, "");
         Login instructorLogin = new Login(null, "instructor", "test", "test");
         Instructor instructor = new Instructor(null, "null", "null", "11111111111", instructorLogin, instructorAddress);
-        Course course = new Course(null, "", "", "cardiff", Date.valueOf(LocalDate.now()), instructor);
+        Course course = new Course(null, "", "", "cardiff", Date.valueOf(LocalDate.now()), null);
         Creation creation = new Creation(null, Date.valueOf(LocalDate.now()),Date.valueOf(LocalDate.now().plusYears(2)));
         System.out.println(creation);
         Drone newDrone = new Drone(null, drone.getManufacturer(), drone.getModel());
