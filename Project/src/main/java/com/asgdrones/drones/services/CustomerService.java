@@ -1,9 +1,7 @@
 package com.asgdrones.drones.services;
 
-import com.asgdrones.drones.domain.Course;
-import com.asgdrones.drones.domain.Customer;
+import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.enums.Courses;
-import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,11 +48,80 @@ public class CustomerService implements CustomerServiceInterface {
 
     @Override
     public String getCustomerName(Long id) {
-        Optional<Customer> customer = customerRepoJPA.findById(id);
-        if (customer.isPresent()) {
-            String fullName = customer.get().getFirstName() + " " + customer.get().getLastName();
-            return fullName;
-        }
-        return null;
+        Customer customer = customerRepoJPA.findByLogin_Id(id);
+        String fullName = customer.getFirstName() + " " + customer.getLastName();
+        return fullName;
     }
+
+    @Override
+    public java.util.Date getDob(Long id) {
+        Customer customer = customerRepoJPA.findByLogin_Id(id);
+        java.util.Date dob = customer.getDob();
+        return dob;
+    }
+
+    @Override
+    public Course getCourse(Long id) {
+        Customer customer = customerRepoJPA.findByLogin_Id(id);
+        Course course = customer.getCourse();
+        return course;
+    }
+
+    @Override
+    public String getDroneManufacturer (Long id) {
+        Customer customer = customerRepoJPA.findByLogin_Id(id);
+        Drone drone = customer.getDrone();
+        String manufacture = drone.getManufacturer();
+        return manufacture;
+    }
+
+    @Override
+    public String getDroneModel(Long id) {
+        Customer customer = customerRepoJPA.findByLogin_Id(id);
+        Drone drone = customer.getDrone();
+        String model = drone.getModel();
+        return model;
+    }
+
+    @Override
+    public String getCustomerPostCode(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Address address = customer.getAddress();
+        String postCode = address.getPostcode();
+        return postCode;
+    }
+
+    @Override
+    public String getCustomerCity(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Address address = customer.getAddress();
+        String city = address.getCity();
+        return city;
+    }
+
+    @Override
+    public String getCustomerStreet(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Address address = customer.getAddress();
+        String street = address.getStreet();
+        return street;
+    }
+
+    @Override
+    public Integer getCustomerHouseNumber(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Address address = customer.getAddress();
+        Integer houseNumber = address.getHouseNumber();
+        return houseNumber;
+    }
+
+    @Override
+    public String GetCustomerHouseName(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Address address = customer.getAddress();
+        String houseName = address.getHouseName();
+        return houseName;
+    }
+
+
 }

@@ -1,5 +1,8 @@
 package com.asgdrones.drones.controllers;
 
+import com.asgdrones.drones.domain.Address;
+import com.asgdrones.drones.domain.Course;
+import com.asgdrones.drones.domain.Drone;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class CustomerController {
@@ -25,15 +30,36 @@ public class CustomerController {
         customerService = cService;
     }
 
-    @RequestMapping(value = "customer/{customerUsername}", method = RequestMethod.GET)
+    @RequestMapping(value = "customer/{customerID}", method = RequestMethod.GET)
     public ModelAndView customerPage(Model model,
                                      HttpServletRequest request,
-                                     @PathVariable("customerUsername") String customerUsername) {
+                                     @PathVariable("customerID") Long customerID) {
         access = request.getCookies();
         for (Cookie obj : access) {
             if (obj.getName().equals("Access")) {
                 if (obj.getValue().equals("customer")) {
                     page = Templates.CUSTOMER_ACCOUNT;
+                    Date dob = customerService.getDob(customerID);
+                    String name = customerService.getCustomerName(customerID);
+                    Course course = customerService.getCourse(customerID);
+                    String droneManufacturer = customerService.getDroneManufacturer(customerID);
+                    String droneModel = customerService.getDroneModel(customerID);
+                    String postCode = customerService.getCustomerPostCode(customerID);
+                    Integer houseNumber = customerService.getCustomerHouseNumber(customerID);
+                    String houseName = customerService.GetCustomerHouseName(customerID);
+                    String street = customerService.getCustomerStreet(customerID);
+                    String city = customerService.getCustomerCity(customerID);
+                    model.addAttribute("customerID", customerID);
+                    model.addAttribute("name",name);
+                    model.addAttribute("dob", dob);
+                    model.addAttribute("courses",course);
+                    model.addAttribute("droneManufacturer",droneManufacturer);
+                    model.addAttribute("droneModel",droneModel);
+                    model.addAttribute("postCode", postCode);
+                    model.addAttribute("houseName", houseName);
+                    model.addAttribute("houseNumber", houseNumber);
+                    model.addAttribute("street",street);
+                    model.addAttribute("city",city);
                 } else {
                     page = Templates.ACCESS_DENIED;
                 }
@@ -58,5 +84,12 @@ public class CustomerController {
         model.addAttribute("name", nameData);
         model.addAttribute("progression", progressionData);
         return new ModelAndView(page.toString(), model.asMap());
+    }
+
+    @RequestMapping(value = "/customer/{customerID}/update_address", method = RequestMethod.GET)
+    public ModelAndView updateAddress(Model model,
+                                      HttpServletRequest request,
+                                      @PathVariable("customerID") Long customerID){
+        return new ModelAndView("updateAddress", model.asMap());
     }
 }
