@@ -3,6 +3,7 @@ package com.asgdrones.drones.services;
 import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.enums.Courses;
 import com.asgdrones.drones.domain.Customer;
+import com.asgdrones.drones.repositories.AddressRepoJPA;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,16 +14,26 @@ import java.util.List;
 @Service
 public class CustomerService implements CustomerServiceInterface {
     private CustomerRepoJPA customerRepoJPA;
+    private AddressRepoJPA addressRepoJPA;
     private int progression;
 
     @Autowired
-    CustomerService(CustomerRepoJPA cRepo) {
+    CustomerService(CustomerRepoJPA cRepo, AddressRepoJPA aRepo) {
         customerRepoJPA = cRepo;
+        addressRepoJPA = aRepo;
     }
 
     @Override
     public List<Customer> findAllById(Iterable<Long> id) {
         return customerRepoJPA.findAllById(id);
+    }
+
+    @Override
+    public void updateAddress(Long LoginId, Address address) {
+        Customer customer = customerRepoJPA.findByLogin_Id(LoginId);
+        Customer updatedCustomer = customerRepoJPA.getOne(customer.getId());
+        customer.setAddress(address);
+        customerRepoJPA.save(customer);
     }
 
     @Override
@@ -68,7 +79,7 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     @Override
-    public String getDroneManufacturer (Long id) {
+    public String getDroneManufacturer(Long id) {
         Customer customer = customerRepoJPA.findByLogin_Id(id);
         Drone drone = customer.getDrone();
         String manufacture = drone.getManufacturer();

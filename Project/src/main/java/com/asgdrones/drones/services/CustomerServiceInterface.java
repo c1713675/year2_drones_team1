@@ -32,4 +32,6 @@ public interface CustomerServiceInterface {
     public String GetCustomerHouseName(Long loginID);
 
     List<Customer> findAllById(Iterable<Long> id);
+
+    public void updateAddress(Long customerID, Address address);
 }
