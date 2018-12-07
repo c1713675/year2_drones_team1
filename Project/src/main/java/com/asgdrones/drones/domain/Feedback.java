@@ -13,16 +13,16 @@ import javax.persistence.*;
  public class Feedback {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "FeedbackID")
+        @Column(name = "candidatereferenceid")
         private Long id;
 
-        @Column(name = "Satisfaction")
+        @Column(name = "satisfaction")
         private int satisfaction;
 
-        @Column(name = "Difficulty")
+        @Column(name = "difficulty")
         private int difficulty;
 
-        @Column(name = "Comments")
+        @Column(name = "comments")
         private String comments;
 
 

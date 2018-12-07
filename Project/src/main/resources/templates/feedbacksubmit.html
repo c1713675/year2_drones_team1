@@ -45,9 +45,6 @@
 
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
-                <li><a th:href="@{/register}">Register</th></a></li>
-                </li>
-                <li>
                 <li><a th:href="@{/aboutUs}">About Us</th></a></li>
                 </li>
                 <li>
@@ -55,7 +52,7 @@
                 </li>
                 <li>
                 <li class="active">
-                <li><a th:href="@{/feedback}">Leave Feedback</th></a></li>
+                <li><a th:href="@{/feedbacksubmit}">Leave Feedback</th></a></li>
                 </li>
 
                 <!-- Navbar link with a dropdown menu -->
@@ -64,8 +61,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">My Dashboard</a></li>
-                        <li><a href="#">Log out</a></li>
+                        <li><a th:href="@{/login}">Log out</a></li>
 
                     </ul>
                 </li>

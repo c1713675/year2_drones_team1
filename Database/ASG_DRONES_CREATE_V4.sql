@@ -196,7 +196,7 @@ DROP TABLE IF EXISTS `asg`.`feedback` ;
 CREATE TABLE IF NOT EXISTS `asg`.`feedback` (
   `CandidateReferenceID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Satisfaction` INT(5) NOT NULL,
-  `Diffculty` INT(5) NOT NULL,
+  `Difficulty` INT(5) NOT NULL,
   `Comments` VARCHAR(80) NULL DEFAULT NULL,
   PRIMARY KEY (`CandidateReferenceID`),
   UNIQUE INDEX `CandidID_UNIQUE` (`CandidateReferenceID` ASC))

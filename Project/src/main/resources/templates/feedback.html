@@ -22,7 +22,7 @@
 <!-- Bootstrap Js CDN -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-<>
+<body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <!-- Navbar Container -->
     <div class="container">
@@ -46,48 +46,38 @@
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
-                    <a href="#register">Register</a>
+                <li><a th:href="@{/feedback}">Feedback</th></a></li>
                 </li>
                 <li>
-                    <a href="#">About us</a>
+                <li><a th:href="@{/aboutUs}">About Us</th></a></li>
                 </li>
                 <li>
-                    <a href="#">Course Info</a>
-                </li>
-                <li>
-                    <a href="#feedback">Leave Feedback</a>
+                <li><a th:href="@{/courseInfo}">Course Info</th></a></li>
                 </li>
 
                 <!-- Navbar link with a dropdown menu -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">My Dashboard</a></li>
-                        <li><a href="#">Log out</a></li>
 
-                    </ul>
-                </li>
             </ul>
-        </div>
-    </div>
-</nav>
-<div class="container">
-    <div class="container">
-        <div class="header">
-            <h3>ASG DRONES</h3>
-        </div>
-    </div>
-</div>
-<div class="jumbotron">
-<form action = "#" method = "post" >
-    <h4>Username</h4>
-    <input type = "text" />
-    <h4>Password</h4>
-    <input type = "text" />
-    <button type = "Login" >Submit</button >
-</form>
-</div>
+            <div class="container">
+                <div class="header">
+                    <h3>ASG DRONES</h3>
+                </div>
+                <div class="jumbotron">
+                    <h1>Register</h1>
+                    <form action="#" th:action="@{/feedback}" th:object= "${feedback}" method="post">
+                        <p>Rate the course difficulty (Out of 5 with 5 being impossible): <input type = "number" th:field="*{difficulty}" required min="1" max="5"/></p>
+                        <p>Rate the course satisfaction (Out of 5 with 5 being excellent): <input type = "number" th:field="*{satisfaction}" required min="1" max="5"/></p>
+                        <p>Leave other comments <input type = "text" th:field="*{comments}"/></p>
+                        <button type = "submit" >Submit </button >
+                    </form>
+                </div>
+            </div>
 </body>
 </html>
+
+
+
+
+
+
+
