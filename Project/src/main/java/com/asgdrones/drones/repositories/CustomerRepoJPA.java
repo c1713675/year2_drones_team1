@@ -16,5 +16,8 @@ public interface CustomerRepoJPA extends JpaRepository<Customer, Long>, Customer
     public List<Customer> findBySearchTerm(@Param("searchQuery") String searchQuery);
 
     List<Customer> findAllById(Long id);
+
+    Customer findByEmail(String email);
+
 }
 

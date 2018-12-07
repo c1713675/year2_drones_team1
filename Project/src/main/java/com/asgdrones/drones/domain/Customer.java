@@ -82,4 +82,9 @@ public class Customer {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn( name = "creation_creationid")
     private Creation creation;
+
+
+    public Customer findByEmail(String email) {
+     return null;
+    }
 }

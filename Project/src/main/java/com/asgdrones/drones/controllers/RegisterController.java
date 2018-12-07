@@ -1,6 +1,7 @@
 package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.*;
+import com.asgdrones.drones.services.CustomerService;
 import com.asgdrones.drones.services.EmailService;
 import com.asgdrones.drones.services.RegisterService;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -46,9 +48,20 @@ public class RegisterController {
     public RedirectView addRegisterForm(@Valid Customer customer, BindingResult bindingResult, Model model) {
         //binding result stops it from being null
 
+        Customer userExists = customer.findByEmail(customer.getEmail());
+
+        System.out.println(userExists);
+
+        if (userExists != null) {
+            model.addAttribute("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
+            model.addAttribute("register");
+            bindingResult.reject("email");
+        }
+
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
         }
+
         System.out.println("Form Received");
         System.out.println(customer);
         model.addAttribute("customer", customer);

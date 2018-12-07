@@ -25,6 +25,11 @@ public class RegisterService implements RegisterServiceInterface {
         creationRepoJPA = crRepo;
     }
 
+    public Customer findByEmail(String email) {
+        return customerRepoJPA.findByEmail(email);
+
+    }
+
     @Override
     public void upload(Address address, Drone drone, Customer customer, Login login) {
         Address instructorAddress = new Address(null, "1234567", "Cardiff", "123 Street", 4, "");
