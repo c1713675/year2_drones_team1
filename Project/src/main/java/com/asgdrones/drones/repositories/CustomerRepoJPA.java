@@ -1,5 +1,6 @@
 package com.asgdrones.drones.repositories;
 
+import com.asgdrones.drones.domain.Course;
 import com.asgdrones.drones.domain.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,7 @@ public interface CustomerRepoJPA extends JpaRepository<Customer, Long>, Customer
     public List<Customer> findBySearchTerm(@Param("searchQuery") String searchQuery);
 
     List<Customer> findAllById(Long id);
+
+    List<Customer> findByCourseId(Long id);
 }
 

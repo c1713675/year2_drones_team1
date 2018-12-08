@@ -800,6 +800,11 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
+INSERT INTO drone (DroneID, Manufacturer, Model) VALUES (null, 'TestManu', 'TestMod');
+INSERT INTO customer (CandidateReferenceID, FirstName, LastName, Dob, Email, PhoneNumber, Paid, HoursOfFlying, Disability, EnglishSpeakingLevel, PreferredGSLocation, Insured, drone_DroneID, address_AddressID, course_CourseID, login_LoginID, creation_CreationID)
+VALUES
+(null, 'TestFirst', 'TestLast', '1990-01-01', 'testcustom1@gmail.com', '01234567890', True, 20, 'None', 7, 'Cardiff', True, 1, 1, 1, 14, 1);
+UPDATE course SET instructor_InstructorID = 2 WHERE courseID >= 1;
 SELECT * FROM address;
 select * from creation;
 select * from customer;

@@ -8,4 +8,5 @@ public interface CustomerServiceInterface {
     public Integer getCourseProgression(Long id);
     public String getCustomerName(Long id);
     List<Customer> findAllById(Iterable<Long> id);
+    List<Customer> findByCourseId(Long id);
 }

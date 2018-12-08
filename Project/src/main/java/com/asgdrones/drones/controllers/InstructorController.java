@@ -1,11 +1,13 @@
 package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.Course;
+import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.domain.Instructor;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import com.asgdrones.drones.services.CourseService;
+import com.asgdrones.drones.services.CustomerService;
 import com.asgdrones.drones.services.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,12 +29,14 @@ public class InstructorController {
     private InstructorRepoJPA instructorRepoJPA;
     private InstructorService instructorService;
     private CourseService courseService;
+    private CustomerService customerService;
 
     @Autowired
-    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseService cService) {
+    InstructorController(InstructorRepoJPA iRepo, InstructorService iService, CourseService cService, CustomerService cuService) {
         instructorRepoJPA = iRepo;
         instructorService = iService;
         courseService = cService;
+        customerService = cuService;
     }
 
     @RequestMapping(value = "instructor/{instructorID}", method = RequestMethod.GET)
@@ -65,4 +69,25 @@ public class InstructorController {
         return new ModelAndView(page.toString(), model.asMap());
     }
 
+    @RequestMapping(value = "instructor/customers/{instructorID}", method = RequestMethod.GET)
+    public ModelAndView instructorCustomer(Model model, HttpServletRequest request, @PathVariable("instructorID") Long instructorID){
+        access = request.getCookies();
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("instructor")) {
+                    page = Templates.INSTRUCTOR_CUSTOMER;
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
+            Instructor instructor = instructorService.getInstructor(instructorID);
+            List<Course> courses = courseService.findByInstructor(instructor);
+            Course course = courses.get(0);
+            List<Customer> customers = customerService.findByCourseId(course.getId());
+            model.addAttribute("customers", customers);
+        }
+        return new ModelAndView(page.toString(), model.asMap());
+    }
 }

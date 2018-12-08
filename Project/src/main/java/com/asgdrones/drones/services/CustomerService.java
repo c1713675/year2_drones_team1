@@ -28,6 +28,11 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     @Override
+    public List<Customer> findByCourseId(Long id) {
+        return customerRepoJPA.findByCourseId(id);
+    }
+
+    @Override
     public Integer getCourseProgression(Long id) {
         Optional<Customer> customer = customerRepoJPA.findById(id);
         if (customer.isPresent()) {
