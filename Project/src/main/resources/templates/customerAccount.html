@@ -103,6 +103,7 @@
                 </tr>
                 </tbody>
             </table>
+            <button class="button"><a th:href="@{'/customer/' +${customerID}+'/add_course'}" style="text-decoration:none">Change Course</a></button>
         </div>
         <div th:if="${courses == null}">
             <button class="btn"> <a th:href="@{'/customer/' +${customerID}+'/add_course'}" style="text-decoration:none">+ add course</a></button>
