@@ -5,6 +5,7 @@
     <title>Bootstrap Navbar Tutorial</title>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/customer.css}">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -35,7 +36,7 @@
                     <a th:href="@{'/customer/' +${customerID}}">Profile</a>
                 </li>
                 <li>
-                    <a href="#">About us</a>
+                    <a th:href="@{'/customer/' +${customerID}+ '/course_progression'}">Progression</a>
                 </li>
                 <li>
                     <a href="#">Course Info</a>
@@ -53,7 +54,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="#">My Dashboard</a></li>
                         <li><a th:href="@{/login}">Log out</th></a></li>
-
                     </ul>
                 </li>
             </ul>
@@ -64,6 +64,9 @@
     <h1>Customer Account</h1>
     <div id="welcome">
         <H2><span th:text="Welcome+' '+${name}"></span></H2>
+        <div th:if="${verified != true}">
+        <button class="btn"><a th:href="@{'/customer/' +${customerID}+'/verify_customer'}"> Verify account</a></button>
+        </div>
     </div>
     <div id="address">
         <h2 class="h2">Address</h2>
@@ -103,7 +106,7 @@
                 </tr>
                 </tbody>
             </table>
-            <button class="button"><a th:href="@{'/customer/' +${customerID}+'/add_course'}" style="text-decoration:none">Change Course</a></button>
+            <button class="btn"><a th:href="@{'/customer/' +${customerID}+'/add_course'}" style="text-decoration:none">Change Course</a></button>
         </div>
         <div th:if="${courses == null}">
             <button class="btn"> <a th:href="@{'/customer/' +${customerID}+'/add_course'}" style="text-decoration:none">+ add course</a></button>

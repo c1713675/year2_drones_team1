@@ -48,6 +48,7 @@ public class CustomerController {
                 if (obj.getValue().equals("customer")) {
                     page = Templates.CUSTOMER_ACCOUNT;
                     Date dob = customerService.getDob(customerID);
+                    Boolean verified = customerService.getVerified(customerID);
                     String name = customerService.getCustomerName(customerID);
                     Course course = customerService.getCourse(customerID);
                     String droneManufacturer = customerService.getDroneManufacturer(customerID);
@@ -60,6 +61,7 @@ public class CustomerController {
                     model.addAttribute("customerID", customerID);
                     model.addAttribute("name", name);
                     model.addAttribute("dob", dob);
+                    model.addAttribute("verified",verified);
                     model.addAttribute("courses", course);
                     model.addAttribute("droneManufacturer", droneManufacturer);
                     model.addAttribute("droneModel", droneModel);
@@ -136,7 +138,7 @@ public class CustomerController {
         System.out.println(address);
         System.out.println(customerID);
         customerService.updateAddress(customerID, address);
-        return new RedirectView("/customer/{customerID}/update_address");
+        return new RedirectView("/customer/{customerID}");
     }
 
     @RequestMapping(value = "/customer/{customerID}/update_drone", method = RequestMethod.GET)
@@ -169,7 +171,7 @@ public class CustomerController {
         model.addAttribute("drone", drone);
         model.addAttribute("customerID", customerID);
         customerService.updateDrone(customerID, drone);
-        return new RedirectView("/customer/{customerID}/update_drone");
+        return new RedirectView("/customer/{customerID}");
     }
 
     @RequestMapping(value = "/customer/{customerID}/add_course", method = RequestMethod.GET)
@@ -203,6 +205,13 @@ public class CustomerController {
 
         System.out.println(course_id);
         customerService.addCourse(customerID, course_id);
+        return new RedirectView("/customer/{customerID}");
+    }
+    @RequestMapping(value = "/customer/{customerID}/verify_customer", method = RequestMethod.GET )
+    public RedirectView verifyCustomer(Model model,
+                                       HttpServletRequest request,
+                                       @PathVariable("customerID") Long customerID){
+        customerService.updateCustomer(customerID);
         return new RedirectView("/customer/{customerID}");
     }
 }

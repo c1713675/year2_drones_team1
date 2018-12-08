@@ -30,6 +30,13 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     @Override
+    public Boolean getVerified(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Boolean verified = customer.getVerified();
+        return verified;
+    }
+
+    @Override
     public void updateAddress(Long loginId, Address address) {
         Customer customer = customerRepoJPA.findByLogin_Id(loginId);
         Customer updatedCustomer = customerRepoJPA.getOne(customer.getId());
@@ -56,6 +63,13 @@ public class CustomerService implements CustomerServiceInterface {
             customer.setCourse(course);
             customerRepoJPA.save(customer);
         }
+    }
+
+    @Override
+    public void updateCustomer(Long loginID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        customer.setVerified(true);
+        customerRepoJPA.save(customer);
     }
 
     @Override
