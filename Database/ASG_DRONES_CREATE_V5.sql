@@ -209,6 +209,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `EnglishSpeakingLevel` FLOAT NULL DEFAULT NULL,
   `PreferredGSLocation` TEXT NULL DEFAULT NULL,
   `Insured` TINYINT(1) NULL DEFAULT NULL,
+  `Verified` BOOLEAN Null Default false,
   `drone_DroneID` INT(10) UNSIGNED NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `course_CourseID` INT(10) UNSIGNED,

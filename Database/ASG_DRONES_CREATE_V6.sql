@@ -209,6 +209,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `EnglishSpeakingLevel` FLOAT NULL DEFAULT NULL,
   `PreferredGSLocation` TEXT NULL DEFAULT NULL,
   `Insured` TINYINT(1) NULL DEFAULT NULL,
+  `Verified` BOOLEAN Null Default false,
   `drone_DroneID` INT(10) UNSIGNED NOT NULL,
   `address_AddressID` INT(10) UNSIGNED NOT NULL,
   `course_CourseID` INT(10) UNSIGNED,
@@ -353,6 +354,34 @@ end$$
 
 DELIMITER ;
 
+USE `asg`;
+DROP procedure IF EXISTS `asg`.`ErrorHandling`;
+
+DELIMITER $$
+USE `asg`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkIfCustomerIsVerified`()
+BEGIN
+DECLARE finished INTEGER DEFAULT 0;
+DECLARE variable_customer_ID INTEGER;
+DEClARE customer_cursor CURSOR FOR 
+SELECT CandidateReferenceID FROM customer;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+OPEN customers_cursor;
+get_customers_loop: LOOP
+FETCH customers_cursor INTO variable_customer_ID;
+IF finished = 1 THEN 
+				 LEAVE get_customers_loop;
+				 END IF;
+                 		-- add bussiness logic here 
+                        DELETE FROM customer
+                        WHERE Verified = 0;
+		 END LOOP get_customers_loop;
+         CLOSE customers_cursor;
+END$$
+
+DELIMITER ;
+
+CALL checkIfCustomerIsVerified();
 -- -----------------------------------------------------
 -- View `asg`.`adminadetails`
 -- -----------------------------------------------------
