@@ -33,5 +33,9 @@ public interface CustomerServiceInterface {
 
     List<Customer> findAllById(Iterable<Long> id);
 
-    public void updateAddress(Long customerID, Address address);
+    public void updateAddress(Long loginID, Address address);
+
+    public void updateDrone(Long loginID, Drone drone);
+
+    public void addCourse(Long loginID, Long courseID);
 }

@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface CourseRepoJPA extends JpaRepository<Course, Long>, CourseRepo {
     List<Course> findByInstructor(Instructor instructor);
+    List<Course> findAll();
 }

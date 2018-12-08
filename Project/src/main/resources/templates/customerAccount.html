@@ -60,7 +60,6 @@
         </div>
     </div>
 </nav>
-
 <div class="jumbotron">
     <h1>Customer Account</h1>
     <div id="welcome">
@@ -84,7 +83,7 @@
     <div id="course">
         <h2 class="h2">Course</h2>
         <div th:if="${courses != null}">
-            <table>
+            <table class="table">
                 <thead>
                 <tr>
                     <th>Course Name</th>
@@ -96,11 +95,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="course: ${courses}">
-                    <td><span th:text="${courses.courseName}"> name </span></td>
-                    <td><span th:text="${courses.courseType}"> type </span></td>
-                    <td><span th:text="${courses.courseLocation}"> location </span></td>
-                    <td><span th:text="${courses.courseDate}"> location </span></td>
-                    <td><span th:text="${courses.instructor.firstName}"> instructor </span></td>
+                    <td><span th:text="${course.courseName}"> name </span></td>
+                    <td><span th:text="${course.courseType}"> type </span></td>
+                    <td><span th:text="${course.courseLocation}"> location </span></td>
+                    <td><span th:text="${course.courseDate}"> location </span></td>
+                    <td><span th:text="${course.instructor.firstName}"> instructor </span></td>
                 </tr>
                 </tbody>
             </table>

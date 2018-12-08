@@ -4,6 +4,7 @@ import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.enums.Courses;
 import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.repositories.AddressRepoJPA;
+import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,13 @@ import java.util.List;
 @Service
 public class CustomerService implements CustomerServiceInterface {
     private CustomerRepoJPA customerRepoJPA;
-    private AddressRepoJPA addressRepoJPA;
+    private CourseRepoJPA courseRepoJPA;
     private int progression;
 
     @Autowired
-    CustomerService(CustomerRepoJPA cRepo, AddressRepoJPA aRepo) {
+    CustomerService(CustomerRepoJPA cRepo, CourseRepoJPA coRepo) {
         customerRepoJPA = cRepo;
-        addressRepoJPA = aRepo;
+        courseRepoJPA = coRepo;
     }
 
     @Override
@@ -29,11 +30,32 @@ public class CustomerService implements CustomerServiceInterface {
     }
 
     @Override
-    public void updateAddress(Long LoginId, Address address) {
-        Customer customer = customerRepoJPA.findByLogin_Id(LoginId);
+    public void updateAddress(Long loginId, Address address) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginId);
         Customer updatedCustomer = customerRepoJPA.getOne(customer.getId());
         customer.setAddress(address);
         customerRepoJPA.save(customer);
+    }
+
+    @Override
+    public void updateDrone(Long loginID, Drone drone) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Customer updateCustomer = customerRepoJPA.getOne(customer.getId());
+        customer.setDrone(drone);
+        customerRepoJPA.save(customer);
+    }
+
+    @Override
+    public void addCourse(Long loginID, Long courseID) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Customer updateCustomer = customerRepoJPA.getOne(customer.getId());
+        Optional<Course> courseOptional = courseRepoJPA.findById(courseID);
+        if (courseOptional.isPresent()) {
+            Course course = courseOptional.get();
+            System.out.println(course);
+            customer.setCourse(course);
+            customerRepoJPA.save(customer);
+        }
     }
 
     @Override

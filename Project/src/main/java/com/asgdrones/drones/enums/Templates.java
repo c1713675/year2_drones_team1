@@ -10,7 +10,9 @@ public enum Templates {
     ACCESS_DENIED("accessDenied"),
     CREATE_COURSE_DATE("createCourseDate"),
     COURSE_CREATED("courseCreated"),
-    UPDATE_ADDRESS("updateAddress");
+    UPDATE_ADDRESS("updateAddress"),
+    UPDATE_DRONE("updateDrone"),
+    ADD_COURSE("addCourse");
 
     private final String name;
 
