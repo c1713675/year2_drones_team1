@@ -91,4 +91,20 @@ public class CustomerJPATest {
         List<Customer> customerList = this.customerRepoJPA.findBySearchTerm("Buckland");
         assertThat(customerList.size()).isEqualTo(1);
     }
+
+    @Test
+    public void testGetFirstName(){
+        Login login = new Login(1L, "instructor", "TestIns", "123");
+        Address address = new Address(1L, "AB123CD", "Cardiff", "Abc Street", 1, null);
+        Instructor instructor = new Instructor(1L, "Test", "TestLast", "01234567890", login, address);
+        Course course = new Course(1L, "Name", "Type", "London", java.sql.Date.valueOf(LocalDate.now()), instructor);
+        Drone drone = new Drone(1L, "N/A", "N/A");
+        Creation creation = new Creation(null, java.sql.Date.valueOf(LocalDate.now()), java.sql.Date.valueOf(LocalDate.now().plusYears(5)));
+        this.entityManager.merge(new Customer(1L,"James","Buckland",
+                new Date(16/11/1998),"j@gmail.com","01735432576",
+                true,(float)13.0,"none",(float)5.0,"Cardiff",
+                true, login,drone,address,course,creation));
+        List<Customer> customers = this.customerRepoJPA.findByCourseId(course.getId());
+        assertThat(customers.size()).isEqualTo(1);
+    }
 }
