@@ -194,12 +194,12 @@ DEFAULT CHARACTER SET = latin1;
 DROP TABLE IF EXISTS `asg`.`feedback` ;
 
 CREATE TABLE IF NOT EXISTS `asg`.`feedback` (
-  `CandidateReferenceID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FeedbackID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Satisfaction` INT(5) NOT NULL,
   `Difficulty` INT(5) NOT NULL,
   `Comments` VARCHAR(80) NULL DEFAULT NULL,
-  PRIMARY KEY (`CandidateReferenceID`),
-  UNIQUE INDEX `CandidID_UNIQUE` (`CandidateReferenceID` ASC))
+  PRIMARY KEY (`FeedbackID`),
+  UNIQUE INDEX `FeedID_UNIQUE` (`FeedbackID` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -226,6 +226,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `course_CourseID` INT(10) UNSIGNED NOT NULL,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
   `creation_CreationID` INT(10) UNSIGNED NOT NULL,
+  `feedback_FeedbackID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`CandidateReferenceID`),
   UNIQUE INDEX `CandidateReferenceID_UNIQUE` (`CandidateReferenceID` ASC),
   INDEX `fk_customer_drone1_idx` (`drone_DroneID` ASC),
@@ -233,6 +234,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   INDEX `fk_customer_course1_idx` (`course_CourseID` ASC),
   INDEX `fk_customer_login1_idx` (`login_LoginID` ASC),
   INDEX `fk_customer_creation1_idx` (`creation_CreationID` ASC),
+  INDEX `fk_customer_feedback1_idx` (`feedback_FeedbackID` ASC),  
   CONSTRAINT `fk_customer_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
@@ -253,11 +255,17 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
     REFERENCES `asg`.`drone` (`DroneID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
+  CONSTRAINT `fk_customer_feedback1`
+    FOREIGN KEY (`feedback_FeedbackID`)
+    REFERENCES `asg`.`feedback` (`FeedbackID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_customer_login1`
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+    
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
@@ -482,6 +490,54 @@ INSERT INTO version (dbversion, active, description) VALUES (newversion, true, '
 END IF;
 
 END$$
+
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`feedback_AFTER_INSERT` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`feedback_AFTER_INSERT`
+AFTER INSERT ON `asg`.`feedback`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Inserting new data into feedback table');
+END IF;
+
+END$$
+
+
+USE `asg`$$
+DROP TRIGGER IF EXISTS `asg`.`feedback_AFTER_UPDATE` $$
+USE `asg`$$
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `asg`.`feedback_AFTER_UPDATE`
+AFTER UPDATE ON `asg`.`feedback`
+FOR EACH ROW
+BEGIN
+
+DECLARE oldVersion INTEGER DEFAULT (SELECT dbversion FROM version WHERE active = true);
+DECLARE newVersion INTEGER DEFAULT 2;
+
+IF EXISTS (SELECT dbversion FROM version WHERE dbversion = oldVersion AND active = true)
+THEN
+SET newVersion = oldVersion + 1;
+UPDATE version SET active = false WHERE dbversion = oldVersion AND active = true;
+INSERT INTO version (dbversion, active, description) VALUES (newversion, true, 'Updating data in feedback table');
+END IF;
+
+END$$
+
 
 
 USE `asg`$$
