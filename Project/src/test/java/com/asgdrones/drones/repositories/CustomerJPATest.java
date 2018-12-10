@@ -100,11 +100,11 @@ public class CustomerJPATest {
         Course course = new Course(1L, "Name", "Type", "London", java.sql.Date.valueOf(LocalDate.now()), instructor);
         Drone drone = new Drone(1L, "N/A", "N/A");
         Creation creation = new Creation(null, java.sql.Date.valueOf(LocalDate.now()), java.sql.Date.valueOf(LocalDate.now().plusYears(5)));
-        this.entityManager.merge(new Customer(1L,"James","Buckland",
-                new Date(16/11/1998),"j@gmail.com","01735432576",
-                true,(float)13.0,"none",(float)5.0,"Cardiff",
+        this.entityManager.merge(new Customer(1L,"TestFirst","TestLast",
+                new Date(01/01/1990),"test@gmail.com","01234567890",
+                true,(float)7.0,"None",(float)5.0,"Cardiff",
                 true, login,drone,address,course,creation));
         List<Customer> customers = this.customerRepoJPA.findByCourseId(course.getId());
-        assertThat(customers.size()).isEqualTo(1);
+        assertThat(customers.get(0).getFirstName()).isEqualTo("TestFirst");
     }
 }
