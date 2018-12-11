@@ -2,6 +2,7 @@ package com.asgdrones.drones.controllers;
 
 import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.services.CourseService;
+import com.asgdrones.drones.services.CustomerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +39,19 @@ public class CustomerControllerTest {
     @MockBean
     private CourseService courseService;
 
+    @MockBean
+    private CustomerService customerService;
+
     @Test
     public void customerProgressionDoesExistTest() throws Exception{
         List<Course> courseList = new ArrayList<>();
-        Address address = new Address(1L,"CF244AN","Cardiff","Abby Lane",4,"");
-        Login login = new Login(1L,"jbuckland","1234","customer");
-        Instructor instructor = new Instructor(1L,"james","buckland","01895430027",login,address);
-        Course course = new Course(1L,"Course1","Type2","Cardiff", java.sql.Date.valueOf(LocalDate.now()),instructor);
+        Address address = new Address(null,"CF244AN","Cardiff","Abby Lane",4,"");
+        Login login = new Login(1L,"customer","jbuckland2","1234");
+        Instructor instructor = new Instructor(null,"james","buckland","01895430027",login,address);
+        Course course = new Course(null,"Course1","Type2","Cardiff", java.sql.Date.valueOf(LocalDate.now()),instructor);
         courseList.add(course);
-        when(courseService.getCourses()).thenReturn(courseList);
+        when(customerService.getCustomerName(1L)).thenReturn("James");
+        when(customerService.getCourseProgression(1L)).thenReturn(2);
         this.mockMvc.perform(get("customer/1/course_progression"))
                 .andDo(print()).andExpect(status().isOk());
     }
@@ -61,7 +66,7 @@ public class CustomerControllerTest {
         Course course = new Course(1L,"Course1","Type2","Cardiff", java.sql.Date.valueOf(LocalDate.now()),instructor);
         Customer customer = new Customer(2L, "James", "Buckland", java.sql.Date.valueOf("1998-11-16"),"jbuckland@gmail.com","01895430027",true,
                 (float)2.0,"none",(float)9.0,"Cardiff",true,false,login,drone,address,course, creation);
-                this.mockMvc.perform(get("customer/2"))
+                this.mockMvc.perform(get("customer/63"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Cardiff")));

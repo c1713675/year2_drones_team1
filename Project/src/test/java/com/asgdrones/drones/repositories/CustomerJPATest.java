@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -95,17 +96,22 @@ public class CustomerJPATest {
     }
     @Test
     public void findbyLoginIDTest() throws Exception{
-        Drone drone = new Drone(1L, "n/a", "n/a");
+        Drone drone = new Drone(null, "n/a", "n/a");
         Creation creation = new Creation(null, java.sql.Date.valueOf(LocalDate.now()), java.sql.Date.valueOf(LocalDate.now().plusYears(2)));
-        Address address = new Address(1L, "CF244AN", "Cardiff", "Abby Lane", 4, "");
-        Login login = new Login(1L, "customer", "jbuckland", "1234");
-        Instructor instructor = new Instructor(1L, "james", "buckland", "01895430027", login, address);
-        Course course = new Course(1L, "Course1", "Type2", "Cardiff", java.sql.Date.valueOf(LocalDate.now()), instructor);
-        this.entityManager.persistAndFlush(new Customer(1L, "James", "Buckland",
+        Address address = new Address(null, "CF244AN", "Cardiff", "Abby Lane", 4, "");
+        Login login = new Login(null, "customer", "jbuckland3", "1234");
+        Instructor instructor = new Instructor(null, "james", "buckland", "01895430027", login, address);
+        Course course = new Course(null, "Course1", "Type2", "Cardiff", java.sql.Date.valueOf(LocalDate.now()), instructor);
+        Customer newCustomer = new Customer(null, "Jim", "Buckland",
                 java.sql.Date.valueOf(LocalDate.now()), "j@gmail.com", "01735432576",
                 true, (float) 13.0, "none", (float) 5.0, "Cardiff",
-                true, false, login, drone, address, course, creation));
-        Customer customer = this.customerRepoJPA.findByLogin_Id(login.getId());
-        assertThat(customer.getFirstName()).isEqualTo("James");
+                true, false, login, drone, address, course, creation);
+
+
+        this.entityManager.merge(newCustomer);
+        Customer checkCustomer = this.customerRepoJPA.findBySearchTerm("Jim").get(0);
+        Long loginId = checkCustomer.getLogin().getId();
+        Customer customer = this.customerRepoJPA.findByLogin_Id(loginId);
+        assertThat(customer.getFirstName()).isEqualTo("Jim");
     }
 }

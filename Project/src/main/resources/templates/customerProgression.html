@@ -48,10 +48,10 @@
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
-                    <a th:href="@{/customerProgression}">Progress</a>
+                    <a th:href="@{'/customer/'+${customerID}+'/course_progression'}">Progress</a>
                 </li>
                 <li>
-                    <a href="#">Course Info</a>
+                    <a th:href="@{'/customer/'+${customerID}}">Profile</a>
                 </li>
                 <li>
                     <a href="#feedback">Leave Feedback</a>
