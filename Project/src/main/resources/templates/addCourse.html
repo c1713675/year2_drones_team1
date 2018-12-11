@@ -1,13 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <title>Bootstrap Navbar Tutorial</title>
-
+    <title>add Course</title>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
@@ -37,49 +33,59 @@
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
-                    <a href="#customerSearch">Search</a>
+                    <a th:href="@{'/customer/' +${customerID}}">Profile</a>
+                </li>
+                <li>
+                    <a href="#">About us</a>
+                </li>
+                <li>
+                    <a href="#">Course Info</a>
+                </li>
+                <li>
+                    <a th:href="@{/feedback}">Leave Feedback</a>
                 </li>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                     <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="jumbotron">
-    <h1>Users</h1>
+    <h1>Courses</h1>
     <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Date of Birth</th>
-            <th>Email</th>
-            <th>Phone number</th>
-            <th>Subscription Paid?</th>
-            <th>Hours of Flying</th>
-            <th>Has Disability?</th>
-            <th>English Speaking Level</th>
-            <th>Preferred GS Location</th>
-            <th>Insured</th>
-            <th>Access</th>
+            <th>Course Name</th>
+            <th>Course Type</th>
+            <th>Course Location</th>
+            <th>Course Date</th>
+            <th>Instructor</th>
+            <th>Add</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="customer: ${customers}">
-            <td><a th:href="@{/customer/{customerID}/course_progression(customerID= ${customer.id})}"><span
-                    th:text="${customer.firstName} +' '+ ${customer.lastName}">Customer Name</span></a></td>
-            <td><span th:text="${customer.dob}"> </span></td>
-            <td><span th:text="${customer.email}"></span></td>
-            <td><span th:text="${customer.phoneNumber}"></span></td>
-            <td><span th:text="${customer.paid}"></span></td>
-            <td><span th:text="${customer.hoursOfFlying}"></span></td>
-            <td><span th:text="${customer.disability}"></span></td>
-            <td><span th:text="${customer.englishSpeakingLevel}"></span></td>
-            <td><span th:text="${customer.preferredGSLocation}"></span></td>
-            <td><span th:text="${customer.insured}"></span></td>
-            <td><span th:text="${customer.login.access}"></span></td>
+        <tr th:each="course: ${courses}">
+            <form action="#" th:action="@{'/customer/' +${customerID}+'/add_course'}" th:object="${newCourse}"
+                  method="post">
+                <td><span th:text="${course.courseName}"> name </span>
+                </td>
+                <td><span th:text="${course.courseType}"> type</span>
+                </td>
+                <td><span th:text="${course.courseLocation}"> location </span>
+                </td>
+                <td><span th:text="${course.courseDate}"> date </span>
+                </td>
+                <td><span th:text="${course.instructor.firstName}"> instructor </span>
+                </td>
+                <td>
+                    <input type="hidden"
+                           name="course_id"
+                           th:value="${courseStat.current.id}"/>
+                    <button class="btn-success" type="submit">add</button>
+                </td>
+            </form>
         </tr>
         </tbody>
     </table>
