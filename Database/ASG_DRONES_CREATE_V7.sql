@@ -75,12 +75,12 @@ CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
   CONSTRAINT `fk_administrator_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_administrator_login1`
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -190,7 +190,8 @@ CREATE TABLE IF NOT EXISTS `asg`.`drone` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
+Insert into drone (Manufacturer, Model) Values ('manufacture 1', 'model 1');
+Insert into drone (Manufacturer, Model) Values('manufacture 2', 'model 2');
 -- -----------------------------------------------------
 -- Table `asg`.`customer`
 -- -----------------------------------------------------
@@ -235,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   CONSTRAINT `fk_customer_creation1`
     FOREIGN KEY (`creation_CreationID`)
     REFERENCES `asg`.`creation` (`CreationID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_customer_drone1`
     FOREIGN KEY (`drone_DroneID`)
@@ -245,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   CONSTRAINT `fk_customer_login1`
     FOREIGN KEY (`login_LoginID`)
     REFERENCES `asg`.`login` (`LoginID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
@@ -359,12 +360,13 @@ DROP procedure IF EXISTS `asg`.`checkIfCustomerIsVerified`;
 
 DELIMITER $$
 USE `asg`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `checkIfCustomerIsVerified`()
+CREATE PROCEDURE `checkIfCustomerIsVerified`()
 BEGIN
 DECLARE finished INTEGER DEFAULT 0;
 DECLARE variable_customer_ID INTEGER;
-DEClARE customers_cursor CURSOR FOR 
-SELECT CandidateReferenceID FROM customer;
+
+DEClARE customers_cursor CURSOR FOR SELECT CandidateReferenceID FROM customer WHERE Verified=0;
+
 DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
 OPEN customers_cursor;
 get_customers_loop: LOOP
@@ -373,15 +375,20 @@ IF finished = 1 THEN
 				 LEAVE get_customers_loop;
 				 END IF;
                  		-- add bussiness logic here 
-                        DELETE FROM customer
-                        WHERE Verified = 0;
+						DELETE FROM login
+                        WHERE LoginID = (SELECT login_loginID FROM customer WHERE CandidateReferenceID=variable_customer_ID);
 		 END LOOP get_customers_loop;
          CLOSE customers_cursor;
+         DELETE FROM customer
+			WHERE Verified = 0;
+
 END$$
 
 DELIMITER ;
 
 CALL checkIfCustomerIsVerified();
+select * from login;
+select * from customer;
 -- -----------------------------------------------------
 -- View `asg`.`adminadetails`
 -- -----------------------------------------------------

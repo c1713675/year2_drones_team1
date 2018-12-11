@@ -5,6 +5,8 @@ import com.asgdrones.drones.services.CourseService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +34,7 @@ public class CustomerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+
     @MockBean
     private CourseService courseService;
 
@@ -44,7 +47,7 @@ public class CustomerControllerTest {
         Course course = new Course(1L,"Course1","Type2","Cardiff", java.sql.Date.valueOf(LocalDate.now()),instructor);
         courseList.add(course);
         when(courseService.getCourses()).thenReturn(courseList);
-        this.mockMvc.perform(get("/customer/1/course_progression"))
+        this.mockMvc.perform(get("customer/1/course_progression"))
                 .andDo(print()).andExpect(status().isOk());
     }
     //todo
@@ -57,8 +60,8 @@ public class CustomerControllerTest {
         Instructor instructor = new Instructor(1L,"james","buckland","01895430027",login,address);
         Course course = new Course(1L,"Course1","Type2","Cardiff", java.sql.Date.valueOf(LocalDate.now()),instructor);
         Customer customer = new Customer(2L, "James", "Buckland", java.sql.Date.valueOf("1998-11-16"),"jbuckland@gmail.com","01895430027",true,
-                (float)2.0,"none",(float)9.0,"Cardiff",true,login,drone,address,course, creation);
-        this.mockMvc.perform(get("/customer/2"))
+                (float)2.0,"none",(float)9.0,"Cardiff",true,false,login,drone,address,course, creation);
+                this.mockMvc.perform(get("customer/2"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Cardiff")));
