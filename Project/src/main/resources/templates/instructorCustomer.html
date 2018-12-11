@@ -3,8 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#exampleNavComponents" aria-expanded
+            "false">
+            <i class="glyphicon glyphicon-align-center"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="collapse navbar-collapse" id="exampleNavComponents">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+                <a th:href="@{/login}">Login</a>
+            </li>
+            <li>
+                <a href="#">About us</a>
+            </li>
+            <li>
+                <a href="#">Course Info</a>
+            </li>
+            <li>
+                <a href="#feedback">Leave Feedback</a>
+            </li>
+
+            <!-- Navbar link with a dropdown menu -->
+
+        </ul>
+    </div>
+</nav>
 <table>
     <thead>
     <tr>

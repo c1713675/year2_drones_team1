@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -84,8 +85,16 @@ public class InstructorController {
             }
             Instructor instructor = instructorService.getInstructor(instructorID);
             List<Course> courses = courseService.findByInstructor(instructor);
-            Course course = courses.get(0);
-            List<Customer> customers = customerService.findByCourseId(course.getId());
+            List<Customer> customers = new ArrayList<>();
+
+            for(Course c: courses){
+                List<Customer> cust = customerService.findByCourseId(c.getId());
+                for(Customer cu: cust) {
+                    customers.add(cu);
+                }
+            }
+            //Course course = courses.get(0);
+            //List<Customer> customers = customerService.findByCourseId(course.getId());
             model.addAttribute("customers", customers);
         }
         return new ModelAndView(page.toString(), model.asMap());

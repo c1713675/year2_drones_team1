@@ -3,8 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#exampleNavComponents" aria-expanded
+            "false">
+            <i class="glyphicon glyphicon-align-center"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="collapse navbar-collapse" id="exampleNavComponents">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active">
+                <a th:href="@{/login}">Login</a>
+            </li>
+            <li>
+                <a href="#">About us</a>
+            </li>
+            <li>
+                <a href="#">Course Info</a>
+            </li>
+            <li>
+                <a href="#feedback">Leave Feedback</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="row">
     <table class="table">
         <thead>
@@ -14,12 +47,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each = "course: ${courses}">
+        <tr th:each="course: ${courses}">
             <td>
-                <a th:text="${course.courseLocation}"></a>
+                <p th:text="${course.courseLocation}"></p>
             </td>
             <td>
-                <a th:text="${course.courseDate}"></a>
+                <p th:text="${course.courseDate}"></p>
             </td>
         </tr>
         </tbody>
