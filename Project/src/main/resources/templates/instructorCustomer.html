@@ -2,39 +2,62 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Customers</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
+    <!-- Navbar Container -->
     <div class="container">
+
+        <!-- Navbar Header [contains both toggle button and navbar brand] -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#exampleNavComponents" aria-expanded
-            "false">
+            <!-- Toggle Button [handles opening navbar components on mobile screens]-->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#exampleNavComponents" aria-expanded"false">
             <i class="glyphicon glyphicon-align-center"></i>
             </button>
+
+            <!-- Navbar Brand -->
+            <a href="#" class="navbar-brand">
+            </a>
+        </div>
+
+
+        <!-- Navbar Collapse [contains navbar components such as navbar menu and forms ] -->
+        <div class="collapse navbar-collapse" id="exampleNavComponents">
+
+            <!-- Navbar Menu -->
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active">
+                    <a th:href="@{/adminAccount}">Admin</a>
+                </li>
+                <li>
+                    <a href="#">About us</a>
+                </li>
+                <li>
+                    <a href="#">Course Info</a>
+                </li>
+                <li>
+                    <a th:href="@{/feedback}">Leave Feedback</a>
+                </li>
+
+                <!-- Navbar link with a dropdown menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">My Dashboard</a></li>
+                        <li><a th:href="@{/login}">Log out</th></a></li>
+
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
-
-    <div class="collapse navbar-collapse" id="exampleNavComponents">
-        <ul class="nav navbar-nav navbar-right">
-            <li class="active">
-                <a th:href="@{/login}">Login</a>
-            </li>
-            <li>
-                <a href="#">About us</a>
-            </li>
-            <li>
-                <a href="#">Course Info</a>
-            </li>
-            <li>
-                <a href="#feedback">Leave Feedback</a>
-            </li>
-        </ul>
-    </div>
 </nav>
+<div class="jumbotron">
 <div class="row">
     <table class="table">
         <thead>
@@ -50,6 +73,7 @@
         </tr>
         </tbody>
     </table>
+</div>
 </div>
 </body>
 </html>
