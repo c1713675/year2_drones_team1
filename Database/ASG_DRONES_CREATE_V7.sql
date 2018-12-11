@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`course` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-insert into course(CourseName,CourseLocation,Instructor_InstructorID) values ('17-2','Cardiff',1);
+insert into course(CourseName,CourseType,CourseLocation,CourseDate,Instructor_InstructorID) values ('17-2','type 1','Cardiff','2018-12-31',1);
 insert into course(CourseName, CourseType,CourseLocation,CourseDate,Instructor_InstructorID) values ('87-2','type 2','Cardiff',now(),1);
 -- -----------------------------------------------------
 -- Table `asg`.`creation`
@@ -386,9 +386,44 @@ END$$
 
 DELIMITER ;
 
-CALL checkIfCustomerIsVerified();
-select * from login;
-select * from customer;
+-- CALL checkIfCustomerIsVerified();
+-- select * from login;
+-- select * from customer;
+
+USE `asg`;
+DROP procedure IF EXISTS `asg`.`deleteIfDeletionDateExpires`;
+
+DELIMITER $$
+USE `asg`$$
+CREATE PROCEDURE `deleteIfDeletionDateExpires`()
+Begin
+DECLARE finished INTEGER DEFAULT 0;
+DECLARE variable_creation_ID INTEGER;
+DEClARE creation_cursor CURSOR FOR SELECT CreationID FROM creation WHERE DeletionDate >= now();
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+OPEN creation_cursor;
+get_creation_loop: LOOP
+FETCH creation_cursor INTO variable_creation_ID;
+IF finished = 1 THEN 
+				 LEAVE get_creation_loop;
+				 END IF;
+                 
+                 DELETE FROM login
+                 WHERE LoginID = (SELECT login_LoginID FROM customer WHERE creation_CreationID = variable_creation_ID);
+                 DELETE FROM customer
+                 WHERE creation_CreationID = (SELECT CreationID FROM creation WHERE CreationID = variable_creation_ID);
+                 
+                 END LOOP get_creation_loop;
+                 
+         CLOSE creation_cursor;
+         DELETE FROM creation
+			WHERE DeletionDate >= now();
+End $$
+
+-- CALL deleteIfDeletionDateExpires();
+-- select * from login;
+-- select * from customer;
+-- select * from creation;
 -- -----------------------------------------------------
 -- View `asg`.`adminadetails`
 -- -----------------------------------------------------
