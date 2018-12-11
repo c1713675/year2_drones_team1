@@ -48,15 +48,6 @@ public class RegisterController {
     public RedirectView addRegisterForm(@Valid Customer customer, BindingResult bindingResult, Model model) {
         //binding result stops it from being null
 
-        Customer userExists = customer.findByEmail(customer.getEmail());
-
-        System.out.println(userExists);
-
-        if (userExists != null) {
-            model.addAttribute("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
-            model.addAttribute("register");
-            bindingResult.reject("email");
-        }
 
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);

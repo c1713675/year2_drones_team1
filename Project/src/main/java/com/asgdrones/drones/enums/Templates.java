@@ -9,7 +9,8 @@ public enum Templates {
     CUSTOMER_PROGRESSION("customerProgression"),
     ACCESS_DENIED("accessDenied"),
     CREATE_COURSE_DATE("createCourseDate"),
-    COURSE_CREATED("courseCreated");
+    COURSE_CREATED("courseCreated"),
+    ADMIN_FEEDBACK("adminFeedbackAccount");
 
     private final String name;
 

@@ -2,6 +2,7 @@ package com.asgdrones.drones.repositories;
 
 import com.asgdrones.drones.domain.Address;
 import com.asgdrones.drones.domain.Admin;
+import com.asgdrones.drones.domain.Feedback;
 
 import java.util.Optional;
 

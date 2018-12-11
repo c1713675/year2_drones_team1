@@ -40,7 +40,7 @@ public class CustomerJPATest {
         this.entityManager.merge(new Customer(1L,"James","Buckland",
                 new Date(16/11/1998),"j@gmail.com","01735432576",
                 true,(float)13.0,"none",(float)5.0,"Cardiff",
-                true, login,drone, address, course, creation));
+                true, login,drone, address, course, null, creation));
         List<Customer> customerList = this.customerRepoJPA.findAll();
         assertThat(customerList.get(0).getFirstName()).isEqualTo("James");
         assertThat(customerList.get(0).getLastName()).isEqualTo("Buckland");
@@ -72,7 +72,7 @@ public class CustomerJPATest {
         this.entityManager.merge(new Customer(2L,"Arron","Li",
                 new Date(5/7/1992),"a@gmail.com","01643875987",
                 true,(float)13.0,"none",(float)5.0,"Cardiff",
-                true, login,drone,address,course, creation));
+                true, login,drone,address,course, null,creation));
         List<Customer> customerList = this.customerRepoJPA.findBySearchTerm("Arron");
         assertThat(customerList.size()).isEqualTo(1);
     }
@@ -87,7 +87,7 @@ public class CustomerJPATest {
         this.entityManager.merge(new Customer(1L,"James","Buckland",
                 new Date(16/11/1998),"j@gmail.com","01735432576",
                 true,(float)13.0,"none",(float)5.0,"Cardiff",
-                true, login,drone,address,course,creation));
+                true, login,drone,address,course,null,creation));
         List<Customer> customerList = this.customerRepoJPA.findBySearchTerm("Buckland");
         assertThat(customerList.size()).isEqualTo(1);
     }

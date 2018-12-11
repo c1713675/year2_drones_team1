@@ -28,6 +28,7 @@ public class AdminController {
     private Templates page;
     private AdminService adminService;
     private CourseService courseService;
+
     @Autowired
     AdminController(AdminService aService, CourseService cService) {
         adminService = aService;

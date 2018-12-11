@@ -3,23 +3,26 @@ package com.asgdrones.drones.services;
 import com.asgdrones.drones.domain.Address;
 import com.asgdrones.drones.domain.Admin;
 import com.asgdrones.drones.domain.Customer;
+import com.asgdrones.drones.domain.Feedback;
 import com.asgdrones.drones.repositories.AdminRepoJPA;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
+import com.asgdrones.drones.repositories.FeedbackRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class AdminService implements AdminServiceInterface {
     private AdminRepoJPA adminRepoJPA;
     private CustomerRepoJPA customerRepoJPA;
+    private FeedbackRepoJPA feedbackRepoJPA;
 
     @Autowired
-    AdminService(AdminRepoJPA aRepo, CustomerRepoJPA cRepo){
+    AdminService(AdminRepoJPA aRepo, CustomerRepoJPA cRepo, FeedbackRepoJPA fRepo) {
         adminRepoJPA = aRepo;
         customerRepoJPA = cRepo;
+        feedbackRepoJPA = fRepo;
     }
 
     @Override
@@ -27,6 +30,7 @@ public class AdminService implements AdminServiceInterface {
         Admin admin = adminRepoJPA.findAdminByLogin_Id(loginID);
         return admin;
     }
+
 
     @Override
     public List<Customer> getCustomers() {
@@ -40,23 +44,24 @@ public class AdminService implements AdminServiceInterface {
         return customerList;
     }
 
+
     @Override
-    public String getAdminName(Long loginID){
-        Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
-            String adminFirstName = adminDetails.getFirstName();
-            String adminLastName = adminDetails.getLastName();
-            String FullName = adminFirstName +" "+ adminLastName;
-            return FullName;
+    public String getAdminName(Long loginID) {
+        Admin adminDetails = adminRepoJPA.findByLogin_Id(loginID);
+        String adminFirstName = adminDetails.getFirstName();
+        String adminLastName = adminDetails.getLastName();
+        String FullName = adminFirstName + " " + adminLastName;
+        return FullName;
     }
 
     @Override
-    public  String GetAdminPostCode(Long loginID){
-        Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
+    public String GetAdminPostCode(Long loginID) {
+        Admin adminDetails = adminRepoJPA.findByLogin_Id(loginID);
         Address address = adminDetails.getAddress();
-        if (address.getPostcode().isEmpty()){
+        if (address.getPostcode().isEmpty()) {
             String postcode = "";
             return postcode;
-        }else {
+        } else {
             String postCode = address.getPostcode();
             return postCode;
         }
@@ -64,12 +69,12 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public String GetAdminCity(Long loginID) {
-        Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
+        Admin adminDetails = adminRepoJPA.findByLogin_Id(loginID);
         Address address = adminDetails.getAddress();
-        if (address.getCity().isEmpty()){
+        if (address.getCity().isEmpty()) {
             String city = "";
             return city;
-        }else {
+        } else {
             String city = address.getCity();
             return city;
         }
@@ -77,12 +82,12 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public String GetAdminStreet(Long loginID) {
-        Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
+        Admin adminDetails = adminRepoJPA.findByLogin_Id(loginID);
         Address address = adminDetails.getAddress();
-        if (address.getStreet().isEmpty()){
+        if (address.getStreet().isEmpty()) {
             String street = "";
             return street;
-        }else {
+        } else {
             String street = address.getCity();
             return street;
         }
@@ -90,22 +95,23 @@ public class AdminService implements AdminServiceInterface {
 
     @Override
     public Integer GetAdminHouseNumber(Long loginID) {
-        Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
+        Admin adminDetails = adminRepoJPA.findByLogin_Id(loginID);
         Address address = adminDetails.getAddress();
-            Integer houseNumber = address.getHouseNumber();
-            return houseNumber;
+        Integer houseNumber = address.getHouseNumber();
+        return houseNumber;
     }
 
     @Override
     public String GetAdminHouseName(Long loginID) {
-        Admin adminDetails =adminRepoJPA.findByLogin_Id(loginID);
+        Admin adminDetails = adminRepoJPA.findByLogin_Id(loginID);
         Address address = adminDetails.getAddress();
-        if (address.getHouseName().isEmpty()){
+        if (address.getHouseName().isEmpty()) {
             String houseName = "";
             return houseName;
-        }else {
+        } else {
             String houseName = address.getHouseName();
             return houseName;
         }
     }
+
 }

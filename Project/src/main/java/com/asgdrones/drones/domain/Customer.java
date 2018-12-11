@@ -78,13 +78,13 @@ public class Customer {
     @JoinColumn(name = "course_CourseID")
     private Course course;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "feedback_FeedbackID")
+    private Feedback feedback;
+
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn( name = "creation_creationid")
     private Creation creation;
 
-
-    public Customer findByEmail(String email) {
-     return null;
-    }
 }
