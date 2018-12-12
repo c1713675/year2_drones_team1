@@ -18,6 +18,9 @@ public interface CustomerRepoJPA extends JpaRepository<Customer, Long>, Customer
     List<Customer> findAllById(Long id);
 
     Customer findByEmail(String email);
+    public Customer findByLogin_Id(Long LoginID);
+
+
 
 }
 

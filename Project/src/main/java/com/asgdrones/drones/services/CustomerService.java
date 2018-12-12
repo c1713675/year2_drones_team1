@@ -2,11 +2,13 @@ package com.asgdrones.drones.services;
 
 import com.asgdrones.drones.domain.Course;
 import com.asgdrones.drones.domain.Customer;
+import com.asgdrones.drones.domain.Feedback;
 import com.asgdrones.drones.enums.Courses;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.repositories.CustomerRepo;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
+import com.asgdrones.drones.repositories.FeedbackRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +18,27 @@ import java.util.List;
 @Service
 public class CustomerService implements CustomerServiceInterface {
     private CustomerRepoJPA customerRepoJPA;
+    private FeedbackRepoJPA feedbackRepoJPA;
     private int progression;
 
     @Autowired
-    CustomerService(CustomerRepoJPA cRepo) {
+    CustomerService(CustomerRepoJPA cRepo, FeedbackRepoJPA fRepo) {
         customerRepoJPA = cRepo;
+        feedbackRepoJPA = fRepo;
     }
 
 
 
     @Override
-    public List<Customer> findAllById(Iterable<Long> id) {
-        return customerRepoJPA.findAllById(id);
+    public void updateFeedback(Long loginID, Feedback feedback) {
+
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Customer updatedCustomer = customerRepoJPA.getOne(customer.getId());
+        customer.setFeedback(feedback);
+        feedbackRepoJPA.save(feedback);
     }
+
+
 
     @Override
     public Integer getCourseProgression(Long id) {
@@ -60,6 +70,7 @@ public class CustomerService implements CustomerServiceInterface {
         }
         return null;
     }
+
 
 
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,22 +37,54 @@ public class FeedbackController {
     private FeedbackService feedbackService;
     private AdminService adminService;
     private CustomerRepoJPA customerRepoJPA;
+    private CustomerService customerService;
 
     @Autowired
-    public FeedbackController(FeedbackService ffService, AdminService aService, CustomerRepoJPA cRepo) {
+    public FeedbackController(FeedbackService ffService, AdminService aService, CustomerRepoJPA cRepo, CustomerService cService) {
         feedbackService = ffService;
         adminService = aService;
         customerRepoJPA = cRepo;
+        customerService = cService;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(Feedback.class);
 
-    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
-    public ModelAndView addFeedback(Model model) {
-        Feedback feedback = new Feedback();
-        model.addAttribute("feedback", feedback);
-        return new ModelAndView("feedback", model.asMap());
+    @RequestMapping(value = "/customer/{customerID}/feedback", method = RequestMethod.GET)
+    public ModelAndView updateAddress(Model model,
+                                      HttpServletRequest request,
+                                      @PathVariable("customerID") Long customerID) {
+        access = request.getCookies();
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("customer")) {
+                    page = Templates.CUSTOMER_FEEDBACK;
+                    Feedback feedback = new Feedback();
+                    model.addAttribute("customerID", customerID);
+                    model.addAttribute("feedback",feedback);
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            } else {
+                page = Templates.ACCESS_DENIED;
+            }
+        }
+        return new ModelAndView(String.valueOf(page), model.asMap());
     }
+
+    @RequestMapping(value = "/customer/{customerID}/feedback", method = RequestMethod.POST)
+    public RedirectView updateAddress(@Valid Feedback feedback,
+                                      BindingResult bindingResult,
+                                      Model model,
+                                      @PathVariable("customerID") Long customerID) {
+        model.addAttribute("feedback", feedback);
+        model.addAttribute("customerID", customerID);
+        System.out.println(feedback);
+        System.out.println(customerID);
+        customerService.updateFeedback(customerID, feedback);
+        return new RedirectView("/customer/{customerID}");
+    }
+
+
 
     @RequestMapping(path = "/feedback", method = RequestMethod.POST)
     public ModelAndView addLoginForm(@Valid Feedback feedback, BindingResult bindingResult, Model model) {
