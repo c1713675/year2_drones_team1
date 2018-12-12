@@ -3,7 +3,6 @@ package com.asgdrones.drones.controllers;
 import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.services.CustomerService;
 import com.asgdrones.drones.services.EmailService;
-import com.asgdrones.drones.services.FeedbackService;
 import com.asgdrones.drones.services.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,20 +20,18 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
-@SessionAttributes({"customer", "address", "drone", "login", "feedback"})
+@SessionAttributes({"customer", "address", "drone", "login"})
 @Controller
 public class RegisterController {
 
     private RegisterService registerService;
     private EmailService emailService;
-    private FeedbackService feedbackService;
 
     @Autowired
-    public RegisterController(RegisterService rService, EmailService eService, FeedbackService fServive) {
+    public RegisterController(RegisterService rService, EmailService eService) {
 
         registerService = rService;
         emailService = eService;
-        feedbackService = fServive;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(RegisterController.class);
@@ -170,43 +167,5 @@ public class RegisterController {
         registerService.upload(address, drone, customer, login);
         return new ModelAndView("login", model.asMap());
     }
-
-
-    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
-    public ModelAndView addFeedback(@SessionAttribute Address address, @SessionAttribute Customer customer,
-                                     @SessionAttribute Drone drone, @SessionAttribute Login login, Model model) {
-        Feedback feedback = new Feedback();
-        System.out.println(feedback);
-        System.out.println(drone);
-        System.out.println(address);
-        System.out.println(customer);
-        System.out.println(login);
-        model.addAttribute("feedback", feedback);
-        return new ModelAndView("feedback", model.asMap());
-    }
-
-
-    @RequestMapping(path = "/feedback", method = RequestMethod.POST)
-    public ModelAndView submitFeedback(@Valid Feedback feedback, @SessionAttribute Login login, @SessionAttribute Address address,
-                                     @SessionAttribute Customer customer, @SessionAttribute Drone drone,
-                                     BindingResult bindingResult, Model model) {
-        //binding result stops it from being null
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-        }
-        System.out.println(feedback);
-        System.out.println(customer);
-        System.out.println(login);
-        System.out.println(drone);
-        System.out.println(address);
-        model.addAttribute("feedback", feedback);
-        model.addAttribute("satisfaction", feedback.getSatisfaction());
-        model.addAttribute("difficulty", feedback.getDifficulty());
-        model.addAttribute("comments", feedback.getComments());
-        feedbackService.save(feedback);
-
-        return new ModelAndView("feedbacksubmit",model.asMap());
-    }
-
 
 }
