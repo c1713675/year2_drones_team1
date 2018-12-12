@@ -198,7 +198,6 @@ CREATE TABLE IF NOT EXISTS `asg`.`feedback` (
   `Satisfaction` INT(5) NOT NULL,
   `Difficulty` INT(5) NOT NULL,
   `Comments` VARCHAR(80) NULL DEFAULT NULL,
-  `customer_CandidateReferenceID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`FeedbackID`),
   UNIQUE INDEX `FeedbackID_UNIQUE` (`FeedbackID` ASC))
 ENGINE = InnoDB
@@ -869,7 +868,6 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-INSERT INTO feedback (feedbackid, satisfaction, difficulty, comments) VALUES('1','2','2','none');
 
 
 SELECT * FROM address;

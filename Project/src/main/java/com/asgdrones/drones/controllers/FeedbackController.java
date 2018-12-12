@@ -85,23 +85,7 @@ public class FeedbackController {
     }
 
 
-
-    @RequestMapping(path = "/feedback", method = RequestMethod.POST)
-    public ModelAndView addLoginForm(@Valid Feedback feedback, BindingResult bindingResult, Model model) {
-        //binding result stops it from being null
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-        }
-        System.out.println(feedback);
-        model.addAttribute("feedback", feedback);
-        model.addAttribute("satisfaction", feedback.getSatisfaction());
-        model.addAttribute("difficulty", feedback.getDifficulty());
-        model.addAttribute("comments", feedback.getComments());
-        feedbackService.save(feedback);
-
-        return new ModelAndView("feedbacksubmit",model.asMap());
-    }
-
+    
     @RequestMapping(value = "/adminFeedbackAccount", method = RequestMethod.GET)
     public ModelAndView adminFeedbackAccount(Model model,
                                              HttpServletRequest request) {
