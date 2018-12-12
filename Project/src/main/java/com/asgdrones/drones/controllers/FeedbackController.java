@@ -5,6 +5,8 @@ import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.domain.Feedback;
 import com.asgdrones.drones.domain.Login;
 import com.asgdrones.drones.enums.Templates;
+import com.asgdrones.drones.repositories.CustomerRepo;
+import com.asgdrones.drones.repositories.CustomerRepoJPA;
 import com.asgdrones.drones.services.AdminService;
 import com.asgdrones.drones.services.CustomerService;
 import com.asgdrones.drones.services.FeedbackService;
@@ -33,13 +35,13 @@ public class FeedbackController {
     private Templates page;
     private FeedbackService feedbackService;
     private AdminService adminService;
-    private CustomerService customerService;
+    private CustomerRepoJPA customerRepoJPA;
 
     @Autowired
-    public FeedbackController(FeedbackService ffService, AdminService aService, CustomerService cService) {
+    public FeedbackController(FeedbackService ffService, AdminService aService, CustomerRepoJPA cRepo) {
         feedbackService = ffService;
         adminService = aService;
-        customerService = cService;
+        customerRepoJPA = cRepo;
     }
 
     static final Logger LOG = LoggerFactory.getLogger(Feedback.class);
@@ -76,17 +78,16 @@ public class FeedbackController {
                 if (obj.getValue().equals("admin")) {
                     page = Templates.ADMIN_FEEDBACK;
                     List<Customer> customerList = adminService.getCustomers();
-                    Integer difficulty = adminService.GetAdminDifficulty(loginID);
                     model.addAttribute("customers",customerList);
+                    model.addAttribute("customerDetails",customerRepoJPA.findAll());
+                    for(Customer c:customerList){
+                        c.getFirstName();
+                        c.getLastName();
+                        c.getFeedback().getDifficulty();
+                        c.getFeedback().getComments();
+                        c.getFeedback().getSatisfaction();
 
-//                    for(Customer c:customerList){
-//                        c.getFirstName();
-//                        c.getLastName();
-//                        c.getFeedback().getDifficulty();
-//                        c.getFeedback().getComments();
-//                        c.getFeedback().getSatisfaction();
-//
-//                    }
+                    }
                 } else {
                     page = Templates.ACCESS_DENIED;
                 }

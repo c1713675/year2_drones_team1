@@ -75,20 +75,18 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Access</th>
             <th>Satisfaction</th>
             <th>Difficulty</th>
             <th>Comments</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="customer: ${customers}">
+        <tr th:each="customer: ${customer}">
             <td><a th:href="@{/customer/{customerID}/course_progression(customerID= ${customer.id})}"><span
                     th:text="${customer.firstname} +' '+ ${customer.lastname}">Customer Name</span></a></td>
-            <td><span th:text="${customer.login.access}"></span></td>
             <td><span th:text="${customer.feedback.satisfaction}"></span> </td>
             <td><span th:text ="${customer.feedback.diffuclty}"></span></td>
-            <td><span th:text = "${customer.feedback.comments}"></span></td>
+            <td><span th:text = "${comments}"></span></td>
         </tr>
         </tbody>
     </table>
