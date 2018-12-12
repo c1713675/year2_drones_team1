@@ -5,9 +5,13 @@ import com.asgdrones.drones.repositories.InstructorRepoJPA;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -24,8 +28,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@DataJpaTest
+@DirtiesContext
+@AutoConfigureTestEntityManager
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class InstructorControllerTest {
     @Autowired
     private TestEntityManager entityManager;
@@ -36,18 +42,9 @@ public class InstructorControllerTest {
     public void instructorLocationTest() throws Exception {
         Login login = new Login(1L, "instructor", "TestIns", "123");
         Address address = new Address(1L, "AB123CD", "Cardiff", "Abc Street", 1, null);
-//        Instructor instructor = new Instructor(1L, "Test", "TestLast", "01234567890", login, address);
-        Course course = new Course(1L, "Name", "Type", "London", java.sql.Date.valueOf(LocalDate.now()), instructor);
-        Drone drone = new Drone(1L, "N/A", "N/A");
-        Creation creation = new Creation(null, java.sql.Date.valueOf(LocalDate.now()), java.sql.Date.valueOf(LocalDate.now().plusYears(5)));
         this.entityManager.merge(new Instructor(1L, "Ins", "Tructor", "01234567890", login, address));
         Optional<Instructor> instructor = this.instructorRepoJPA.findById(1L);
-//        assertEquals();
-    }
-
-    @Test
-    public void instructorDateTest(){
-        List<Date> dates = this.instructorRepoJPA.getCourseDates(11L);
-        assertEquals(dates.get(0).toString(),"2019-03-04");
+        List<String> addresses = this.instructorRepoJPA.getInstructorAddresses(1L);
+        assertEquals(instructor.get().getAddress().getCity(), "Cardiff");
     }
 }
