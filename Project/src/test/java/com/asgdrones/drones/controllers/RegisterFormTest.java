@@ -40,8 +40,15 @@ public class RegisterFormTest {
     @Test
     public void shouldReturnTerms() throws Exception{
 
-        this.mockMvc.perform(get("/register")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get("/register_customer")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("terms and conditions")));
+    }
+
+    @Test
+    public void shouldReturnFeedback() throws Exception{
+
+        this.mockMvc.perform(get("/feedback")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("satisfaction")));
     }
 
 

@@ -46,28 +46,6 @@ public class FeedbackController {
 
     static final Logger LOG = LoggerFactory.getLogger(Feedback.class);
 
-    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
-    public ModelAndView addFeedback(Model model) {
-        Feedback feedback = new Feedback();
-        model.addAttribute("feedback", feedback);
-        return new ModelAndView("feedback", model.asMap());
-    }
-
-    @RequestMapping(path = "/feedback", method = RequestMethod.POST)
-    public ModelAndView addLoginForm(@Valid Feedback feedback, BindingResult bindingResult, Model model) {
-        //binding result stops it from being null
-        if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
-        }
-        System.out.println(feedback);
-        model.addAttribute("feedback", feedback);
-        model.addAttribute("satisfaction", feedback.getSatisfaction());
-        model.addAttribute("difficulty", feedback.getDifficulty());
-        model.addAttribute("comments", feedback.getComments());
-        feedbackService.save(feedback);
-
-        return new ModelAndView("feedbacksubmit",model.asMap());
-    }
 
     @RequestMapping(value = "/adminFeedbackAccount", method = RequestMethod.GET)
     public ModelAndView adminFeedbackAccount(Model model,

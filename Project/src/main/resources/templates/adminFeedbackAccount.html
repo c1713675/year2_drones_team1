@@ -86,7 +86,7 @@
                     th:text="${customer.firstname} +' '+ ${customer.lastname}">Customer Name</span></a></td>
             <td><span th:text="${customer.feedback.satisfaction}"></span> </td>
             <td><span th:text ="${customer.feedback.diffuclty}"></span></td>
-            <td><span th:text = "${comments}"></span></td>
+            <td><span th:text = "${customer.feedback.comments}"></span></td>
         </tr>
         </tbody>
     </table>
