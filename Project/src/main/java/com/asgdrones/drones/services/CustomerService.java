@@ -32,7 +32,9 @@ public class CustomerService implements CustomerServiceInterface {
     @Override
     public List<Customer> findByCourseId(Long id) {
         return customerRepoJPA.findByCourseId(id);
+    }
 
+    @Override
     public Boolean getVerified(Long loginID) {
         Customer customer = customerRepoJPA.findByLogin_Id(loginID);
         Boolean verified = customer.getVerified();
