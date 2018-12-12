@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" th:href="@{/css/admin.css}">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Bootstrap CSS CDN -->
+    <meta charset="UTF-8">
+    <title>Customers</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style.css">
-    <title>Courses</title>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -64,28 +57,23 @@
         </div>
     </div>
 </nav>
-</body>
-<div class = "jumbotron">
+<div class="jumbotron">
 <div class="row">
-    <table>
+    <table class="table">
         <thead>
         <tr>
-            <th>City</th>
-            <th>Date</th>
+            <th>Customer</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="course: ${courses}">
+        <tr th:each="customer: ${customers}">
             <td>
-                <p th:text="${course.courseLocation}"></p>
-            </td>
-            <td>
-                <p th:text="${course.courseDate}"></p>
+                <p th:text="${customer.firstName + ' ' + customer.lastName}"></p>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-</body>
 </div>
+</body>
 </html>

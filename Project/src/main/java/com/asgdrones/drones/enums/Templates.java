@@ -10,6 +10,7 @@ public enum Templates {
     ACCESS_DENIED("accessDenied"),
     CREATE_COURSE_DATE("createCourseDate"),
     COURSE_CREATED("courseCreated"),
+    INSTRUCTOR_CUSTOMER("instructorCustomer");
     UPDATE_ADDRESS("updateAddress"),
     UPDATE_DRONE("updateDrone"),
     ADD_COURSE("addCourse");

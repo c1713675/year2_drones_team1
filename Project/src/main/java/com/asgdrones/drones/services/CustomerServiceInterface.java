@@ -32,6 +32,8 @@ public interface CustomerServiceInterface {
     public String GetCustomerHouseName(Long loginID);
 
     List<Customer> findAllById(Iterable<Long> id);
+    
+    List<Customer> findByCourseId(Long id);
 
     public Boolean getVerified(Long loginID);
 
