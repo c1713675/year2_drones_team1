@@ -99,6 +99,20 @@ CREATE TABLE IF NOT EXISTS `asg`.`qualification` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
+-- -----------------------------------------------------
+-- Table `asg`.`feedback`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `asg`.`feedback` ;
+
+CREATE TABLE IF NOT EXISTS `asg`.`feedback` (
+  `FeedbackID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Satisfaction` INT(5) NOT NULL,
+  `Difficulty` INT(5) NOT NULL,
+  `Comments` VARCHAR(80) NULL DEFAULT NULL,
+  PRIMARY KEY (`FeedbackID`),
+  UNIQUE INDEX `FeedbackID_UNIQUE` (`FeedbackID` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
 -- -----------------------------------------------------
 -- Table `asg`.`instructor`
@@ -216,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   `course_CourseID` INT(10) UNSIGNED,
   `login_LoginID` INT(10) UNSIGNED NOT NULL,
   `creation_CreationID` INT(10) UNSIGNED NOT NULL,
+  `feedback_FeedbackID` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`CandidateReferenceID`),
   UNIQUE INDEX `CandidateReferenceID_UNIQUE` (`CandidateReferenceID` ASC),
   INDEX `fk_customer_drone1_idx` (`drone_DroneID` ASC),
@@ -223,6 +238,12 @@ CREATE TABLE IF NOT EXISTS `asg`.`customer` (
   INDEX `fk_customer_course1_idx` (`course_CourseID` ASC),
   INDEX `fk_customer_login1_idx` (`login_LoginID` ASC),
   INDEX `fk_customer_creation1_idx` (`creation_CreationID` ASC),
+  INDEX `fk_customer_feedback1_idx` (`feedback_CreationID` ASC),
+  CONSTRAINT `fk_customer_feedback1`
+    FOREIGN KEY (`feedback_FeebackID`)
+    REFERENCES `asg`.`feedback` (`FeedbackID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `fk_customer_address1`
     FOREIGN KEY (`address_AddressID`)
     REFERENCES `asg`.`address` (`AddressID`)

@@ -5,7 +5,7 @@ public enum Templates {
     INSTRUCTOR_ACCOUNT("instructorAccount"),
     CUSTOMER_ACCOUNT("customerAccount"),
     ADMIN_ACCOUNT("adminAccount"),
-    FEEDBACK("feedback"),
+    CUSTOMER_FEEDBACK("feedback"),
     CUSTOMER_PROGRESSION("customerProgression"),
     ACCESS_DENIED("accessDenied"),
     CREATE_COURSE_DATE("createCourseDate"),

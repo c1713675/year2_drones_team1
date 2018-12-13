@@ -1,12 +1,9 @@
 package com.asgdrones.drones.services;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Customer;
-import com.asgdrones.drones.domain.Drone;
-import com.asgdrones.drones.domain.Login;
+import com.asgdrones.drones.domain.*;
 
 public interface RegisterServiceInterface {
-    public void upload(Address address, Drone drone, Customer customer, Login login);
+    public void upload(Address address, Drone drone, Customer customer, Login login, Feedback feedback);
 
 
 }

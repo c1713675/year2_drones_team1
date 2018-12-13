@@ -6,6 +6,7 @@ import com.asgdrones.drones.domain.Customer;
 import com.asgdrones.drones.repositories.AddressRepoJPA;
 import com.asgdrones.drones.repositories.CourseRepoJPA;
 import com.asgdrones.drones.repositories.CustomerRepoJPA;
+import com.asgdrones.drones.repositories.FeedbackRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,13 @@ public class CustomerService implements CustomerServiceInterface {
     private CustomerRepoJPA customerRepoJPA;
     private CourseRepoJPA courseRepoJPA;
     private int progression;
+    private FeedbackRepoJPA feedbackRepoJPA;
 
     @Autowired
-    CustomerService(CustomerRepoJPA cRepo, CourseRepoJPA coRepo) {
+    CustomerService(CustomerRepoJPA cRepo, CourseRepoJPA coRepo, FeedbackRepoJPA fRepo) {
         customerRepoJPA = cRepo;
         courseRepoJPA = coRepo;
+        feedbackRepoJPA = fRepo;
     }
 
     @Override
@@ -57,6 +60,15 @@ public class CustomerService implements CustomerServiceInterface {
         customerRepoJPA.save(customer);
     }
 
+
+    @Override
+    public void updateFeedback(Long loginID, Feedback feedback) {
+        Customer customer = customerRepoJPA.findByLogin_Id(loginID);
+        Customer updateFeedback = customerRepoJPA.getOne(customer.getId());
+        updateFeedback.setFeedback(feedback);
+        customerRepoJPA.save(customer);
+    }
+
     @Override
     public void addCourse(Long loginID, Long courseID) {
         Customer customer = customerRepoJPA.findByLogin_Id(loginID);
@@ -76,6 +88,7 @@ public class CustomerService implements CustomerServiceInterface {
         customer.setVerified(true);
         customerRepoJPA.save(customer);
     }
+
 
     @Override
     public Integer getCourseProgression(Long id) {
@@ -104,6 +117,8 @@ public class CustomerService implements CustomerServiceInterface {
         String fullName = customer.getFirstName() + " " + customer.getLastName();
         return fullName;
     }
+
+
 
     @Override
     public java.util.Date getDob(Long id) {

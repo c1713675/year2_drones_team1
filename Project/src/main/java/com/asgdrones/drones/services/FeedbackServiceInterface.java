@@ -4,6 +4,6 @@ import com.asgdrones.drones.domain.Feedback;
 
 public interface FeedbackServiceInterface {
 
-    public void save(Feedback feedback);
+    public void upload(Feedback feedback);
 
 }

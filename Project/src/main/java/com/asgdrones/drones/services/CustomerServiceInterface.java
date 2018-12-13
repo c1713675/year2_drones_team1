@@ -1,17 +1,16 @@
 package com.asgdrones.drones.services;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Course;
-import com.asgdrones.drones.domain.Customer;
-import com.asgdrones.drones.domain.Drone;
+import com.asgdrones.drones.domain.*;
 
 import java.sql.Date;
 import java.util.List;
 
 public interface CustomerServiceInterface {
+
     public Integer getCourseProgression(Long id);
 
     public String getCustomerName(Long id);
+
 
     public java.util.Date getDob(Long id);
 
@@ -44,4 +43,6 @@ public interface CustomerServiceInterface {
     public void addCourse(Long loginID, Long courseID);
 
     public void updateCustomer(Long loginID);
+
+    public void updateFeedback(Long loginID, Feedback feedback);
 }

@@ -81,6 +81,10 @@ public class Customer {
     @JoinColumn(name = "course_CourseID")
     private Course course;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "feedback_feedbackid")
+    private Feedback feedback;
+
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn( name = "creation_creationid")

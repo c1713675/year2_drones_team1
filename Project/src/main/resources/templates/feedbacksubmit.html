@@ -45,34 +45,39 @@
 
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                <li><a th:href="@{/feedback}">Feedback</th></a></li>
-                </li>
-                <li>
                 <li><a th:href="@{/aboutUs}">About Us</th></a></li>
                 </li>
                 <li>
                 <li><a th:href="@{/courseInfo}">Course Info</th></a></li>
                 </li>
+                <li>
+                <li class="active">
+                <li><a th:href="@{/feedbacksubmit}">Leave Feedback</th></a></li>
+                </li>
 
                 <!-- Navbar link with a dropdown menu -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/login}">Log out</a></li>
 
+                    </ul>
+                </li>
             </ul>
-            <div class="container">
-                <div class="header">
-                    <h3>ASG DRONES</h3>
-                </div>
-                <div class="jumbotron">
-                    <h1>Leave Feedback</h1>
-                    <form action="#" th:action="@{'/customer/' +${customerID}+ '/feedback'}" th:object= "${feedback}" method="post">
-                        <p>Rate the course difficulty (Out of 5 with 5 being impossible): <input type = "text" th:field="*{difficulty}" required min="1" max="5"/></p>
-                        <p>Rate the course satisfaction (Out of 5 with 5 being excellent): <input type = "text" th:field="*{satisfaction}" required min="1" max="5"/></p>
-                        <p>Leave other comments <input type = "text" th:field="*{comments}"/></p>
-                        <button type = "submit" >Submit </button >
-                    </form>
-                </div>
-            </div>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="header">
+        <h3>ASG DRONES</h3>
+    </div>
+    <div class="jumbotron">
+        <h1>Thank you for leaving feedback!</h1>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
-
-
