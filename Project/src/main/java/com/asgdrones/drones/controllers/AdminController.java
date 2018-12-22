@@ -8,6 +8,7 @@ import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.AdminRepoJPA;
 import com.asgdrones.drones.services.AdminService;
 import com.asgdrones.drones.services.CourseService;
+import com.asgdrones.drones.services.ResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +29,12 @@ public class AdminController {
     private Templates page;
     private AdminService adminService;
     private CourseService courseService;
+    private ResultService resultService;
     @Autowired
-    AdminController(AdminService aService, CourseService cService) {
+    AdminController(AdminService aService, CourseService cService, ResultService rService) {
         adminService = aService;
         courseService = cService;
+        resultService = rService;
     }
 
     @RequestMapping(value = "admin/{loginID}", method = RequestMethod.GET)
@@ -49,6 +52,8 @@ public class AdminController {
                     String city = adminService.GetAdminCity(loginID);
                     String street = adminService.GetAdminStreet(loginID);
                     Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
+                    Integer totalResults = resultService.countAllResults();
+                    Integer totalPass = resultService.countAllByPassfailIsTrue();
                     List<Customer> customerList = adminService.getCustomers();
                     System.out.println(customerList.size());
                     System.out.println(Arrays.deepToString(new List[]{customerList}));
@@ -60,6 +65,8 @@ public class AdminController {
                     model.addAttribute("houseNumber", houseNumber);
                     model.addAttribute("customers", customerList);
                     model.addAttribute("search", search);
+                    model.addAttribute("totalResults", totalResults);
+                    model.addAttribute("totalPass", totalPass);
                 } else {
                     page = Templates.ACCESS_DENIED;
                 }
