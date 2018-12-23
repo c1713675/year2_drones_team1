@@ -54,6 +54,7 @@ public class AdminController {
                     Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
                     Integer totalResults = resultService.countAllResults();
                     Integer totalPass = resultService.countAllByPassfailIsTrue();
+                    Integer totalFail = totalResults - totalPass;
                     List<Customer> customerList = adminService.getCustomers();
                     System.out.println(customerList.size());
                     System.out.println(Arrays.deepToString(new List[]{customerList}));
@@ -67,6 +68,7 @@ public class AdminController {
                     model.addAttribute("search", search);
                     model.addAttribute("totalResults", totalResults);
                     model.addAttribute("totalPass", totalPass);
+                    model.addAttribute("totalFail", totalFail);
                 } else {
                     page = Templates.ACCESS_DENIED;
                 }

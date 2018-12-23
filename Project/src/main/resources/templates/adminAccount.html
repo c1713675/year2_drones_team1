@@ -78,6 +78,19 @@
 <table class="table">
     <thead>
     <tr>
+        <th>Amount Passed</th>
+        <th>Amount Failed</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--<p th:text="${totalPass + '/' + totalResults}"></p>-->
+    <td><span th:text="${totalPass}"></span></td>
+    <td><span th:text="${totalFail}"></span></td>
+    <td><span th:text="${totalResults}"></span></td>
+    </tbody>
+    <thead>
+    <tr>
         <th>Name</th>
         <th>Date of Birth</th>
         <th>Email</th>
@@ -106,8 +119,6 @@
         <td><span th:text="${customer.insured}"></span></td>
         <td><span th:text="${customer.login.access}"></span></td>
     </tr>
-    <p th:text="${totalResults}"></p>
-    <p th:text="${totalPass}"></p>
     </tbody>
 </table>
 </div>
