@@ -4,6 +4,8 @@ import com.asgdrones.drones.repositories.ResultRepoJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ResultService implements ResultServiceInterface{
     private ResultRepoJPA resultRepoJPA;
@@ -15,11 +17,11 @@ public class ResultService implements ResultServiceInterface{
 
     @Override
     public Integer countAllResults() {
-        return resultRepoJPA.countAllResults();
+        return resultRepoJPA.countAllResults().get();
     }
 
     @Override
     public Integer countAllByPassfailIsTrue() {
-        return resultRepoJPA.countAllByPassfailIsTrue();
+        return resultRepoJPA.countAllByPassfailIsTrue().get();
     }
 }
