@@ -10,8 +10,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext
 @AutoConfigureTestEntityManager
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class ResultJPATest {
     @Autowired
     private TestEntityManager entityManager;
@@ -45,6 +49,7 @@ public class ResultJPATest {
 //        this.entityManager.persist(result2);
 //        this.entityManager.persist(result3);
         Integer amountResults = this.resultRepoJPA.countAllResults().get();
+//        List<Result> resultList = resultRepoJPA.findAll();
         assertThat(amountResults).isEqualTo(1);
     }
 }
