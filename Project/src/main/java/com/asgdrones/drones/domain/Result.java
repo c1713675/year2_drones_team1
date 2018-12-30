@@ -24,6 +24,7 @@ public class Result {
     @Column(name = "typeoftest")
     private String typeOfTest;
 
-    @Column(name = "customer_CandidateReferenceID")
-    private Long candidateReferenceId;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_CandidateReferenceID")
+    private Customer candidateReferenceId;
 }

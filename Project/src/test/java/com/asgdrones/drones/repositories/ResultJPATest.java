@@ -39,17 +39,11 @@ public class ResultJPATest {
         Instructor instructor = new Instructor(null, "Ins", "Tructor", "01234567890", login, address);
         Course course = new Course(null, "Course 1", "GS", "Cardiff", java.sql.Date.valueOf(LocalDate.now()), instructor);
         Customer customer = new Customer(null, "Test", "Customer", java.sql.Date.valueOf(LocalDate.now()), "test@gmail.com", "01234567890", true, (float) 10.0, "none", (float) 5.0, "Cardiff", true, false, login, drone, address, course, creation);
-        Result result1 = new Result(null, 100, true, "GS", customer.getId());
-//        Result result2 = new Result(null, 100, true, "GS", customer.getId());
-//        Result result3 = new Result(null, 100, true, "GS", customer.getId());
+        Result result1 = new Result(null, 100, true, "GS", customer);
         this.entityManager.merge(result1);
-//        this.entityManager.merge(result2);
-//        this.entityManager.merge(result3);
-//        this.entityManager.persist(result1);
-//        this.entityManager.persist(result2);
-//        this.entityManager.persist(result3);
         Integer amountResults = this.resultRepoJPA.countAllResults().get();
-//        List<Result> resultList = resultRepoJPA.findAll();
-        assertThat(amountResults).isEqualTo(1);
+        List<Result> resultList = resultRepoJPA.findAll();
+//      Assertion to test that the amount of results found from the count JPA query is the same as the amount of results in a list found using JPA's findAll().
+        assertThat(amountResults).isEqualTo(resultList.size());
     }
 }
