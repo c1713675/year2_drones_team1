@@ -87,11 +87,15 @@
     </thead>
     <tbody>
     <tr th:each="r : ${results}">
-    <!--<p th:text="${totalPass + '/' + totalResults}"></p>-->
         <td><span th:text="${r.candidateReferenceId.firstName} + ' ' + ${r.candidateReferenceId.lastName}"></span></td>
         <td><span th:text="${r.typeOfTest}"></span></td>
         <td><span th:text="${r.mark}"></span></td>
-        <td><span th:text="${r.passfail}"></span></td>
+        <div th:if="${r.passfail}">
+            <td><span th:text="Pass"></span></td>
+        </div>
+        <div th:unless="${r.passfail}">
+            <td><span th:text="Fail"></span></td>
+        </div>
     <!--<td><span th:text="${totalResults}"></span></td>-->
     </tbody>
     </tr>
