@@ -78,17 +78,23 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Amount Passed</th>
-        <th>Amount Failed</th>
-        <th>Total</th>
+        <th>Customer Name</th>
+        <th>Test Name</th>
+        <th>Mark</th>
+        <th>Pass/Fail</th>
+        <!--<th>Total</th>-->
     </tr>
     </thead>
     <tbody>
+    <tr th:each="r : ${results}">
     <!--<p th:text="${totalPass + '/' + totalResults}"></p>-->
-    <td><span th:text="${totalPass}"></span></td>
-    <td><span th:text="${totalFail}"></span></td>
-    <td><span th:text="${totalResults}"></span></td>
+        <td><span th:text="${r.candidateReferenceId.firstName} + ' ' + ${r.candidateReferenceId.lastName}"></span></td>
+        <td><span th:text="${r.typeOfTest}"></span></td>
+        <td><span th:text="${r.mark}"></span></td>
+        <td><span th:text="${r.passfail}"></span></td>
+    <!--<td><span th:text="${totalResults}"></span></td>-->
     </tbody>
+    </tr>
     <thead>
     <tr>
         <th>Name</th>

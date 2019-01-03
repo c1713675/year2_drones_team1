@@ -1,9 +1,6 @@
 package com.asgdrones.drones.controllers;
 
-import com.asgdrones.drones.domain.Address;
-import com.asgdrones.drones.domain.Admin;
-import com.asgdrones.drones.domain.Course;
-import com.asgdrones.drones.domain.Customer;
+import com.asgdrones.drones.domain.*;
 import com.asgdrones.drones.enums.Templates;
 import com.asgdrones.drones.repositories.AdminRepoJPA;
 import com.asgdrones.drones.services.AdminService;
@@ -20,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,9 +50,9 @@ public class AdminController {
                     String city = adminService.GetAdminCity(loginID);
                     String street = adminService.GetAdminStreet(loginID);
                     Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
-                    Integer totalResults = resultService.countAllResults();
                     Integer totalPass = resultService.countAllByPassfailIsTrue();
-                    Integer totalFail = totalResults - totalPass;
+                    List<Result> results = resultService.findAll();
+                    Integer totalResults = results.size();
                     List<Customer> customerList = adminService.getCustomers();
                     System.out.println(customerList.size());
                     System.out.println(Arrays.deepToString(new List[]{customerList}));
@@ -66,9 +64,10 @@ public class AdminController {
                     model.addAttribute("houseNumber", houseNumber);
                     model.addAttribute("customers", customerList);
                     model.addAttribute("search", search);
-                    model.addAttribute("totalResults", totalResults);
+                    model.addAttribute("results", results);
+//                    model.addAttribute("totalResults", totalResults);
                     model.addAttribute("totalPass", totalPass);
-                    model.addAttribute("totalFail", totalFail);
+//                    model.addAttribute("totalFail", totalFail);
                 } else {
                     page = Templates.ACCESS_DENIED;
                 }
