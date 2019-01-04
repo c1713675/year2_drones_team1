@@ -13,7 +13,8 @@ public enum Templates {
     INSTRUCTOR_CUSTOMER("instructorCustomer"),
     UPDATE_ADDRESS("updateAddress"),
     UPDATE_DRONE("updateDrone"),
-    ADD_COURSE("addCourse");
+    ADD_COURSE("addCourse"),
+    DISPLAY_RESULTS("adminResults");
 
     private final String name;
 

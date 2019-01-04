@@ -28,6 +28,7 @@ public class AdminController {
     private AdminService adminService;
     private CourseService courseService;
     private ResultService resultService;
+
     @Autowired
     AdminController(AdminService aService, CourseService cService, ResultService rService) {
         adminService = aService;
@@ -50,9 +51,6 @@ public class AdminController {
                     String city = adminService.GetAdminCity(loginID);
                     String street = adminService.GetAdminStreet(loginID);
                     Integer houseNumber = adminService.GetAdminHouseNumber(loginID);
-                    Integer totalPass = resultService.countAllByPassfailIsTrue();
-                    List<Result> results = resultService.findAll();
-                    Integer totalResults = results.size();
                     List<Customer> customerList = adminService.getCustomers();
                     System.out.println(customerList.size());
                     System.out.println(Arrays.deepToString(new List[]{customerList}));
@@ -64,10 +62,6 @@ public class AdminController {
                     model.addAttribute("houseNumber", houseNumber);
                     model.addAttribute("customers", customerList);
                     model.addAttribute("search", search);
-                    model.addAttribute("results", results);
-//                    model.addAttribute("totalResults", totalResults);
-                    model.addAttribute("totalPass", totalPass);
-//                    model.addAttribute("totalFail", totalFail);
                 } else {
                     page = Templates.ACCESS_DENIED;
                 }
@@ -91,7 +85,7 @@ public class AdminController {
     @RequestMapping(value = "admin/{loginID}/createcoursedate", method = RequestMethod.GET)
     public ModelAndView createCourseDate(Model model,
                                          HttpServletRequest request,
-                                         @PathVariable("loginID") Long loginID){
+                                         @PathVariable("loginID") Long loginID) {
         access = request.getCookies();
         for (Cookie obj : access) {
             System.out.println(obj.toString());
@@ -108,14 +102,14 @@ public class AdminController {
         }
 //        page = Templates.CREATE_COURSE_DATE;
         Course course = new Course();
-        model.addAttribute("course",course);
+        model.addAttribute("course", course);
         return new ModelAndView(page.toString(), model.asMap());
     }
 
     @RequestMapping(value = "createcoursedate", method = RequestMethod.POST)
     public ModelAndView createCourseDate(Model model,
-                                      @Valid Course course,
-                                      BindingResult bindingResult) {
+                                         @Valid Course course,
+                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
         }
@@ -124,4 +118,34 @@ public class AdminController {
         page = Templates.COURSE_CREATED;
         return new ModelAndView(page.toString(), model.asMap());
     }
+
+    @RequestMapping(value = "admin/{loginID}/results", method = RequestMethod.GET)
+    public ModelAndView adminResults(Model model,
+                                     HttpServletRequest request,
+                                     @PathVariable("loginID") Long loginID) {
+        access = request.getCookies();
+        for (Cookie obj : access) {
+            if (obj.getName().equals("Access")) {
+                if (obj.getValue().equals("admin")) {
+                    if (obj.getValue().equals("admin")) {
+                        page = Templates.DISPLAY_RESULTS;
+                        Integer totalPass = resultService.countAllByPassfailIsTrue();
+                        List<Result> results = resultService.findAll();
+                        Integer totalResults = results.size();
+                        model.addAttribute("results", results);
+//                    model.addAttribute("totalResults", totalResults);
+                        model.addAttribute("totalPass", totalPass);
+//                    model.addAttribute("totalFail", totalFail);
+//                        model.addAttribute("loginID", loginID);
+                    } else {
+                        page = Templates.ACCESS_DENIED;
+                    }
+                } else {
+                    page = Templates.ACCESS_DENIED;
+                }
+            }
+        }
+        return new ModelAndView(page.toString(), model.asMap());
+    }
 }
+

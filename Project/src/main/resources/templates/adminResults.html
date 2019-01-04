@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Create Course Date</title>
-    <!-- Bootstrap CSS CDN -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Results</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
+
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <!-- Navbar Container -->
@@ -14,9 +18,7 @@
         <!-- Navbar Header [contains both toggle button and navbar brand] -->
         <div class="navbar-header">
             <!-- Toggle Button [handles opening navbar components on mobile screens]-->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#exampleNavComponents" aria-expanded
-            "false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#exampleNavComponents" aria-expanded"false">
             <i class="glyphicon glyphicon-align-center"></i>
             </button>
 
@@ -48,15 +50,33 @@
         </div>
     </div>
 </nav>
-<div class="jumbotron">
-    <h1>Create Course</h1>
-    <form action="#" th:action="@{/createcoursedate}" th:object="${course}" method="post">
-        <p>Course Name: <input type="text" th:field="*{CourseName}"/></p>
-        <p>Course Type: <input type="text" th:field="*{CourseType}"/></p>
-        <p>Course Location: <input type="text" th:field="*{CourseLocation}"/></p>
-        <p>Date: <input type="date" th:field="*{CourseDate}"/></p>
-        <input type="submit" value="Create"></input>
-    </form>
-</div>
+</body>
+<body>
+<br>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Customer Name</th>
+        <th>Test Name</th>
+        <th>Mark</th>
+        <th>Pass/Fail</th>
+        <!--<th>Total</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${results}">
+        <td><span th:text="${r.candidateReferenceId.firstName} + ' ' + ${r.candidateReferenceId.lastName}"></span></td>
+        <td><span th:text="${r.typeOfTest}"></span></td>
+        <td><span th:text="${r.mark}"></span></td>
+        <div th:if="${r.passfail}">
+            <td><span th:text="Pass"></span></td>
+        </div>
+        <div th:unless="${r.passfail}">
+            <td><span th:text="Fail"></span></td>
+        </div>
+        <!--<td><span th:text="${totalResults}"></span></td>-->
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
