@@ -18,8 +18,8 @@ public class ResultService implements ResultServiceInterface{
     }
 
     @Override
-    public Integer countAllResults(Long customerId) {
-        return resultRepoJPA.countAllResults(customerId).get();
+    public Integer countAllResults() {
+        return resultRepoJPA.countAllResults().get();
     }
 
     @Override

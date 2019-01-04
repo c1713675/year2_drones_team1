@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface ResultRepoJPA extends JpaRepository<Result, Long>, ResultRepo {
-    @Query(value = "SELECT COUNT(r.ResultID) FROM results r WHERE r.customer_CandidateReferenceID = :customerId", nativeQuery = true)
-    Optional<Integer> countAllResults(@Param("customerId") Long customerId);
+    @Query(value = "SELECT COUNT(r.ResultID) FROM results r", nativeQuery = true)
+    Optional<Integer> countAllResults();
     Optional<Integer> countAllByPassfailIsTrue();
 }

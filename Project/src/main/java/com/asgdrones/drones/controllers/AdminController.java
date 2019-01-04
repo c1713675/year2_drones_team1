@@ -131,9 +131,9 @@ public class AdminController {
                         page = Templates.DISPLAY_RESULTS;
                         Integer totalPass = resultService.countAllByPassfailIsTrue();
                         List<Result> results = resultService.findAll();
-                        Integer totalResults = results.size();
+                        Integer totalResults = resultService.countAllResults();
                         model.addAttribute("results", results);
-//                    model.addAttribute("totalResults", totalResults);
+                        model.addAttribute("totalResults", totalResults);
                         model.addAttribute("totalPass", totalPass);
 //                    model.addAttribute("totalFail", totalFail);
 //                        model.addAttribute("loginID", loginID);
