@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Bootstrap CSS CDN -->
+    <title>Results</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <title>Courses</title>
 </head>
+
 <body>
 <nav class="navbar navbar-default navbar-fixed-top">
     <!-- Navbar Container -->
@@ -18,9 +18,7 @@
         <!-- Navbar Header [contains both toggle button and navbar brand] -->
         <div class="navbar-header">
             <!-- Toggle Button [handles opening navbar components on mobile screens]-->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#exampleNavComponents" aria-expanded
-            "false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#exampleNavComponents" aria-expanded"false">
             <i class="glyphicon glyphicon-align-center"></i>
             </button>
 
@@ -35,11 +33,14 @@
 
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="active">
-                    <a th:href="@{'/instructor/'+${instructorID}}">Instructor</a>
+                <li>
+                    <a th:href="@{'/admin/' +${loginID}}">Admin</a>
                 </li>
                 <li>
-                    <a th:href="@{'/instructor/customers/'+${instructorID}}">Customers</a>
+                    <a th:href="@{'/admin/'+${loginID}+'/createcoursedate'}">Create Course</a>
+                </li>
+                <li class="active">
+                    <a th:href="@{'/admin/'+${loginID}+'/results'}">Customer Results</a>
                 </li>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
@@ -49,25 +50,37 @@
     </div>
 </nav>
 </body>
-<div class="jumbotron">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>City</th>
-            <th>Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="course: ${courses}">
-            <td>
-                <p th:text="${course.courseLocation}"></p>
-            </td>
-            <td>
-                <p th:text="${course.courseDate}"></p>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<body>
+<br>
+<br>
+<h1>Amount Of Results</h1>
+<h1 th:text="${totalResults}"></h1>
+<br>
+<h1>Results</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Customer Name</th>
+        <th>Test Name</th>
+        <th>Mark</th>
+        <th>Pass/Fail</th>
+        <!--<th>Total</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="r : ${results}">
+        <td><span th:text="${r.candidateReferenceId.firstName} + ' ' + ${r.candidateReferenceId.lastName}"></span></td>
+        <td><span th:text="${r.typeOfTest}"></span></td>
+        <td><span th:text="${r.mark}"></span></td>
+        <div th:if="${r.passfail}">
+            <td><span th:text="Pass"></span></td>
+        </div>
+        <div th:unless="${r.passfail}">
+            <td><span th:text="Fail"></span></td>
+        </div>
+        <!--<td><span th:text="${totalResults}"></span></td>-->
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

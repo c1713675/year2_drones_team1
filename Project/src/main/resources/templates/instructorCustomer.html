@@ -14,7 +14,9 @@
         <!-- Navbar Header [contains both toggle button and navbar brand] -->
         <div class="navbar-header">
             <!-- Toggle Button [handles opening navbar components on mobile screens]-->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#exampleNavComponents" aria-expanded"false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#exampleNavComponents" aria-expanded
+            "false">
             <i class="glyphicon glyphicon-align-center"></i>
             </button>
 
@@ -29,18 +31,14 @@
 
             <!-- Navbar Menu -->
             <ul class="nav navbar-nav navbar-right">
-                <li class="active">
+                <li>
                     <a th:href="@{'/instructor/'+${instructorID}}">Instructor</a>
                 </li>
-                <li>
-                    <a href="#">About us</a>
-                </li>
-                <li>
-                    <a href="#">Course Info</a>
+                <li class="active">
+                    <a th:href="@{'/instructor/customers/'+${instructorID}}">Customers</a>
                 </li>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
             </ul>
         </div>

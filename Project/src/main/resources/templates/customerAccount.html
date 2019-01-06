@@ -36,14 +36,10 @@
                     <a th:href="@{'/customer/' +${customerID}}">Profile</a>
                 </li>
                 <li>
-                    <a th:href="@{'/customer/' +${customerID}+ '/course_progression'}">Progression</a>
-                </li>
-                <li>
-                    <a href="#">Course Info</a>
+                    <a th:href="@{'/customer/' +${customerID}+ '/course_progression'}">Progress</a>
                 </li>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/register}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </ul>
             </ul>
         </div>
@@ -82,7 +78,6 @@
                     <th>Course Type</th>
                     <th>Course Location</th>
                     <th>Course Date</th>
-                    <th>Instructor</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -91,7 +86,6 @@
                     <td><span th:text="${course.courseType}"> type </span></td>
                     <td><span th:text="${course.courseLocation}"> location </span></td>
                     <td><span th:text="${course.courseDate}"> location </span></td>
-                    <td><span th:text="${course.instructor.firstName}"> instructor </span></td>
                 </tr>
                 </tbody>
             </table>
