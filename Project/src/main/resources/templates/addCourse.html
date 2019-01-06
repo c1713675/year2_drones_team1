@@ -59,7 +59,6 @@
             <th>Course Type</th>
             <th>Course Location</th>
             <th>Course Date</th>
-            <th>Instructor</th>
             <th>Add</th>
         </tr>
         </thead>
@@ -74,8 +73,6 @@
                 <td><span th:text="${course.courseLocation}"> location </span>
                 </td>
                 <td><span th:text="${course.courseDate}"> date </span>
-                </td>
-                <td><span th:text="${course.instructor.firstName}"> instructor </span>
                 </td>
                 <td>
                     <input type="hidden"
