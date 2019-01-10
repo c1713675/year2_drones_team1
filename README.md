@@ -20,11 +20,11 @@ Displays a page allowing the user to edit the details of their registered addres
 ### /customer/{id}/update_drone
 Displays a page allowing the user to edit the details of their registered drone.
 
-### /customer/15/add_course
+### /customer/{id}/add_course
 Shows a list of courses which have been scheduled, and allows the user to assign
 themself to one of these courses.
 
-### /customer/15/course_progression
+### /customer/{id}/course_progression
 Displays the user's progress through a course.
 
 
