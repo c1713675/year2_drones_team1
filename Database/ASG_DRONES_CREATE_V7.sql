@@ -56,6 +56,7 @@ DEFAULT CHARACTER SET = latin1;
 
 insert into login (Username, LoginPassword , Access) values ('admin','password','admin');
 insert into login (Username, LoginPassword, Access) values ('instructor','password','instructor');
+insert into login (Username, LoginPassword, Access) values ('custom', 'password', 'customer');
 
 -- -----------------------------------------------------
 -- Table `asg`.`administrator`
@@ -85,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`administrator` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-insert into administrator (FirstName, LastName, address_AddressID, login_LoginID) values ('James', 'Buckland', 1, 13);
+insert into administrator (FirstName, LastName, address_AddressID, login_LoginID) values ('Test', 'Admin', 1, 13);
 
 -- -----------------------------------------------------
 -- Table `asg`.`qualification`
@@ -176,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `asg`.`creation` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-
+INSERT INTO creation (CreationID) VALUES (1);
 -- -----------------------------------------------------
 -- Table `asg`.`drone`
 -- -----------------------------------------------------
@@ -252,6 +253,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
 
+
 -- -----------------------------------------------------
 -- Table `asg`.`materialised_view_user_report`
 -- -----------------------------------------------------
@@ -287,6 +289,11 @@ CREATE TABLE IF NOT EXISTS `asg`.`results` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+
+INSERT INTO results (ResultID, Mark, PassFail, TypeOfTest, customer_CandidateReferenceID) VALUES (null, 100, true, 'GS', 1);
+INSERT INTO results (ResultID, Mark, PassFail, TypeOfTest, customer_CandidateReferenceID) VALUES (null, 90, true, 'Course 2', 1);
+INSERT INTO results (ResultID, Mark, PassFail, TypeOfTest, customer_CandidateReferenceID) VALUES (null, 48, false, 'Course 3', 1);
 
 
 -- -----------------------------------------------------
@@ -420,7 +427,7 @@ IF finished = 1 THEN
 			WHERE DeletionDate >= now();
 End $$
 
--- CALL deleteIfDeletionDateExpires();
+-- CALL deleteIfDeletionDateExpires();f
 -- select * from login;
 -- select * from customer;
 -- select * from creation;
@@ -864,8 +871,10 @@ END IF;
 
 END$$
 
-
 DELIMITER ;
+
+INSERT INTO customer (CandidateReferenceID, FirstName, LastName, Dob, Email, PhoneNumber, Paid, HoursOfFlying, Disability, EnglishSpeakingLevel, PreferredGSLocation, Insured, Verified, drone_DroneID, address_AddressID, course_CourseID, login_LoginID, creation_CreationID)
+VALUES (1, 'TestFirst', 'TestLast', '1990-02-01', 'test@test.com', '01234567890', true, 10, 'None', 10, 'Cardiff', true, true, 1, 1, 1, 15, 1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
